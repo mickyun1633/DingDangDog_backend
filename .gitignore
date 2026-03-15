@@ -48,6 +48,7 @@ catalina.out
 .vscode/
 .idea/
 *.iml
+*.iws
 
 # =========================
 # Environment / Local config
@@ -56,6 +57,7 @@ catalina.out
 .env.*
 db.properties
 jdbc.properties
+src/main/resources/db.properties
 
 # =========================
 # 업로드 파일 (실행 시 생성)
@@ -69,7 +71,13 @@ uploads/
 *.jar
 
 # 하지만 웹 프로젝트 lib 폴더는 포함
-!WEB-INF/lib/*.jar
-!WebContent/WEB-INF/lib/*.jar
-!webapp/WEB-INF/lib/*.jar
 !src/main/webapp/WEB-INF/lib/*.jar
+
+# =============================
+# Backup & Temp
+# =============================
+*.tmp
+*.bak
+*.swp
+*.orig
+*.rej
