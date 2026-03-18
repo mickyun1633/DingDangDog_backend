@@ -68,7 +68,7 @@
 										</div>
 
 										<%
-										session.setAttribute("userNumber", "10002");
+										session.setAttribute("userNumber", 10002);
 										session.setAttribute("userType", "C");
 										%>
 										<div>

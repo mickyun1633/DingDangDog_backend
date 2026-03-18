@@ -21,11 +21,13 @@ public class CheckPasswordController implements Execute {
 		System.out.println("===CheckPasswordController 실행===");
 
 		HttpSession session = request.getSession();
+		String inputPassword = request.getParameter("checkPassword");
 		System.out.println("1");
-		if(session == null) {
-			System.out.println("못받아옴");
-		} else {
+		System.out.println("=======" + session);
+		if (session != null) {
 			System.out.println("받아옴?");
+		} else {
+			System.out.println("못받아옴");
 		}
 		UserDTO userDTO = new UserDTO();
 		System.out.println("2");
@@ -33,11 +35,10 @@ public class CheckPasswordController implements Execute {
 		System.out.println("3");
 		Result result = new Result();
 		System.out.println("4");
-		int loginUserNumber = (Integer) session.getAttribute("userNumber");
+		int loginUserNumber =  Integer.parseInt((String) session.getAttribute("userNumber"));
 		System.out.println("5");
 		String loginUserType = (String) session.getAttribute("userType");
 		System.out.println("6");
-		String inputPassword = request.getParameter("checkPassword");
 		String path = null;
 
 		System.out.println(loginUserNumber);
@@ -60,7 +61,7 @@ public class CheckPasswordController implements Execute {
 			path = request.getContextPath() + "/mypage/checkPw.mp?checkPw=fail";
 		}
 
-		result.setRedirect(true); 
+		result.setRedirect(true);
 		result.setPath(path);
 
 		return result;
