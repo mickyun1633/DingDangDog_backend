@@ -36,7 +36,7 @@ public class ArchiveDAO {
 		// 2. 성향 점수 수정
 		sqlSession.update("archiveUpdate.updateScore", updateDTO);
 	}
-	
+
 // ===== 정보 삭제 =====  
 	// adminNumber, userNumber(보호소)
 	public void delete(ArchiveDeleteDTO deleteDTO) {
@@ -59,10 +59,6 @@ public class ArchiveDAO {
 	// 이름, 품종, 성별, 점수 등 모든 상세 내역 조회
 	public ArchiveReadDTO selectDetail(int dogNumber) {
 		return sqlSession.selectOne("archiveRead.selectDetail", dogNumber);
-	}
-
-	public static void main(String[] args) {
-		ArchiveListController
 	}
 
 }
