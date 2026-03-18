@@ -61,6 +61,7 @@ function handleImageUpload(event) {
       if (loadedCount === imageFiles.length) {
         renderThumbnail();
         syncEditorToHidden();
+        imageUpload.value = "";
       }
     };
 
@@ -83,7 +84,7 @@ function renderThumbnail() {
 
 function handleSubmit(event) {
   const titleValue = titleInput.value.trim();
-  const contentText = writeContentEditor.innerText.trim();
+  const contentText = writeContentEditor.textContent.trim();
 
   syncEditorToHidden();
 
@@ -109,7 +110,7 @@ function handleSubmit(event) {
 
   const submitData = {
     title: titleValue,
-    thumbnail: uploadedImages[0]?.src || "",
+    thumbnail: uploadedImages.length > 0 ? uploadedImages[0].src : "",
     content: hiddenPostInput.value,
     imageCount: uploadedImages.length
   };
@@ -118,5 +119,5 @@ function handleSubmit(event) {
 }
 
 function syncEditorToHidden() {
-  hiddenPostInput.value = writeContentEditor.innerText.trim();
+  hiddenPostInput.value = writeContentEditor.innerHTML.trim();
 }

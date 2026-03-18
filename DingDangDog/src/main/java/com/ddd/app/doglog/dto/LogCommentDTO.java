@@ -1,20 +1,20 @@
 package com.ddd.app.doglog.dto;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 public class LogCommentDTO {
 	private int commentNumber;
 	private int logNumber;
 	private int userNumber;
 	private String commentPost;
-	private Date commentDate;
+	private LocalDateTime commentDate;
 
 	private String userNickname;
 
 	public LogCommentDTO() {
 	}
 
-	public LogCommentDTO(int commentNumber, int logNumber, int userNumber, String commentPost, Date commentDate,
+	public LogCommentDTO(int commentNumber, int logNumber, int userNumber, String commentPost, LocalDateTime commentDate,
 			String userNickname) {
 		this.commentNumber = commentNumber;
 		this.logNumber = logNumber;
@@ -56,11 +56,11 @@ public class LogCommentDTO {
 		this.commentPost = commentPost;
 	}
 
-	public Date getCommentDate() {
+	public LocalDateTime getCommentDate() {
 		return commentDate;
 	}
 
-	public void setCommentDate(Date commentDate) {
+	public void setCommentDate(LocalDateTime commentDate) {
 		this.commentDate = commentDate;
 	}
 

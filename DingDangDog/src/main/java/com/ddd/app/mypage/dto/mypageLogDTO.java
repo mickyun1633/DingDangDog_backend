@@ -1,6 +1,6 @@
 package com.ddd.app.mypage.dto;
 
-public class mypageLogDTO {
+public class MypageLogDTO {
 	private int logNumber;
 	private int userNumber;
 	private String userNickname;

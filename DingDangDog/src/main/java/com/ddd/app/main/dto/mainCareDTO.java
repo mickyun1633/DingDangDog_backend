@@ -26,8 +26,7 @@ public class mainCareDTO {
 	}
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return super.toString();
+		return "mainCareDTO [careNumber=" + careNumber + ", careTitle=" + careTitle + ", careDate=" + careDate + "]";
 	}
 	
 	

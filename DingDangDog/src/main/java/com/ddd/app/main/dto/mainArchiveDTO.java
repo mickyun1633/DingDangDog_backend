@@ -47,10 +47,9 @@ public class mainArchiveDTO {
 	
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return super.toString();
+		return "mainArchiveDTO [dogNumber=" + dogNumber + ", dogName=" + dogName + ", dogBreed=" + dogBreed
+				+ ", dogGender=" + dogGender + ", dogAge=" + dogAge + ", archiveImgPath=" + archiveImgPath + "]";
 	}
-	
 	
 	
 	

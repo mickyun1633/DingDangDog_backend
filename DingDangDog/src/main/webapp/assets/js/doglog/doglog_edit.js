@@ -52,12 +52,25 @@ function init() {
    이벤트 바인딩
 ========================= */
 function bindEvents() {
-  editImg.addEventListener("change", handleImageUpload);
-  existingImageList?.addEventListener("click", handleExistingImageDelete);
-  editContent.addEventListener("input", syncEditorToHidden);
+  if (editImg) {
+    editImg.addEventListener("change", handleImageUpload);
+  }
 
-  btnBackToDetail.addEventListener("click", handleCancel);
-  btnEditSave.addEventListener("click", handleSubmit);
+  if (existingImageList) {
+    existingImageList.addEventListener("click", handleExistingImageDelete);
+  }
+
+  if (editContent) {
+    editContent.addEventListener("input", syncEditorToHidden);
+  }
+
+  if (btnBackToDetail) {
+    btnBackToDetail.addEventListener("click", handleCancel);
+  }
+
+  if (btnEditSave) {
+    btnEditSave.addEventListener("click", handleSubmit);
+  }
 }
 
 /* =========================
@@ -125,6 +138,8 @@ function handleImageUpload(event) {
 
     reader.readAsDataURL(file);
   });
+
+  editImg.value = "";
 }
 
 /* =========================
@@ -136,7 +151,11 @@ function syncPreviewFromExisting() {
     return;
   }
 
-  const firstExistingImage = existingImageList?.querySelector(".existing-image-item img");
+  let firstExistingImage = null;
+
+  if (existingImageList) {
+    firstExistingImage = existingImageList.querySelector(".existing-image-item img");
+  }
 
   if (firstExistingImage) {
     editPreviewImg.src = firstExistingImage.src;

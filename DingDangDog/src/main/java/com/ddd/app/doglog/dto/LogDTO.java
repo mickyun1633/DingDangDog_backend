@@ -1,14 +1,15 @@
 package com.ddd.app.doglog.dto;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 public class LogDTO {
 	private int logNumber;
 	private int userNumber;
 	private String logTitle;
 	private String logPost;
-	private Date logDate;
-	private Date logModifyDate;
+	private LocalDateTime logDate;
+	private LocalDateTime logModifyDate;
+	
 	private String userNickname;
 	private String representativeImgPath;
 	
@@ -17,7 +18,7 @@ public class LogDTO {
 	public LogDTO() {
 	}
 
-	public LogDTO(int logNumber, int userNumber, String logTitle, String logPost, Date logDate, Date logModifyDate,
+	public LogDTO(int logNumber, int userNumber, String logTitle, String logPost, LocalDateTime logDate, LocalDateTime logModifyDate,
 			String userNickname, String representativeImgPath) {
 		this.logNumber = logNumber;
 		this.userNumber = userNumber;
@@ -61,19 +62,19 @@ public class LogDTO {
 		this.logPost = logPost;
 	}
 
-	public Date getLogDate() {
+	public LocalDateTime getLogDate() {
 		return logDate;
 	}
 
-	public void setLogDate(Date logDate) {
+	public void setLogDate(LocalDateTime logDate) {
 		this.logDate = logDate;
 	}
 
-	public Date getLogModifyDate() {
+	public LocalDateTime getLogModifyDate() {
 		return logModifyDate;
 	}
 
-	public void setLogModifyDate(Date logModifyDate) {
+	public void setLogModifyDate(LocalDateTime logModifyDate) {
 		this.logModifyDate = logModifyDate;
 	}
 

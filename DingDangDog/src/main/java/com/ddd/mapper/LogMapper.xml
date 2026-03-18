@@ -195,7 +195,7 @@
 	</update>
 
 	<!-- 댓글 삭제 -->
-	<delete id="deleteCommentsByLogNumber" parameterType="LogCommentDTO">
+	<delete id="deleteComment" parameterType="LogCommentDTO">
 		DELETE FROM ddd_log_comment
 		WHERE comment_number = #{commentNumber}
 		  AND user_number = #{userNumber}

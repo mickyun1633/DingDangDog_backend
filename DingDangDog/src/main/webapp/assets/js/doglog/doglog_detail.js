@@ -13,74 +13,120 @@ const btnBackToList = document.getElementById("btnBackToList");
 const btnDetailEdit = document.getElementById("btnDetailEdit");
 const btnDetailDelete = document.getElementById("btnDetailDelete");
 
+const commentForm = document.getElementById("commentForm");
+const commentNumberInput = document.getElementById("commentNumber");
+const logNumberInput = document.getElementById("logNumber");
+const commentCancelWrap = document.getElementById("commentCancelWrap");
+const btnCommentCancel = document.getElementById("btnCommentCancel");
+
 /* =========================
    초기 실행
 ========================= */
 bindEvents();
 
 /* =========================
-   이벤트
+   이벤트 등록
 ========================= */
 function bindEvents() {
-  btnCommentWrite?.addEventListener("click", handleCommentWrite);
-  btnDetailDelete?.addEventListener("click", handlePostDelete);
-  commentList?.addEventListener("click", handleCommentAction);
+  bindCommentWriteForm();
+  bindCommentEdit();
+  bindPostDelete();
+  bindCommentCancelButton();
 }
 
 /* =========================
-   댓글 작성
+   댓글 작성 / 수정
+   - form submit 기준으로 검사
 ========================= */
-function handleCommentWrite(event) {
-  const commentForm = btnCommentWrite?.closest("form");
-  if (!commentForm) return;
+function bindCommentWriteForm() {
+  if (!commentForm || !commentWriteInput) return;
 
-  const commentText = commentWriteInput?.value.trim();
+  commentForm.addEventListener("submit", function (event) {
+    const commentText = commentWriteInput.value.trim();
 
-  if (!commentText) {
-    event.preventDefault();
-    alert("댓글 내용을 입력해주세요.");
-    commentWriteInput?.focus();
-    return;
-  }
-
-  // 정상 입력이면 form submit 진행
+    if (!commentText) {
+      event.preventDefault();
+      alert("댓글 내용을 입력해주세요.");
+      commentWriteInput.focus();
+      return;
+    }
+  });
 }
 
 /* =========================
-   댓글 삭제
-   - 댓글 삭제 버튼/링크에 data-action="delete-comment" 속성이 있어야 동작
+   댓글 수정
+   - 수정 버튼 클릭 시 기존 댓글 내용을 입력창에 세팅
+   - form action을 editOk로 변경
 ========================= */
-function handleCommentAction(event) {
-  const deleteTarget = event.target.closest('[data-action="delete-comment"]');
-  if (!deleteTarget) return;
+function bindCommentEdit() {
+  if (!commentList || !commentForm || !commentWriteInput || !btnCommentWrite || !commentNumberInput) return;
 
-  const isConfirmed = confirm("댓글을 삭제하시겠습니까?");
-  if (!isConfirmed) {
-    event.preventDefault();
+  commentList.addEventListener("click", function (event) {
+    const editTarget = event.target.closest('[data-action="edit-comment"]');
+    if (!editTarget) return;
+
+    const commentNumber = editTarget.dataset.commentNumber;
+    if (!commentNumber) return;
+
+    const commentContainer = editTarget.closest(".detail-comment-container");
+    if (!commentContainer) return;
+
+    const commentContent = commentContainer.querySelector(".comment-post-content");
+    const commentPost = commentContent ? commentContent.textContent.trim() : "";
+
+    commentWriteInput.value = commentPost;
+    commentNumberInput.value = commentNumber;
+    commentForm.action = contextPath + "/comment/editOk.lo";
+    btnCommentWrite.textContent = "댓글 수정";
+
+    if (commentCancelWrap) {
+      commentCancelWrap.style.display = "block";
+    }
+
+    commentWriteInput.focus();
+  });
+}
+
+/* =========================
+   댓글 수정 취소
+========================= */
+function bindCommentCancelButton() {
+  if (!btnCommentCancel || !commentForm || !commentWriteInput || !btnCommentWrite || !commentNumberInput) return;
+
+  btnCommentCancel.addEventListener("click", function () {
+    resetCommentForm();
+  });
+}
+
+function resetCommentForm() {
+  commentWriteInput.value = "";
+  commentNumberInput.value = "";
+  commentForm.action = contextPath + "/comment/writeOk.lo";
+  btnCommentWrite.textContent = "댓글 작성";
+
+  if (commentCancelWrap) {
+    commentCancelWrap.style.display = "none";
   }
 }
 
 /* =========================
    게시글 삭제
-   - 삭제 버튼에 data-delete-url이 있으면 그 주소로 이동
-   - 아니면 a 태그 href 사용
 ========================= */
-function handlePostDelete(event) {
-  const isConfirmed = confirm("게시글을 삭제하시겠습니까?");
-  if (!isConfirmed) {
-    event.preventDefault();
-    return;
-  }
+function bindPostDelete() {
+  if (!btnDetailDelete) return;
 
-  const deleteUrl = btnDetailDelete?.dataset.deleteUrl;
+  btnDetailDelete.addEventListener("click", function (event) {
+    const isConfirmed = confirm("게시글을 삭제하시겠습니까?");
+    if (!isConfirmed) {
+      event.preventDefault();
+      return;
+    }
 
-  if (deleteUrl) {
+    const deleteUrl = btnDetailDelete.dataset.deleteUrl;
+    if (!deleteUrl) return;
+
     location.href = deleteUrl;
-    return;
-  }
-
-  // a 태그가 아니라 button이면 기본동작이 없으므로
-  // data-delete-url이 없는 경우는 따로 이동 안 함
+  });
 }
 
 /* =========================
@@ -88,9 +134,9 @@ function handlePostDelete(event) {
 ========================= */
 function escapeHtml(value) {
   return String(value)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#39;");
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
 }
