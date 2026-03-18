@@ -63,16 +63,25 @@ public class MypageFrontController extends HttpServlet {
 			result.setRedirect(false);
 			System.out.println("비밀번호 검사 페이지 이동");
 			break;
+			
+		case "/mypage/checkPwOk.mp":
+			System.out.println("비밀번호 검사 요청");
+			result = new CheckPasswordController().execute(request, response);
+			System.out.println("비밀번호 검사 처리 완료");
+			break;
+			
 		case "/mypage/myLog.mp":
 			System.out.println("내가 작성한 멍!로그 페이지 이동 요청");
 			result = new MypageLogListController().execute(request, response);
 			System.out.println("내가 작성한 멍!로그 페이지 이동 완료");
 			break;
-//		case "/mypage/profileEditC.mp":
-//			System.out.println("마이페이지 정보수정 페이지 이동 요청");
-//			result = new ProfileCEditController().execute(request, response);
-//			System.out.println("마이페이지 정보수정 페이지 이동 완료");
-//			break;
+
+
+		case "/mypage/profileEditC.mp":
+			System.out.println("마이페이지 정보수정 페이지 이동 요청");
+			result = new ProfileCEditController().execute(request, response);
+			System.out.println("마이페이지 정보수정 페이지 이동 완료");
+			break;
 		}
 
 		if (result != null && result.getPath() != null) {

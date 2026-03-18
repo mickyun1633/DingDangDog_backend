@@ -10,8 +10,6 @@ public class MypageLogDTO {
 	private String logModifyDate;
 	private String representativeImgPath;
 
-	public MypageLogDTO() {
-	}
 
 	public int getLogNumber() {
 		return logNumber;
@@ -79,8 +77,14 @@ public class MypageLogDTO {
 
 	@Override
 	public String toString() {
+<<<<<<< HEAD
 		return "MypageLogDTO [logNumber=" + logNumber + ", userNumber=" + userNumber + ", userNickname="
 				+ userNickname + ", logTitle=" + logTitle + ", logPost=" + logPost + ", logDate=" + logDate
 				+ ", logModifyDate=" + logModifyDate + ", representativeImgPath=" + representativeImgPath + "]";
+=======
+		return "MypageLogDTO [logNumber=" + logNumber + ", userNumber=" + userNumber + ", userNickname=" + userNickname
+				+ ", logTitle=" + logTitle + ", logPost=" + logPost + ", logDate=" + logDate + ", logModifyDate="
+				+ logModifyDate + ", representativeImgPath=" + representativeImgPath + "]";
+>>>>>>> 2ba57aaf7d13c837996f73de1a10d70c2341122d
 	}
 }
