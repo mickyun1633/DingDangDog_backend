@@ -53,12 +53,12 @@
 			alias="AdminCareDTO" />
 		<typeAlias type="com.ddd.app.admin.dto.AdminLogDTO"
 			alias="AdminLogDTO" />
-		<typeAlias type="com.ddd.app.inquiry.dto.InquiryListDTO"
+		<!-- <typeAlias type="com.ddd.app.inquiry.dto.InquiryListDTO"
 			alias="InquiryListDTO" />
 		<typeAlias type="com.ddd.app.inquiry.dto.InquiryDetailDTO"
 			alias="InquiryDetailDTO" />
 		<typeAlias type="com.ddd.app.inquiry.dto.InquiryWritingDTO"
-			alias="InquiryWritingDTO" />
+			alias="InquiryWritingDTO" /> -->
 		<typeAlias type="com.ddd.app.mypage.dto.mypageCcareDTO"
 			alias="mypageCcareDTO" />
 		<typeAlias type="com.ddd.app.mypage.dto.mypageScareDTO"
@@ -67,8 +67,8 @@
 			alias="MyPageDogMatchingDTO" />
 		<typeAlias type="com.ddd.app.mypage.dto.MypageSInfoDTO"
 			alias="MypageSDTO" />
-		<typeAlias type="com.ddd.app.mypage.dto.mypageLogDTO"
-			alias="LogDTO" />
+		<typeAlias type="com.ddd.app.mypage.dto.MypageLogDTO"
+			alias="MypageLogDTO" />
 		<typeAlias type="com.ddd.app.main.dto.mainCareDTO"
 			alias="mainCareDTO" />
 		<typeAlias type="com.ddd.app.main.dto.mainArchiveDTO"
@@ -94,17 +94,17 @@
 	<mappers>
 		<mapper resource="com/ddd/mapper/UserMapper.xml" />
 		<mapper resource="com/ddd/mapper/LogMapper.xml" />
-		<mapper resource="com/ddd/mapper/MatchingMapper.xml" />
+		<!-- <mapper resource="com/ddd/mapper/MatchingMapper.xml" /> -->
 		<mapper resource="com/ddd/mapper/AdminArchiveMapper.xml" />
 		<mapper resource="com/ddd/mapper/AdminLogMapper.xml" />
 		<mapper resource="com/ddd/mapper/AdminCareMapper.xml" />
-		<mapper resource="com/ddd/mapper/MypageSCareMapper.xml" />
+		<!-- <mapper resource="com/ddd/mapper/MypageSCareMapper.xml" /> -->
 		<mapper resource="com/ddd/mapper/MypageCCareMapper.xml" />
-		<mapper resource="com/ddd/mapper/MypageMatchingResultMapper.xml" />
+		<!-- <mapper resource="com/ddd/mapper/MypageMatchingResultMapper.xml" /> -->
 		<mapper resource="com/ddd/mapper/MypageCInfoMapper.xml" />
 		<mapper resource="com/ddd/mapper/MypageSInfoMapper.xml" />
 		<mapper resource="com/ddd/mapper/MypageLogMapper.xml" />
-		<mapper resource="com/ddd/mapper/InquiryMapper.xml" />
+		<!-- <mapper resource="com/ddd/mapper/InquiryMapper.xml" /> -->
 		<mapper resource="com/ddd/mapper/mainMapper.xml" />
 		<mapper resource="com/ddd/mapper/ReportMapper.xml" />
 	</mappers>
