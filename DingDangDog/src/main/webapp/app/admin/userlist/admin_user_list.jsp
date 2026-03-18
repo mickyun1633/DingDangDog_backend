@@ -16,7 +16,7 @@
 	<!-- 전체화면 -->
 	<main class="admin-main-container">
 		<!-- 사이드바 -->
-		<aside class="admin-sidebar"></aside>
+		<%@ include file="/app/admin/admin_sidebar.jsp" %>
 		<!-- 메인 화면 -->
 		<section class="admin-main-section">
 			<!-- 페이지 상단 (제목, 버튼) -->
@@ -33,7 +33,6 @@
 			<div class="admin-main-content admin-box-shadow">
 				<!-- 테이블등 정보 -->
 				<c:choose>
-					<!-- 일반회원 -->
 					<c:when test="${userType == 'C'}">
 						<div class="admin-list-header">
 							<div class="user-number">회원번호</div>
@@ -45,22 +44,19 @@
 						</div>
 
 						<c:forEach var="user" items="${userList}">
-							<div class="admin-list-row">
+							<a
+								href="${pageContext.request.contextPath}/admin/userCDetailOk.ad?userNumber=${user.userNumber}"
+								class="admin-list-row">
 								<div class="user-number">${user.userNumber}</div>
-								<div class="user-id">
-									<a
-										href="${pageContext.request.contextPath}/admin/userDetailOk.ad?userNumber=${user.userNumber}&userType=C">
-										${user.userId} </a>
-								</div>
+								<div class="user-id">${user.userId}</div>
 								<div class="user-name">${user.userName}</div>
 								<div class="user-nickname">${user.userNickname}</div>
 								<div class="user-phone">${user.userPhone}</div>
 								<div class="user-email">${user.userEmail}</div>
-							</div>
+							</a>
 						</c:forEach>
 					</c:when>
 
-					<!-- 보호소회원   -->
 					<c:when test="${userType == 'S'}">
 						<div class="admin-list-header">
 							<div class="user-number">회원번호</div>
@@ -72,23 +68,20 @@
 						</div>
 
 						<c:forEach var="user" items="${userList}">
-							<div class="admin-list-row">
+							<a
+								href="${pageContext.request.contextPath}/admin/userSDetailOk.ad?userNumber=${user.userNumber}"
+								class="admin-list-row">
 								<div class="user-number">${user.userNumber}</div>
-								<div class="user-id">
-									<a
-										href="${pageContext.request.contextPath}/admin/userDetailOk.ad?userNumber=${user.userNumber}&userType=S">
-										${user.userId} </a>
-								</div>
+								<div class="user-id">${user.userId}</div>
 								<div class="user-shelter-name">${user.shelterName}</div>
 								<div class="user-phone">${user.userPhone}</div>
-								<div class="user-email">${user.userEmail}</div>
-								<c:if test="${user.shelterCertification == 'N'}">
+								<div class="user-email">${user.userEmail}</div> <c:if
+									test="${user.shelterCertification == 'N'}">
 									<div class="user-confirm-check confirm-wait">인증대기</div>
-								</c:if>
-								<c:if test="${user.shelterCertification == 'Y'}">
+								</c:if> <c:if test="${user.shelterCertification == 'Y'}">
 									<div class="user-confirm-check">인증완료</div>
 								</c:if>
-							</div>
+							</a>
 						</c:forEach>
 					</c:when>
 				</c:choose>
@@ -97,17 +90,28 @@
 
 			<!-- 페이지 하단 (검색, 페이지네이션) -->
 			<div class="admin-main-section-footer">
-				<div class="search-box">
-					<select class="search-select admin-box-shadow">
-						<option>아이디</option>
-						<option>닉네임</option>
-					</select> <input type="text" class="search-input admin-box-shadow" />
-					<button class="btn-search admin-box-shadow">검색</button>
-				</div>
+				<form
+					action="${pageContext.request.contextPath}/admin/userListOk.ad"
+					method="get">
+
+					<input type="hidden" name="userType" value="${userType}">
+
+					<div class="search-box">
+						<select name="searchType" class="search-select admin-box-shadow">
+							<option value="id" ${searchType == 'id' ? 'selected' : ''}>아이디</option>
+							<option value="nickname"
+								${searchType == 'nickname' ? 'selected' : ''}>닉네임</option>
+						</select> <input type="text" name="keyword"
+							class="search-input admin-box-shadow" value="${keyword}" />
+
+
+						<button type="submit" class="btn-search admin-box-shadow">검색</button>
+					</div>
+				</form>
 
 				<!-- 페이지네이션 -->
 				<!-- 페이지네이션 정리 -->
-
+				<!-- 
 				<div class="pagination">
 					<ul class="page-list">
 						<li>
@@ -135,6 +139,51 @@
 								<span>&gt;</span>
 							</button>
 						</li>
+					</ul>
+				</div> -->
+
+				<div class="pagination">
+					<ul class="page-list">
+
+						<c:if test="${prev}">
+							<li>
+								<button class="prev-btn"
+									onclick="location.href='${pageContext.request.contextPath}/admin/userListOk.ad?page=${startPage - 1}&userType=${userType}'">
+									<span>&lt;</span>
+								</button>
+							</li>
+						</c:if>
+
+						<c:set var="realStartPage"
+							value="${startPage < 0 ? 0 : startPage}" />
+						<c:forEach var="i" begin="${realStartPage}" end="${endPage}">
+							<c:choose>
+								<c:when test="${!(i == page)}">
+									<li>
+										<button class="page-item"
+											onclick="location.href='${pageContext.request.contextPath}/admin/userListOk.ad?page=${i}&userType=${userType}'">
+											<c:out value="${i}" />
+										</button>
+									</li>
+								</c:when>
+								<c:otherwise>
+									<li>
+										<button class="page-item current-page">
+											<c:out value="${i}" />
+										</button>
+									</li>
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
+
+						<c:if test="${next}">
+							<li>
+								<button class="next-btn"
+									onclick="location.href='${pageContext.request.contextPath}/admin/userListOk.ad?page=${endPage + 1}&userType=${userType}'">
+									<span>&gt;</span>
+								</button>
+							</li>
+						</c:if>
 					</ul>
 				</div>
 

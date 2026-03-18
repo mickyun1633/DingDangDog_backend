@@ -1,57 +1,92 @@
 .admin-main-content {
-  background-color: white;
-  border-radius: 5px;
+	background-color: white;
+	border-radius: 5px;
 }
 
-.admin-list-row,
-.admin-list-header {
-  display: grid;
-  grid-template-columns: 120px 1fr 250px 300px 300px 300px;
-  padding-left: 10px;
-  line-height: 35px;
-  text-align: center;
+.admin-list-row, .admin-list-header {
+	/* 	display: grid;
+	grid-template-columns: 120px 1fr 250px 300px 300px 300px; */
+	display: flex;
+	padding-left: 10px;
+	line-height: 35px;
+	text-align: center;
+	padding-left: 10px;
 }
 
 .admin-list-header {
-  height: 40px;
-  font-weight: bold;
+	height: 40px;
+	font-weight: bold;
 }
 
 .admin-list-row {
-  border-top: 1px solid #f0f0f0;
-  height: 35px;
+	border-top: 1px solid #f0f0f0;
+	height: 35px;
+	color: black;
+}
+
+.user-number {
+	flex: 0.5;
+}
+
+.user-id {
+	flex: 1.2;
+}
+
+.user-name {
+	flex: 1;
+}
+
+.user-nickname {
+	flex: 1.2;
+}
+
+.user-phone {
+	flex: 1;
+}
+
+.user-email {
+	flex: 1.5;
+}
+
+.user-shelter-name {
+	flex: 2;
+}
+
+.user-confirm-check {
+	flex: 1;
 }
 
 .admin-main-section-header {
-  height: auto;
-  padding-bottom: 20px;
+	height: auto;
+	padding-bottom: 20px;
 }
 
 .section-header-btns {
-  display: flex;
+	display: flex;
+	font-family: "HannaPro";
+}
 
-  font-family: "HannaPro";
-}
 .section-header-btns button:first-child {
-  margin-right: 10px;
+	margin-right: 10px;
 }
+
 .section-header-btns button {
-  cursor: pointer;
-  background-color: white;
-  color: #f47c2a;
-  border: 1px solid #f47c2a;
-  font-size: 14px;
-  border-radius: 5px;
-  width: 75px;
-  height: 35px;
+	cursor: pointer;
+	background-color: white;
+	color: #f47c2a;
+	border: 1px solid #f47c2a;
+	font-size: 14px;
+	border-radius: 5px;
+	width: 75px;
+	height: 35px;
 }
 
 .section-header-btns button.selected {
-  background-color: #f47c2a;
-  color: white;
+	background-color: #f47c2a;
+	color: white;
 }
 
 .confirm-wait {
-  color: red;
-  font-weight: bold;
+	color: red;
+	font-weight: bold;
 }
