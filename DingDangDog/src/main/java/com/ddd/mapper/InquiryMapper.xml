@@ -1,69 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="inquiry">
-
-	<!-- 문의글 삭제 --> <!-- 미완 
+	<!-- 문의글 삭제 -->
 	<delete id="delete" parameterType="InquiryDetailDTO">
-		DELETE FROM tbl_board
-		WHERE board_number = #{boardNumber}
+		DELETE FROM DDD_INQUIRY
+		WHERE INQUIRY_NUMBER = #{inquiryNumber}
+		AND USER_NUMBER = #{userNumber}
 	</delete>
-	-->
-	
-	<!-- 전체 문의글 조회  --> 
-	<select id="selectAll" resultType="InquiryListDTO">
+
+	<!-- 전체 게시글 조회 -->
+	<!-- <select id="selectAll" resultType="BoardListDTO"> <![CDATA[ SELECT 
+		* FROM ( SELECT ROWNUM AS rnum, subquery.* FROM ( SELECT m.member_number, 
+		m.member_id, b.board_number, b.board_title, b.board_content, b.board_date, 
+		b.board_read_count FROM tbl_member m JOIN tbl_board b ON m.member_number 
+		= b.member_number ORDER BY b.board_date DESC ) subquery ) WHERE rnum BETWEEN 
+		#{startRow} AND #{endRow} ]]> </select> -->
+	<!-- 전체 문의글 조회 -->
+	<select id="selectAll" parameterType="Map"
+		resultType="InquiryListDTO">
 		SELECT
-		    CASE
-		        WHEN ANSWER_STATUS = 'Y' THEN '문의 완료'
-		        WHEN ANSWER_STATUS = 'N' THEN '문의중'
-		    END AS ANSWER_STATUS_TEXT,
-		    INQUIRY_NUMBER,
-		    INQUIRY_TITLE,
-		    TO_CHAR(INQUIRY_DATE, 'YYYY-MM-DD') AS INQUIRY_DATE,
-		    USER_NUMBER
+		ANSWER_STATUS,
+		INQUIRY_NUMBER,
+		INQUIRY_TITLE,
+		TO_CHAR(INQUIRY_DATE, 'YYYY-MM-DD') AS INQUIRY_DATE,
+		USER_NUMBER
 		FROM DDD_INQUIRY
 		WHERE USER_NUMBER = #{userNumber}
-		ORDER BY INQUIRY_NUMBER DESC
+		ORDER BY
+		INQUIRY_NUMBER DESC
 	</select>
 
 
 	<!-- 상세 문의글 조회 -->
-	<select id="select" resultType="InquiryDetailDTO">
+	<select id="select" parameterType="InquiryDetailDTO "
+		resultType="InquiryDetailDTO">
 		SELECT
-		    INQUIRY_NUMBER,
-		    INQUIRY_TITLE,
-		    TO_CHAR(INQUIRY_DATE, 'YYYY.MM.DD') AS INQUIRY_DATE,
-		    INQUIRY_POST,
-		    ANSWER_STATUS,
-		    TO_CHAR(ANSWER_DATE, 'YYYY.MM.DD') AS ANSWER_DATE,
-		    ANSWER_POST
+		INQUIRY_NUMBER,
+		INQUIRY_TITLE,
+		TO_CHAR(INQUIRY_DATE, 'YYYY.MM.DD') AS INQUIRY_DATE,
+		INQUIRY_POST,
+		TO_CHAR(ANSWER_DATE, 'YYYY.MM.DD') AS ANSWER_DATE,
+		ANSWER_POST
 		FROM DDD_INQUIRY
 		WHERE INQUIRY_NUMBER = #{inquiryNumber}
-		  AND USER_NUMBER = #{userNumber}
+		AND USER_NUMBER = #{userNumber}
 	</select>
-	
+
 	<!-- 문의글 작성 -->
 	<insert id="insert" parameterType="InquiryWritingDTO">
 		INSERT INTO DDD_INQUIRY (
-		    INQUIRY_NUMBER,
-		    USER_NUMBER,
-		    INQUIRY_TITLE,
-		    INQUIRY_POST,
-		    INQUIRY_DATE,
-		    ANSWER_STATUS
+		INQUIRY_NUMBER,
+		USER_NUMBER,
+		INQUIRY_TITLE,
+		INQUIRY_POST,
+		INQUIRY_DATE,
+		ANSWER_STATUS
 		) VALUES (
-		   SEQ_INQUIRY.NEXTVAL,
-       	   #{userNumber},
-           #{inquiryTitle},
-           #{inquiryPost},
-           SYSDATE,
-           'N'
+		SEQ_INQUIRY.NEXTVAL,
+		#{userNumber},
+		#{inquiryTitle},
+		#{inquiryPost},
+		SYSDATE,
+		'N'
 		)
 	</insert>
-	
+
 	<!-- 총 개수 조회 -->
-	<select id="getTotal" resultType="int">
+
+	<select id="getTotal" parameterType="userNumber"
+		resultType="int">
 		SELECT COUNT(*)
 		FROM DDD_INQUIRY
+		WHERE USER_NUMBER = #{userNumber}
+
 	</select>
+
 </mapper>
 	

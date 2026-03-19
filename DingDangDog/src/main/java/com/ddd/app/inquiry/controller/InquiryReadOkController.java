@@ -1,0 +1,21 @@
+package com.ddd.app.inquiry.controller;
+
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.ddd.app.Execute;
+import com.ddd.app.Result;
+
+public class InquiryReadOkController implements Execute {
+
+	@Override
+	public Result execute(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}
