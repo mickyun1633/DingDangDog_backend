@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	const nicknameCheckBtn = document.getElementById("nickname-check-btn");
 	const nicknameSuccess = document.getElementById("nickname-success");
 	const nicknameError = document.getElementById("nickname-error");
-	let isNicknameChecked = false;
+	let isNicknameChecked = true;
 
 	nicknameInput.addEventListener("input", function() {
 		isNicknameChecked = false;
@@ -133,25 +133,26 @@ document.addEventListener("DOMContentLoaded", function() {
 
 	/*탈퇴처리*/
 	const withdrawSubmitBtn = document.getElementById("withdraw-submit-btn");
-
-	withdrawSubmitBtn.addEventListener("click", () => {
-		if (withdrawConfirmInput.value === "네 탈퇴하겠습니다") {
-			location.href = `${base}/mypage/withdrawOk.mp`;
-		} else {
-			alert("탈퇴 문구를 정확히 입력해주세요.");
-		}
-	});
+	if (withdrawSubmitBtn) {
+		withdrawSubmitBtn.addEventListener("click", () => {
+			if (withdrawConfirmInput.value === "네 탈퇴하겠습니다") {
+				location.href = `${base}/mypage/withdrawOk.mp`;
+			} else {
+				alert("탈퇴 문구를 정확히 입력해주세요.");
+			}
+		});
+	}
 
 
 	completeBtn.addEventListener("click", function(e) {
 
 		if (isPasswordValid && isPasswordMatch && isNicknameChecked) {
 			if (confirm("회원 정보를 수정하시겠습니까?")) {
-				editForm.submit(); 
+				editForm.submit();
 			}
 		} else {
 			alert("입력 항목을 다시 확인해주세요.");
-			e.preventDefault(); 
+			e.preventDefault();
 		}
 	});
 
