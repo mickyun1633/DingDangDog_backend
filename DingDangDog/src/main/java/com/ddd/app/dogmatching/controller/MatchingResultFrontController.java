@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.ddd.app.Result;
 
-public class MatchingFrontController extends HttpServlet {
+public class MatchingResultFrontController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -53,7 +53,7 @@ public class MatchingFrontController extends HttpServlet {
 
 		// ===== 매칭 리스트 =====
 		case "/matching/list.matching": // 내 매칭 기록 목록 조회
-			result = new MatchingListController().execute(request, response);
+			result = new MatchingResultListController().execute(request, response);
 			break;
 		}
 

@@ -14,7 +14,7 @@ import com.ddd.app.Result;
 import com.ddd.app.dogmatching.dao.MatchingResultDAO;
 import com.ddd.app.dogmatching.dto.MatchingResultDTO;
 
-public class MatchingListController implements Execute {
+public class MatchingResultListController implements Execute {
 
 	@Override
 	public Result execute(HttpServletRequest request, HttpServletResponse response)
