@@ -1,6 +1,7 @@
 package com.ddd.app.admin.dto;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class AdminCareDTO {
 
@@ -8,111 +9,101 @@ public class AdminCareDTO {
 	private int userNumber;
 	private String careTitle;
 	private String carePost;
-	private Date careDate;
+	private LocalDateTime careDate;
 	private int careRecruit;
-	private Date careWriteDate;
+	private LocalDateTime careWriteDate;
 	private String careStatus;
 	private String userNickname;
 	private String userName;
 	private String userPhone;
 	private int applyNumber;
-
+	
 	public int getCareNumber() {
 		return careNumber;
 	}
-
 	public void setCareNumber(int careNumber) {
 		this.careNumber = careNumber;
 	}
-
 	public int getUserNumber() {
 		return userNumber;
 	}
-
 	public void setUserNumber(int userNumber) {
 		this.userNumber = userNumber;
 	}
-
 	public String getCareTitle() {
 		return careTitle;
 	}
-
 	public void setCareTitle(String careTitle) {
 		this.careTitle = careTitle;
 	}
-
 	public String getCarePost() {
 		return carePost;
 	}
-
 	public void setCarePost(String carePost) {
 		this.carePost = carePost;
 	}
-
-	public Date getCareDate() {
+	public LocalDateTime getCareDate() {
 		return careDate;
 	}
-
-	public void setCareDate(Date careDate) {
+	public void setCareDate(LocalDateTime careDate) {
 		this.careDate = careDate;
 	}
-
 	public int getCareRecruit() {
 		return careRecruit;
 	}
-
 	public void setCareRecruit(int careRecruit) {
 		this.careRecruit = careRecruit;
 	}
-
-	public Date getCareWriteDate() {
+	public LocalDateTime getCareWriteDate() {
 		return careWriteDate;
 	}
-
-	public void setCareWriteDate(Date careWriteDate) {
+	public void setCareWriteDate(LocalDateTime careWriteDate) {
 		this.careWriteDate = careWriteDate;
 	}
-
 	public String getCareStatus() {
 		return careStatus;
 	}
-
 	public void setCareStatus(String careStatus) {
 		this.careStatus = careStatus;
 	}
-
 	public String getUserNickname() {
 		return userNickname;
 	}
-
 	public void setUserNickname(String userNickname) {
 		this.userNickname = userNickname;
 	}
-
 	public String getUserName() {
 		return userName;
 	}
-
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-
 	public String getUserPhone() {
 		return userPhone;
 	}
-
 	public void setUserPhone(String userPhone) {
 		this.userPhone = userPhone;
 	}
-
 	public int getApplyNumber() {
 		return applyNumber;
 	}
-
 	public void setApplyNumber(int applyNumber) {
 		this.applyNumber = applyNumber;
 	}
+	
+	private static final DateTimeFormatter DATE_FORMAT =
+            DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    
+    public String getCareDateStr() {
+        if (careDate == null) return "";
+        return careDate.format(DATE_FORMAT);
+    }
 
+    public String getCareWriteDateStr() {
+        if (careWriteDate == null) return "";
+        return careWriteDate.format(DATE_FORMAT);
+    }
+	
 	@Override
 	public String toString() {
 		return "AdminCareDTO [careNumber=" + careNumber + ", userNumber=" + userNumber + ", careTitle=" + careTitle

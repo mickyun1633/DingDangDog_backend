@@ -1,6 +1,7 @@
 package com.ddd.app.mypage.dto;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class MypageCcareDTO {
 //	-- 멍케어 신청목록 조회
@@ -22,7 +23,7 @@ public class MypageCcareDTO {
 	
 	private int applyNumber;
 	private int careNumber;
-	private Date careDate;
+	private LocalDateTime careDate;
 	private String shelterName;
 	private int userNumber;
 	
@@ -38,10 +39,10 @@ public class MypageCcareDTO {
 	public void setCareNumber(int careNumber) {
 		this.careNumber = careNumber;
 	}
-	public Date getCareDate() {
+	public LocalDateTime getCareDate() {
 		return careDate;
 	}
-	public void setCareDate(Date careDate) {
+	public void setCareDate(LocalDateTime careDate) {
 		this.careDate = careDate;
 	}
 	public String getShelterName() {
@@ -57,9 +58,17 @@ public class MypageCcareDTO {
 		this.userNumber = userNumber;
 	}
 	
+	private static final DateTimeFormatter DATE_FORMAT =
+            DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    
+    public String getCareDateStr() {
+        if (careDate == null) return "";
+        return careDate.format(DATE_FORMAT);
+    }
+	
 	@Override
 	public String toString() {
-		return "mypageCcareDTO [applyNumber=" + applyNumber + ", careNumber=" + careNumber + ", careDate=" + careDate
+		return "MypageCcareDTO [applyNumber=" + applyNumber + ", careNumber=" + careNumber + ", careDate=" + careDate
 				+ ", shelterName=" + shelterName + ", userNumber=" + userNumber + "]";
 	}
 	
