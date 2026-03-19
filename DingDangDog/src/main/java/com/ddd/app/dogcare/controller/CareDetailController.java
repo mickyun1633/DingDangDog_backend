@@ -1,6 +1,7 @@
 package com.ddd.app.dogcare.controller;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +21,7 @@ public class CareDetailController implements Execute{
 		
 		CareDAO careDAO = new CareDAO();
 		Result result = new Result();
+		CareDetailDTO careDetailDTO = new CareDetailDTO();
 		
 		int careNumber = Integer.parseInt(request.getParameter("careNumber"));
 		
@@ -29,6 +31,13 @@ public class CareDetailController implements Execute{
 		
 		CareDetailDTO care = careDAO.selectCare(careNumber);
 
+		String careDateStr = request.getParameter("careDate");
+
+		if (careDateStr != null && !careDateStr.isEmpty()) {
+		    LocalDateTime careDate = LocalDateTime.parse(careDateStr + "T00:00:00");
+		    careDetailDTO.setCareDate(careDate);
+		}
+		
 		// 신청현황 따로 조회
 		String applyStatus = careDAO.getApplyStatus(careNumber);
 		// care 객체에 넣기
