@@ -1,41 +1,41 @@
 package com.ddd.app.main.controller;
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * Servlet implementation class mainController
- */
-@WebServlet("/mainController")
-public class mainController extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public mainController() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+import com.ddd.app.Execute;
+import com.ddd.app.Result;
+import com.ddd.app.main.dao.mainDAO;
+import com.ddd.app.main.dto.mainArchiveDTO;
+import com.ddd.app.main.dto.mainCareDTO;
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+public class mainController implements Execute {
+
+	@Override
+	public Result execute(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		System.out.println("메인페이지 이동");
+
+		mainDAO dao = new mainDAO();
+
+		List<mainArchiveDTO> archiveList = dao.selectMainArchiveList();
+		List<mainCareDTO> careList = dao.selectMainCareList();
+
+		System.out.println("archiveList 개수 : " + archiveList.size());
+		System.out.println("careList 개수 : " + careList.size());
+
+		request.setAttribute("archiveList", archiveList);
+		request.setAttribute("careList", careList);
+
+		Result result = new Result();
+		result.setPath("/app/main.jsp");
+		result.setRedirect(false);
+
+		return result;
 	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
-
 }

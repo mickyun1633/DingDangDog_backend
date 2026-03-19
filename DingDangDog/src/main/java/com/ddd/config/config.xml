@@ -53,14 +53,14 @@
 			alias="AdminCareDTO" />
 		<typeAlias type="com.ddd.app.admin.dto.AdminLogDTO"
 			alias="AdminLogDTO" />
-		<typeAlias type="com.ddd.app.inquiry.dto.InquiryListDTO"
+		<!-- <typeAlias type="com.ddd.app.inquiry.dto.InquiryListDTO"
 			alias="InquiryListDTO" />
 		<typeAlias type="com.ddd.app.inquiry.dto.InquiryDetailDTO"
 			alias="InquiryDetailDTO" />
 		<typeAlias type="com.ddd.app.inquiry.dto.InquiryWritingDTO"
 			alias="InquiryWritingDTO" />
 		<typeAlias type="com.ddd.app.mypage.dto.MypageCcareDTO"
-			alias="MypageCcareDTO" />
+			alias="MypageCcareDTO" />  -->
 		<typeAlias type="com.ddd.app.mypage.dto.MypageScareDTO"
 			alias="MypageScareDTO" />
 		<typeAlias type="com.ddd.app.mypage.dto.MyPageDogMatchingDTO"
@@ -94,17 +94,17 @@
 	<mappers>
 		<mapper resource="com/ddd/mapper/UserMapper.xml" />
 		<mapper resource="com/ddd/mapper/LogMapper.xml" />
-		<mapper resource="com/ddd/mapper/MatchingMapper.xml" />
+		<!-- <mapper resource="com/ddd/mapper/MatchingMapper.xml" /> -->
 		<mapper resource="com/ddd/mapper/AdminArchiveMapper.xml" />
 		<mapper resource="com/ddd/mapper/AdminLogMapper.xml" />
 		<mapper resource="com/ddd/mapper/AdminCareMapper.xml" />
-		<mapper resource="com/ddd/mapper/MypageSCareMapper.xml" />
-		<mapper resource="com/ddd/mapper/MypageCCareMapper.xml" />
-		<mapper resource="com/ddd/mapper/MypageMatchingResultMapper.xml" />
+		<!-- <mapper resource="com/ddd/mapper/MypageSCareMapper.xml" /> -->
+		<!-- <mapper resource="com/ddd/mapper/MypageCCareMapper.xml" /> -->
+		<!-- <mapper resource="com/ddd/mapper/MypageMatchingResultMapper.xml" /> -->
 		<mapper resource="com/ddd/mapper/MypageCInfoMapper.xml" />
 		<mapper resource="com/ddd/mapper/MypageSInfoMapper.xml" />
 		<mapper resource="com/ddd/mapper/MypageLogMapper.xml" />
-		<mapper resource="com/ddd/mapper/InquiryMapper.xml" />
+		<!-- <mapper resource="com/ddd/mapper/InquiryMapper.xml" /> -->
 		<mapper resource="com/ddd/mapper/mainMapper.xml" />
 		<mapper resource="com/ddd/mapper/ReportMapper.xml" />
 	</mappers>

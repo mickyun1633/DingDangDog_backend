@@ -10,10 +10,20 @@
   <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/doglog/doglog_write.css" />
   <script defer src="${pageContext.request.contextPath}/assets/js/doglog/doglog_write.js"></script>
   <title>멍! 로그 작성</title>
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/header.css" />
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/footer.css" />
 </head>
-
-<body>
-  <div id="header-container"></div>
+	
+	<body>
+		<!-- 유저 번호 확인 존재시 로그인 헤더 -->
+		<c:choose>
+		  <c:when test="${not empty sessionScope.userNumber}">
+		    <jsp:include page="/app/header_login.jsp" />
+		  </c:when>
+		  <c:otherwise>
+		    <jsp:include page="/app/header_logout.jsp" />
+		  </c:otherwise>
+		</c:choose>
 
   <main class="doglog-write">
     <div class="container">
@@ -82,7 +92,7 @@
 
   <div id="footer-container"></div>
 
-  <script src="${pageContext.request.contextPath}/assets/js/header-footer.js"></script>
+  <jsp:include page="/app/footer.jsp" />
 </body>
 
 </html>

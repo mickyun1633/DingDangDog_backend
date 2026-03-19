@@ -10,11 +10,20 @@
   <title>멍! 로그 전체목록</title>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/doglog/doglog_list.css">
   <script defer src="${pageContext.request.contextPath}/assets/js/doglog/doglog_list.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/header.css" />
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/footer.css" />
 </head>
 
 <body>
-  <div id="header-container"></div>
-
+	<!-- 유저 번호 확인 존재시 로그인 헤더 -->
+	<c:choose>
+	  <c:when test="${not empty sessionScope.userNumber}">
+	    <jsp:include page="/app/header_login.jsp" />
+	  </c:when>
+	  <c:otherwise>
+	    <jsp:include page="/app/header_logout.jsp" />
+	  </c:otherwise>
+	</c:choose>
   <main>
     <div class="doglog-main-container">
       <div class="main-container-header">
@@ -132,6 +141,6 @@
 
   <div id="footer-container"></div>
 
-  <script src="${pageContext.request.contextPath}/assets/js/header-footer.js"></script>
+  <jsp:include page="/app/footer.jsp" />
 </body>
 </html>

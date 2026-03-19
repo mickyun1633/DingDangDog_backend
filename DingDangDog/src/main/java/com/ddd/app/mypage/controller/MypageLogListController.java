@@ -17,25 +17,44 @@ public class MypageLogListController implements Execute {
 
 	@Override
 	public Result execute(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	        throws ServletException, IOException {
 
-		System.out.println("내가 작성한 멍! 로그 목록");
+	    System.out.println("내가 작성한 멍! 로그 목록");
 
-		HttpSession session = request.getSession();
-		Integer userNumber = (Integer) session.getAttribute("userNumber");
+	    
+	    HttpSession session = request.getSession();
+	    session.setAttribute("userNumber",10001);
+	    session.setAttribute("userType","C");
+	    Integer userNumber = (Integer) session.getAttribute("userNumber");
+	    String loginUserType = (String) session.getAttribute("userType");
 
-		Result result = new Result();
+	    Result result = new Result();
 
-		MypageLogDAO logDAO = new MypageLogDAO();
-		List<MypageLogDTO> logList = logDAO.selectMyLogs(userNumber);
 
-		System.out.println("로그인 userNumber : " + userNumber);
-		System.out.println("조회된 logList 개수 : " + logList.size());
+	    if (userNumber == null || loginUserType == null) {
+	        System.out.println("비로그인 사용자 접근");
+	        result.setPath(request.getContextPath() + "/login.me");
+	        result.setRedirect(true);
+	        return result;
+	    }
 
-		request.setAttribute("logList", logList);
 
-		result.setPath("/app/mypage/common/review_list.jsp");
-		result.setRedirect(false);
-		return result;
+	    if (!"C".equals(loginUserType)) {
+	        System.out.println("보호소 회원 접근 차단");
+	        result.setPath(request.getContextPath() + "/index.jsp");
+	        result.setRedirect(true);
+	        return result;
+	    }
+
+	    MypageLogDAO logDAO = new MypageLogDAO();
+	    List<MypageLogDTO> logList = logDAO.selectMyLogs(userNumber);
+
+	    System.out.println("조회된 logList 개수 : " + logList.size());
+
+	    request.setAttribute("logList", logList);
+
+	    result.setPath("/app/mypage/common/review_list.jsp");
+	    result.setRedirect(false);
+	    return result;
 	}
 }

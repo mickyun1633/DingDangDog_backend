@@ -10,6 +10,7 @@ public class MypageLogDTO {
 	private String logModifyDate;
 	private String representativeImgPath;
 
+
 	public int getLogNumber() {
 		return logNumber;
 	}
@@ -79,5 +80,6 @@ public class MypageLogDTO {
 		return "MypageLogDTO [logNumber=" + logNumber + ", userNumber=" + userNumber + ", userNickname="
 				+ userNickname + ", logTitle=" + logTitle + ", logPost=" + logPost + ", logDate=" + logDate
 				+ ", logModifyDate=" + logModifyDate + ", representativeImgPath=" + representativeImgPath + "]";
+
 	}
 }

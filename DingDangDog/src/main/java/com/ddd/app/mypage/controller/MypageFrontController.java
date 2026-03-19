@@ -63,15 +63,49 @@ public class MypageFrontController extends HttpServlet {
 			result.setRedirect(false);
 			System.out.println("비밀번호 검사 페이지 이동");
 			break;
+			
 		case "/mypage/checkPwOk.mp":
 			System.out.println("비밀번호 검사 요청");
 			result = new CheckPasswordController().execute(request, response);
 			System.out.println("비밀번호 검사 처리 완료");
 			break;
+			
+		case "/mypage/myLog.mp":
+			System.out.println("내가 작성한 멍!로그 페이지 이동 요청");
+			result = new MypageLogListController().execute(request, response);
+			System.out.println("내가 작성한 멍!로그 페이지 이동 완료");
+			break;
+
+
 		case "/mypage/profileEditC.mp":
-			System.out.println("마이페이지 정보수정 페이지 이동 요청");
+			System.out.println("일반회원 마이페이지 정보수정 페이지 이동 요청");
 			result = new ProfileCEditController().execute(request, response);
-			System.out.println("마이페이지 정보수정 페이지 이동 완료");
+			System.out.println("일반회원 마이페이지 정보수정 페이지 이동 완료");
+			break;
+		case "/mypage/profileEditCOk.mp":
+			System.out.println("일반회원 마이페이지 정보수정 처리 요청");
+			result = new ProfileCEditOkController().execute(request, response);
+			System.out.println("일반회원 마이페이지 정보수정 처리 완료");
+			break;
+		case "/mypage/profileEditS.mp":
+			System.out.println("보호소회원 마이페이지 정보수정 페이지 이동 요청");
+			result = new ProfileSEditController().execute(request, response);
+			System.out.println("보호소회원 마이페이지 정보수정 페이지 이동 완료");
+			break;
+		case "/mypage/profileEditSOk.mp":
+			System.out.println("보호소회원 마이페이지 정보수정 처리 요청");
+			result = new ProfileSEditOkController().execute(request, response);
+			System.out.println("보호소회원 마이페이지 정보수정 처리 완료");
+			break;
+		case "/mypage/checkNickNameOk.mp":
+			System.out.println("닉네임 중복체크 요청");
+			result = new CheckNicknameOkController().execute(request, response);
+			System.out.println("닉네임 중복체크 처리 완료");
+			break;
+		case "/mypage/withdrawOk.mp":
+			System.out.println("마이페이지 탈퇴처리 요청");
+			result = new WithdrawOkController().execute(request, response);
+			System.out.println("마이페이지 탈퇴처리 완료");
 			break;
 		}
 

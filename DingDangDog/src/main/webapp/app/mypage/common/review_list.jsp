@@ -1,3 +1,7 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -5,24 +9,35 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>내가 작성한 멍! 로그 목록</title>
-  <link rel="stylesheet" href="./../../../assets/css/mypage/common/review_list.css" />
-  <script defer src="./../../../assets/js/mypage/common/review_list.js"></script>
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/mypage/common/review_list.css" />
+  <script defer src="${pageContext.request.contextPath}/assets/js/mypage/common/review_list.js"></script>
+  	<!--헤더 푸터용 css  -->
+  	<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/header.css" />
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/footer.css" />
 </head>
 
 <body>
-  <!-- header -->
-  <div id="header-container"></div>
+	<!-- 유저 번호 확인 존재시 로그인 헤더 -->
+	<c:choose>
+	  <c:when test="${not empty sessionScope.userNumber}">
+	    <jsp:include page="/app/header_login.jsp" />
+	  </c:when>
+	  <c:otherwise>
+	    <jsp:include page="/app/header_logout.jsp" />
+	  </c:otherwise>
+	</c:choose>
+
   <main class="review-list">
     <div class="container">
       <aside class="sidebar">
         <nav class="side-menu">
-          <a class="btn-side-link" href="./profile_edit_common.html">내 정보 변경</a>
+          <a class="btn-side-link" href="${pageContext.request.contextPath}/mypage/profileEdit.my">내 정보 변경</a>
           <hr>
-          <a class="btn-side-link" href="./volunteer_status_list_common.html">멍! 케어 신청 확인</a>
+          <a class="btn-side-link" href="${pageContext.request.contextPath}/mypage/volunteerStatus.my">멍! 케어 신청 확인</a>
           <hr>
-          <a class="btn-side-link" href="./review_list.html">내가 작성한 멍! 로그 목록</a>
+          <a class="btn-side-link" href="${pageContext.request.contextPath}/mypage/reviewList.my">내가 작성한 멍! 로그 목록</a>
           <hr>
-          <a class="btn-side-link" href="./support_list_common.html">1 : 1 문의</a>
+          <a class="btn-side-link" href="${pageContext.request.contextPath}/mypage/supportList.my">1 : 1 문의</a>
         </nav>
       </aside>
 
@@ -55,10 +70,25 @@
       </section>
     </div>
   </main>
-  <!-- footer -->
-  <div id="footer-container"></div>
-  <!-- js -->
-  <script src="/assets/js/header-footer.js"></script>
-</body>
 
+
+  <!-- 서버 데이터 -->
+  <script>
+    const contextPath = "${pageContext.request.contextPath}";
+    const reviewData = [
+      <c:forEach var="log" items="${logList}" varStatus="status">
+        {
+          id: ${empty log.logNumber ? 0 : log.logNumber},
+          title: "<c:out value='${log.logTitle}'/>",
+          date: "<c:out value='${log.logDate}'/>"
+        }<c:if test="${!status.last}">,</c:if>
+      </c:forEach>
+    ];
+  </script>
+
+  
+
+	<!-- 푸터 jsp 적용  -->
+	<jsp:include page="/app/footer.jsp" />
+</body>
 </html>
