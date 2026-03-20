@@ -5,6 +5,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.ddd.app.Result;
 
@@ -50,6 +51,13 @@ public class AdminFrontController extends HttpServlet {
 		System.out.println("현재경로 : " + target);
 
 		Result result = null;
+		
+//		HttpSession session = request.getSession();
+//
+//		// 테스트용 관리자 세션 강제 주입
+//		session.setAttribute("adminNumber", 1);
+//		session.setAttribute("adminId", "admin1");
+//		session.setAttribute("userType", "A");
 
 		switch (target) {
 		case "/admin/adminLogin.ad":
@@ -103,14 +111,41 @@ public class AdminFrontController extends HttpServlet {
 			System.out.println("멍! 케어 페이지 요청");
 			result = new AdminCareListOkController().execute(request, response);
 			System.out.println("명! 케어 페이지 이동");
+			break;
 		case "/admin/adminCareDetailOk.ad":
 			System.out.println("멍! 케어 상세페이지 요청");
 			result = new AdminCareDetailOkController().execute(request, response);
 			System.out.println("멍! 케어 상세페이지 이동");
+			break;
 		case "/admin/adminCareDeleteOk.ad":
 			System.out.println("멍! 케어 상세페이지 삭제 요청");
 			result = new AdminCareDeleteOkController().execute(request, response);
 			System.out.println("멍! 케어 상세페이지 삭제 완료");
+			break;
+			
+		case "/admin/adminLogListOk.ad":
+			System.out.println("멍! 로그 목록 요청");
+			result = new AdminLogListOkController().execute(request, response);
+			System.out.println("멍! 로그 목록 이동");
+			break;
+
+		case "/admin/adminLogDetailOk.ad":
+			System.out.println("멍! 로그 상세 요청");
+			result = new AdminLogDetailOkController().execute(request, response);
+			System.out.println("멍! 로그 상세 이동");
+			break;
+
+		case "/admin/adminLogDeleteOk.ad":
+			System.out.println("멍! 로그 삭제 요청");
+			result = new AdminLogDeleteOkController().execute(request, response);
+			System.out.println("멍! 로그 삭제 완료");
+			break;
+
+		case "/admin/adminLogCommentDeleteOk.ad":
+			System.out.println("멍! 로그 댓글 삭제 요청");
+			result = new AdminLogCommentDeleteOkController().execute(request, response);
+			System.out.println("멍! 로그 댓글 삭제 완료");
+			break;
 			
 		}
 
