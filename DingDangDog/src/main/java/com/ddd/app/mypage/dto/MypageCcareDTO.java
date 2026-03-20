@@ -39,8 +39,10 @@ public class MypageCcareDTO {
 	public void setCareNumber(int careNumber) {
 		this.careNumber = careNumber;
 	}
-	public LocalDateTime getCareDate() {
-		return careDate;
+	public String getCareDate() {
+		if (careDate == null)
+			return "";
+		return careDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 	}
 	public void setCareDate(LocalDateTime careDate) {
 		this.careDate = careDate;
@@ -57,14 +59,6 @@ public class MypageCcareDTO {
 	public void setUserNumber(int userNumber) {
 		this.userNumber = userNumber;
 	}
-	
-	private static final DateTimeFormatter DATE_FORMAT =
-            DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    
-    public String getCareDateStr() {
-        if (careDate == null) return "";
-        return careDate.format(DATE_FORMAT);
-    }
 	
 	@Override
 	public String toString() {

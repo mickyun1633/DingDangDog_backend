@@ -4,7 +4,7 @@
 <mapper namespace="mypageCcare">
 
     <!-- 멍케어 신청 목록 조회 -->
-    <select id="selectApplyList" parameterType="int" resultType="com.ddd.app.mypage.dto.mypageCcareDTO">
+    <select id="selectApplyList" parameterType="int" resultType="com.ddd.app.mypage.dto.MypageCcareDTO">
         SELECT
             CA.APPLY_NUMBER AS applyNumber,
             C.CARE_NUMBER AS careNumber,

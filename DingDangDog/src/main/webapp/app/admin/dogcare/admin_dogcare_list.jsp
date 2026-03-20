@@ -66,20 +66,23 @@
 			<div class="admin-main-section-footer">
 
 				<!-- 검색 -->
-				<form method="get" action="${pageContext.request.contextPath}/admin/adminCareListOk.ad">
+				<form method="get"
+					action="${pageContext.request.contextPath}/admin/adminCareListOk.ad">
 					<div class="search-box">
-
+						<!-- 검색 유형을 선택하는 드롭다운 -->
 						<select name="type" class="search-select admin-box-shadow">
-							<option value="nickname">닉네임</option>
-							<option value="title">제목</option>
-						</select> <input type="text" name="keyword"
-							class="search-input admin-box-shadow" />
-
+							<option value="nickname"
+								${param.type == 'nickname' ? 'selected' : ''}>닉네임</option>
+							<option value="title" ${param.type == 'title' ? 'selected' : ''}>제목</option>
+						</select>
+						<!-- 검색어 입력 필드 -->
+						<input type="text" name="keyword"
+							class="search-input admin-box-shadow" value="${param.keyword}"
+							placeholder="검색어를 입력하세요" />
 						<button type="submit" class="btn-search admin-box-shadow">검색</button>
-
 					</div>
 				</form>
-				
+
 				<!-- 페이지네이션 -->
 				<div class="pagination">
 					<ul class="page-list">
