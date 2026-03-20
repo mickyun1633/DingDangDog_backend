@@ -31,7 +31,7 @@
 			</div>
 
 			<!-- 리스트 영역 -->
-			<div class="admin-main-content">
+			<div class="admin-main-content admin-box-shadow">
 
 				<!-- 헤더 -->
 				<div class="admin-dogcare-list-header">
@@ -66,20 +66,23 @@
 			<div class="admin-main-section-footer">
 
 				<!-- 검색 -->
-				<form method="get" action="/admin/dogcare/list.do">
+				<form method="get"
+					action="${pageContext.request.contextPath}/admin/adminCareListOk.ad">
 					<div class="search-box">
-
+						<!-- 검색 유형을 선택하는 드롭다운 -->
 						<select name="type" class="search-select admin-box-shadow">
-							<option value="nickname">닉네임</option>
-							<option value="title">제목</option>
-						</select> <input type="text" name="keyword"
-							class="search-input admin-box-shadow" />
-
+							<option value="nickname"
+								${param.type == 'nickname' ? 'selected' : ''}>닉네임</option>
+							<option value="title" ${param.type == 'title' ? 'selected' : ''}>제목</option>
+						</select>
+						<!-- 검색어 입력 필드 -->
+						<input type="text" name="keyword"
+							class="search-input admin-box-shadow" value="${param.keyword}"
+							placeholder="검색어를 입력하세요" />
 						<button type="submit" class="btn-search admin-box-shadow">검색</button>
-
 					</div>
 				</form>
-				
+
 				<!-- 페이지네이션 -->
 				<div class="pagination">
 					<ul class="page-list">
@@ -87,7 +90,7 @@
 						<!-- 이전 버튼 -->
 						<c:if test="${prev}">
 							<li><a
-								href="${pageContext.request.contextPath}/admin/adminCareListOk?page=${startPage - 1}&type=${type}&keyword=${keyword}">
+								href="${pageContext.request.contextPath}/admin/adminCareListOk.ad?page=${startPage - 1}&type=${type}&keyword=${keyword}">
 									<button class="prev-btn">&lt;</button>
 							</a></li>
 						</c:if>
@@ -95,7 +98,7 @@
 						<!-- 페이지 번호 -->
 						<c:forEach var="i" begin="${startPage}" end="${endPage}">
 							<li><a
-								href="${pageContext.request.contextPath}/admin/adminCareListOk?page=${i}&type=${type}&keyword=${keyword}">
+								href="${pageContext.request.contextPath}/admin/adminCareListOk.ad?page=${i}&type=${type}&keyword=${keyword}">
 									<button class="page-item ${i == page ? 'current-page' : ''}">
 										${i}</button>
 							</a></li>
@@ -104,7 +107,7 @@
 						<!-- 다음 버튼 -->
 						<c:if test="${next}">
 							<li><a
-								href="${pageContext.request.contextPath}/admin/adminCareListOk?page=${endPage + 1}&type=${type}&keyword=${keyword}">
+								href="${pageContext.request.contextPath}/admin/adminCareListOk.ad?page=${endPage + 1}&type=${type}&keyword=${keyword}">
 									<button class="next-btn">&gt;</button>
 							</a></li>
 						</c:if>

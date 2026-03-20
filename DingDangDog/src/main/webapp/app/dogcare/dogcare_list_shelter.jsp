@@ -76,32 +76,35 @@
                 <!-- 페이지네이션 -->
                 <div class="main-container-footer">
                     <div class="pagination">
-                        <ul class="page-list">
-                            <!-- 이전 버튼 -->
-                            <c:if test="${prev}">
-                                <li>
-                                    <button class="prev-btn" onclick="location.href='${pageContext.request.contextPath}/care/list.ca?page=${startpage - 1}&keyword=${keyword}'">&lt;</button>
-                                </li>
-                            </c:if>
+					<ul class="page-list">
 
-                            <!-- 페이지 번호 출력 -->
-                            <c:forEach var="i" begin="${startpage}" end="${endpage}">
-                                <li>
-                                    <button class="page-item <c:if test='${i == page}'>current-page</c:if>"
-                                        onclick="location.href='${pageContext.request.contextPath}/care/list.ca?page=${i}&keyword=${keyword}'">
-                                        ${i}
-                                    </button>
-                                </li>
-                            </c:forEach>
+						<!-- 이전 버튼 -->
+						<c:if test="${prev}">
+							<li><a
+								href="${pageContext.request.contextPath}/care/list.ca?page=${startPage - 1}&type=${type}&keyword=${keyword}">
+									<button class="prev-btn">&lt;</button>
+							</a></li>
+						</c:if>
 
-                            <!-- 다음 버튼 -->
-                            <c:if test="${next}">
-                                <li>
-                                    <button class="next-btn" onclick="location.href='${pageContext.request.contextPath}/care/list.ca?page=${endpage + 1}&keyword=${keyword}'">&gt;</button>
-                                </li>
-                            </c:if>
-                        </ul>
-                    </div>
+						<!-- 페이지 번호 -->
+						<c:forEach var="i" begin="${startPage}" end="${endPage}">
+							<li><a
+								href="${pageContext.request.contextPath}/care/list.ca?page=${i}&type=${type}&keyword=${keyword}">
+									<button class="page-item ${i == page ? 'current-page' : ''}">
+										${i}</button>
+							</a></li>
+						</c:forEach>
+
+						<!-- 다음 버튼 -->
+						<c:if test="${next}">
+							<li><a
+								href="${pageContext.request.contextPath}/care/list.ca?page=${endPage + 1}&type=${type}&keyword=${keyword}">
+									<button class="next-btn">&gt;</button>
+							</a></li>
+						</c:if>
+
+					</ul>
+				</div>
 
                     <!-- 봉사 등록 버튼 -->
                     <div>

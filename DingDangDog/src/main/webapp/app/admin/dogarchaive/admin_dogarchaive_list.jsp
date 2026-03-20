@@ -24,7 +24,7 @@
         <div class="admin-title">멍! 카이브 리스트</div>
       </div>
       <!-- 페이지 컨텐츠 -->
-      <div class="admin-main-content">
+      <div class="admin-main-content admin-box-shadow">
         <!-- 테이블등 정보 -->
         <div class="admin-dogarchaive-list-header">
           <div class="dogarchaive-number">등록 번호</div>

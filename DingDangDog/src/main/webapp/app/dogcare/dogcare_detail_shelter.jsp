@@ -86,7 +86,7 @@
 
 	<!-- 신고 모달창 -->
 	<!-- 신청자 목록을 세션 값에 따라 표시 -->
-	<c:if test="${sessionScope.userNumber != null}">
+	<c:if test="${sessionScope.userNumber != null && sessionScope.userNumber == careList.userNumber}">
 		<div id="applyModal" class="modal">
 
 			<div class="modal-content">

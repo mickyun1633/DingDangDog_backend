@@ -26,7 +26,7 @@ public class CareDAO {
 	}
 
 	// 멍! 케어 목록 조회
-	public List<CareListDTO> selectCareList(Map<String, Object> pageMap) {
+	public List<CareListDTO> selectCareList(Map<String, Integer> pageMap) {
 		System.out.println("멍! 케어 목록 조회 실행 : " + pageMap);
 		List<CareListDTO> list = sqlSession.selectList("care.selectCareList", pageMap);
 		System.out.println("조회된 멍! 케어 게시글 수 : " + list);

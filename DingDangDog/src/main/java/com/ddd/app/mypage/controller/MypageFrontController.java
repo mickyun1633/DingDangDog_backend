@@ -111,6 +111,16 @@ public class MypageFrontController extends HttpServlet {
 			result = new profileSFileOKController().execute(request, response);
 			System.out.println("마이페이지 파일 업로드 처리 완료");
 			break; 
+		case "/mypage/applyCareList.mp":
+			System.out.println("일반회원 내가 신청한 멍! 케어 목록 페이지 이동 요청");
+			result = new ApplyCareListController().execute(request, response);
+			System.out.println("일반회원 내가 신청한 멍! 케어 목록 페이지 이동 완료");
+			break;
+		case "/mypage/writeCareList.mp":
+			System.out.println("일반회원 내가 신청한 멍! 케어 목록 페이지 이동 요청");
+			result = new WriteCareListController().execute(request, response);
+			System.out.println("일반회원 내가 신청한 멍! 케어 목록 페이지 이동 완료");
+			break;
 		}
 
 		if (result != null && result.getPath() != null) {

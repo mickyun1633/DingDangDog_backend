@@ -1,29 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="care">
-	<!-- 전체 멍! 케어 -->
+	<!-- 전체 멍! 케어 수 조회 -->
 	<select id="getTotal" resultType="int">
-		SELECT COUNT(care_number)
-		FROM
-		ddd_care
+    select count(*) from
+    ddd_care
 	</select>
 
 	<!-- 멍! 케어 전체 목록 조회 -->
-	<select id="selectCareList" resultType="CareListDTO">
-		SELECT c.care_number, c.care_title, c.care_date, u.user_nickname,
-		c.care_write_date
-		FROM DDD_CARE c
-		JOIN ddd_user u ON c.user_number =
-		u.user_number
-		WHERE c.care_status IN ('open','close')
-		<if test="keyword != null and keyword != ''">
-			AND (
-			c.care_title LIKE '%' || #{keyword} || '%'
-			OR
-			u.user_nickname LIKE '%' || #{keyword} || '%'
-			)
-		</if>
-		ORDER BY c.care_date DESC
+	<select id="selectCareList" parameterType="map"
+		resultType="CareListDTO">
+		<![CDATA[
+		select * from (
+			select rownum as rnum, subquery.*
+			from (
+		SELECT c.care_number, c.care_title, c.care_date,
+		u.user_nickname, c.care_write_date
+		FROM ddd_care c
+		JOIN ddd_user u
+		ON
+		c.user_number = u.user_number
+		WHERE c.care_status = 'open'
+		ORDER BY
+		c.care_date ASC
+		)subquery
+		)where rnum between #{startRow} and #{endRow}	]]>
 	</select>
 
 
@@ -78,7 +79,8 @@
 	<!-- 멍! 케어 삭제 (soft delete) -->
 	<update id="deleteCare" parameterType="int">
 		UPDATE DDD_CARE
-		SET care_status = 'deleted'
+		SET
+		care_status = 'deleted'
 		WHERE care_number = #{careNumber}
 	</update>
 

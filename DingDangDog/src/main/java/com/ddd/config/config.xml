@@ -103,7 +103,7 @@
 		<mapper resource="com/ddd/mapper/AdminLogMapper.xml" />
 		<mapper resource="com/ddd/mapper/AdminCareMapper.xml" />
 		<mapper resource="com/ddd/mapper/MypageSCareMapper.xml" />
-		<!-- <mapper resource="com/ddd/mapper/MypageCCareMapper.xml" /> -->
+		<mapper resource="com/ddd/mapper/MypageCCareMapper.xml" />
 		<mapper
 			resource="com/ddd/mapper/MypageMatchingResultMapper.xml" />
 		<mapper resource="com/ddd/mapper/MypageCInfoMapper.xml" />
