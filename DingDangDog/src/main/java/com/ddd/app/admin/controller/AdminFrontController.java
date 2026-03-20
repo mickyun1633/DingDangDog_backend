@@ -52,12 +52,12 @@ public class AdminFrontController extends HttpServlet {
 
 		Result result = null;
 		
-//		HttpSession session = request.getSession();
-//
-//		// 테스트용 관리자 세션 강제 주입
-//		session.setAttribute("adminNumber", 1);
-//		session.setAttribute("adminId", "admin1");
-//		session.setAttribute("userType", "A");
+		HttpSession session = request.getSession();
+
+		// 테스트용 관리자 세션 강제 주입
+		session.setAttribute("adminNumber", 1);
+		session.setAttribute("adminId", "admin1");
+		session.setAttribute("userType", "A");
 
 		switch (target) {
 		case "/admin/adminLogin.ad":
@@ -157,6 +157,12 @@ public class AdminFrontController extends HttpServlet {
 			System.out.println("멍! 카이브 리스트 요청");
 			result = new AdminArchiveListOkController().execute(request, response);
 			System.out.println("멍! 카이브 리스트 완료");
+			break;
+			
+		case "/admin/archiveSearch.ad":
+			System.out.println("관리자 멍! 카이브 검색 요청");
+			result = new AdminArchiveSearchOkController().execute(request, response);
+			System.out.println("관리자 멍! 카이브 검색 완료");
 			break;
 			
 		case "/admin/adminArchiveDeleteOk.ad":

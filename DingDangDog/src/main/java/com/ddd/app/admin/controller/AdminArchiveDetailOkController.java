@@ -27,7 +27,7 @@ public class AdminArchiveDetailOkController implements Execute {
 		request.setAttribute("archive", archive);
 
 		Result result = new Result();
-		result.setPath("/app/admin/archive/admin_archive_detail.jsp");
+		result.setPath("/app/admin/dogarchive/admin_dogarchive_detail.jsp");
 		result.setRedirect(false);
 		return result;
 	}

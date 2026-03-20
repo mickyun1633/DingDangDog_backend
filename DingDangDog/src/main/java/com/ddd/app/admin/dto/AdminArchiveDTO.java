@@ -46,6 +46,7 @@ public class AdminArchiveDTO {
 	private int archiveImgNumber;
 	private String archiveImgName;
 	private String archiveImgPath;
+	private String shelterName;
 
 	public int getDogNumber() {
 		return dogNumber;
@@ -161,6 +162,14 @@ public class AdminArchiveDTO {
 	public void setArchiveImgPath(String archiveImgPath) {
 		this.archiveImgPath = archiveImgPath;
 	}
+	
+	public String getShelterName() {
+		return shelterName;
+	}
+
+	public void setShelterName(String shelterName) {
+		this.shelterName = shelterName;
+	}
 
 	@Override
 	public String toString() {
@@ -170,6 +179,6 @@ public class AdminArchiveDTO {
 				+ ", archiveModifyDate=" + archiveModifyDate + ", dogDetail=" + dogDetail + ", dogActivity="
 				+ dogActivity + ", dogSociality=" + dogSociality + ", dogIndependence=" + dogIndependence
 				+ ", dogBarking=" + dogBarking + ", dogGrooming=" + dogGrooming + ", archiveImgNumber="
-				+ archiveImgNumber + ", archiveImgName=" + archiveImgName + ", archiveImgPath=" + archiveImgPath + "]";
+				+ archiveImgNumber + ", archiveImgName=" + archiveImgName + ", archiveImgPath=" + archiveImgPath + ", shelterName="+ shelterName + "]";
 	}
 }

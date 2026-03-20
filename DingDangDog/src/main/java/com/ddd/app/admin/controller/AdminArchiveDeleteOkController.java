@@ -22,7 +22,7 @@ public class AdminArchiveDeleteOkController implements Execute{
 		archiveDAO.deleteArchive(dogNumber);
 		
 		Result result = new Result();
-		result.setPath(request.getContextPath() + "/");
+		result.setPath(request.getContextPath() + "/admin/adminArchiveListOk.ad");
 		result.setRedirect(true);
 		return result;
 	}
