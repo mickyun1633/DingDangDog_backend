@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.ddd.app.Execute;
 import com.ddd.app.Result;
 import com.ddd.app.admin.dao.AdminDAO;
+import com.ddd.app.admin.dao.AdminLogDAO;
+import com.ddd.app.admin.dto.AdminLogDTO;
 import com.ddd.app.admin.dto.AdminUserDTO;
 
 public class AdminDashBoardOkController implements Execute {
@@ -20,14 +22,19 @@ public class AdminDashBoardOkController implements Execute {
 
 		System.out.println("===AdminDashBoardOkController 실행===");
 		AdminDAO adminDAO = new AdminDAO();
+		AdminLogDAO adLogDAO = new AdminLogDAO();
 		Result result = new Result();
 
 		List<AdminUserDTO> userList = null;
+		List<AdminLogDTO> logList = null;
 
 		userList = adminDAO.getDashboardUserList();
+		logList = adLogDAO.getDashboardLogList();
 
 		request.setAttribute("userList", userList);
+		request.setAttribute("logList", logList);
 		System.out.println("대시보드 userList : " + userList);
+		System.out.println("대시보드 logList : " + logList);
 
 		result.setPath("/app/admin/dashboard/admin_dashboard.jsp");
 		result.setRedirect(false);

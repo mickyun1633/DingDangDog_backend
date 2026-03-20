@@ -54,41 +54,6 @@
 										</c:if>
 									</div>
 								</c:forEach>
-
-								<!-- <div class="dashboard-list-row userlist">
-									<div class="user-number">50</div>
-									<div class="user-id">Zzang12</div>
-									<div class="user-name">짱구</div>
-									<div class="user-nickname">z123z</div>
-								</div>
-
-								<div class="dashboard-list-row userlist">
-									<div class="user-number">50</div>
-									<div class="user-id">Zzang12</div>
-									<div class="user-name">짱구</div>
-									<div class="user-nickname">z123z</div>
-								</div>
-
-								<div class="dashboard-list-row userlist">
-									<div class="user-number">50</div>
-									<div class="user-id">Zzang12</div>
-									<div class="user-name">짱구</div>
-									<div class="user-nickname">z123z</div>
-								</div>
-
-								<div class="dashboard-list-row userlist">
-									<div class="user-number">50</div>
-									<div class="user-id">Zzang12</div>
-									<div class="user-name">짱구</div>
-									<div class="user-nickname">z123z</div>
-								</div>
-
-								<div class="dashboard-list-row userlist">
-									<div class="user-number">50</div>
-									<div class="user-id">Zzang12</div>
-									<div class="user-name">짱구</div>
-									<div class="user-nickname">z123z</div>
-								</div> -->
 							</div>
 						</article>
 					</li>
@@ -269,7 +234,7 @@
 						<article class="dashboard-box admin-box-shadow">
 							<div class="box-header">
 								<span class="box-title">멍! 로그 목록</span> <a
-									href="${pageContext.request.contextPath}/admin/"
+									href="${pageContext.request.contextPath}/admin/adminLogListOk.ad"
 									class="link-btn">+</a>
 							</div>
 							<div class="box-content">
@@ -280,36 +245,15 @@
 									<div class="doglog-date">작성 날짜</div>
 								</div>
 
-								<div class="dashboard-list-row doglog">
-									<div class="doglog-number">5</div>
-									<div class="doglog-title">저희 강아지 구경하고 가세요!</div>
-									<div class="doglog-nickname">z123z</div>
-									<div class="doglog-date">2026-03-07</div>
-								</div>
-								<div class="dashboard-list-row doglog">
-									<div class="doglog-number">5</div>
-									<div class="doglog-title">저희 강아지 구경하고 가세요!</div>
-									<div class="doglog-nickname">z123z</div>
-									<div class="doglog-date">2026-03-07</div>
-								</div>
-								<div class="dashboard-list-row doglog">
-									<div class="doglog-number">5</div>
-									<div class="doglog-title">저희 강아지 구경하고 가세요!</div>
-									<div class="doglog-nickname">z123z</div>
-									<div class="doglog-date">2026-03-07</div>
-								</div>
-								<div class="dashboard-list-row doglog">
-									<div class="doglog-number">5</div>
-									<div class="doglog-title">저희 강아지 구경하고 가세요!</div>
-									<div class="doglog-nickname">z123z</div>
-									<div class="doglog-date">2026-03-07</div>
-								</div>
-								<div class="dashboard-list-row doglog">
-									<div class="doglog-number">5</div>
-									<div class="doglog-title">저희 강아지 구경하고 가세요!</div>
-									<div class="doglog-nickname">z123z</div>
-									<div class="doglog-date">2026-03-07</div>
-								</div>
+
+								<c:forEach var="log" items="${logList}">
+									<div class="dashboard-list-row doglog">
+										<div class="doglog-number">${log.logNumber }</div>
+										<div class="doglog-title">${log.logTitle }</div>
+										<div class="doglog-nickname">${log.userNickname }</div>
+										<div class="doglog-date">${log.logDate }</div>
+									</div>
+								</c:forEach>
 							</div>
 						</article>
 					</li>

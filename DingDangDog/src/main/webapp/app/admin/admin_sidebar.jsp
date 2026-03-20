@@ -32,7 +32,7 @@
 			</li>
 			<li class="admin-nav-list">
 				<!-- 멍! 로그 목록 페이지로 이동 --> <a
-				href="${pageContext.request.contextPath}/admin/"> 멍! 로그 목록</a>
+				href="${pageContext.request.contextPath}/admin/adminLogListOk.ad"> 멍! 로그 목록</a>
 			</li>
 			<li class="admin-nav-list">
 				<!-- 문의사항 페이지로 이동 --> <a
