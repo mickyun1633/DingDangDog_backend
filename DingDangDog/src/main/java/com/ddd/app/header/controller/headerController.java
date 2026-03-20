@@ -49,10 +49,6 @@ public class headerController extends HttpServlet {
 		System.out.println("현재 경로 : " + target);
 
 		Result result = null;
-		
-		
-		// 테스트용 하드코딩 세션
-//		request.getSession().setAttribute("userNumber", 10001);
 
 		switch (target) {
 		
