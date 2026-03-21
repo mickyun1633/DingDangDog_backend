@@ -19,20 +19,22 @@
 	href="${pageContext.request.contextPath}/assets/css/header.css" />
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/assets/css/footer.css" />
+<script defer
+	src="${pageContext.request.contextPath}/assets/js/dogcare/dogcare_detail_shelter.js"></script>
 
 </head>
 
 <body>
 	<!-- header -->
 	<!-- 유저 번호 확인 존재시 로그인 헤더 -->
-		<c:choose>
-			<c:when test="${not empty sessionScope.userNumber}">
-				<jsp:include page="/app/header_login.jsp" />
-			</c:when>
-			<c:otherwise>
-				<jsp:include page="/app/header_logout.jsp" />
-			</c:otherwise>
-		</c:choose>
+	<c:choose>
+		<c:when test="${not empty sessionScope.userNumber}">
+			<jsp:include page="/app/header_login.jsp" />
+		</c:when>
+		<c:otherwise>
+			<jsp:include page="/app/header_logout.jsp" />
+		</c:otherwise>
+	</c:choose>
 	<main>
 		<div class="dogcare-main-container">
 			<div class="main-container-header">
@@ -57,23 +59,43 @@
 				onclick="location.href='${pageContext.request.contextPath}/care/list.ca'">
 				목록으로</button>
 			<div class="footer-right">
-				<div class="apply-status" id="applyStatusBtn">
-					신청 현황 <span id="applyCount">${care.applyStatus}</span>
-				</div>
-				<!-- 세션 값에 따라 수정/삭제 버튼을 보이거나 숨깁니다. -->
-				<c:if
-					test="${sessionScope.userNumber != null && sessionScope.userNumber == care.userNumber}">
-					<form>
-						<!-- 수정 버튼 -->
-						<button type="button" class="btn-list" id="btn-update"
-							onclick="location.href='${pageContext.request.contextPath}/care/update.ca?careNumber=${care.careNumber}'">
-							수정하기</button>
 
-						<!-- 삭제 버튼 -->
-						<button type="button" class="btn-list" id="deleteBtn"
-							onclick="location.href='${pageContext.request.contextPath}/care/delete.ca?careNumber=${care.careNumber}'">
-							삭제</button>
+				<button type="button" class="apply-status" id="applyStatusBtn">
+					신청 현황 <span id="applyCount">${care.applyStatus}</span>
+				</button>
+
+				<!-- 중복 신청 시 메시지를 alert 창으로 표시 -->
+				<c:if test="${not empty alertMessage}">
+					<script type="text/javascript">
+						alert("${alertMessage}");
+					</script>
+				</c:if>
+
+				<!-- 세션 구분해서 사용자별로 보이는 버튼 다르게 -->
+				<c:if
+					test="${sessionScope.userType == 'C' || sessionScope.userNumber == null}">
+					<form>
+						<button type="button" class="btn-list" id="applyBtn"
+							onclick="location.href='${pageContext.request.contextPath}/care/apply.ca?careNumber=${care.careNumber}'">
+							신청</button>
 					</form>
+				</c:if>
+				<c:if test="${sessionScope.userType == 'S'}">
+					<c:choose>
+						<c:when test="${sessionScope.userNumber == care.userNumber}">
+							<form>
+								<button type="button" class="btn-list" id="updateBtn"
+									onclick="location.href='${pageContext.request.contextPath}/care/update.ca?careNumber=${care.careNumber}'">
+									수정하기</button>
+
+								<button type="button" class="btn-list" id="deleteBtn"
+									onclick="location.href='${pageContext.request.contextPath}/care/delete.ca?careNumber=${care.careNumber}'">
+									삭제</button>
+							</form>
+						</c:when>
+						<c:otherwise>
+						</c:otherwise>
+					</c:choose>
 				</c:if>
 
 			</div>
@@ -82,11 +104,12 @@
 	<!-- footer -->
 	<jsp:include page="/app/footer.jsp" />
 	<!-- js -->
-	<script src="/assets/js/header-footer.js"></script>
-
+	<!-- <script src="/assets/js/header-footer.js"></script>
+ -->
 	<!-- 신고 모달창 -->
 	<!-- 신청자 목록을 세션 값에 따라 표시 -->
-	<c:if test="${sessionScope.userNumber != null && sessionScope.userNumber == careList.userNumber}">
+	<c:if
+		test="${sessionScope.userNumber != null && sessionScope.userNumber == care.userNumber}">
 		<div id="applyModal" class="modal">
 
 			<div class="modal-content">

@@ -7,7 +7,8 @@
 <head>
 <meta charset="UTF-8" />
 <title>멍! 케어 일정 등록</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/dogcare/dogcare_write.css" />
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/assets/css/dogcare/dogcare_write.css" />
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/assets/css/header.css" />
 <link rel="stylesheet"
@@ -16,14 +17,14 @@
 	src="${pageContext.request.contextPath}/assets/js/dogcare/dogcare_write.js"></script>
 </head>
 <!-- 유저 번호 확인 존재시 로그인 헤더 -->
-	<c:choose>
-	  <c:when test="${not empty sessionScope.userNumber}">
-	    <jsp:include page="/app/header_login.jsp" />
-	  </c:when>
-	  <c:otherwise>
-	    <jsp:include page="/app/header_logout.jsp" />
-	  </c:otherwise>
-	</c:choose>
+<c:choose>
+	<c:when test="${not empty sessionScope.userNumber}">
+		<jsp:include page="/app/header_login.jsp" />
+	</c:when>
+	<c:otherwise>
+		<jsp:include page="/app/header_logout.jsp" />
+	</c:otherwise>
+</c:choose>
 <body>
 
 	<main>
@@ -72,6 +73,6 @@
 			</div>
 		</div>
 	</main>
-
+	<jsp:include page="/app/footer.jsp" />
 </body>
 </html>

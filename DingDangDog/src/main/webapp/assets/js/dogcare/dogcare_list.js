@@ -1,8 +1,4 @@
 
-// 봉사 등록
-RegistBtn.addEventListener("click", function(){
-  location.href="./dogcare_write.html";
-});
 
 // 페이지네이션
 document.addEventListener("DOMContentLoaded", function () {

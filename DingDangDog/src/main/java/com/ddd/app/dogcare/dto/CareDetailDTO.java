@@ -24,7 +24,16 @@ public class CareDetailDTO {
 	private int userNumber;
 	private String applyStatus;
 	private String careStatus;
+	private String applyCount;
 	
+
+	public String getApplyCount() {
+		return applyCount;
+	}
+
+	public void setApplyCount(String applyCount) {
+		this.applyCount = applyCount;
+	}
 
 	public String getCareStatus() {
 		return careStatus;
@@ -118,13 +127,15 @@ public class CareDetailDTO {
 		this.userNumber = userNumber;
 	}
 
-
 	@Override
 	public String toString() {
 		return "CareDetailDTO [careNumber=" + careNumber + ", careTitle=" + careTitle + ", carePost=" + carePost
 				+ ", careDate=" + careDate + ", careRecruit=" + careRecruit + ", userNickname=" + userNickname
 				+ ", careWriteDate=" + careWriteDate + ", applyNumber=" + applyNumber + ", userNumber=" + userNumber
-				+ "]";
+				+ ", applyStatus=" + applyStatus + ", careStatus=" + careStatus + ", applyCount=" + applyCount + "]";
 	}
+
+
+	
 
 }

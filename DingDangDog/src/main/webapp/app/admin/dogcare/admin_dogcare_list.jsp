@@ -35,9 +35,9 @@
 
 				<!-- 헤더 -->
 				<div class="admin-dogcare-list-header">
-					<div class="dogcare-number">게시글 번호</div>
+					<div class="dogcare-number">봉사 날짜</div>
 					<div class="dogcare-title">제목</div>
-					<div class="dogcare-id">봉사 날짜</div>
+					<div class="dogcare-id">신청 현황</div>
 					<div class="dogcare-nickname">닉네임</div>
 					<div class="dogcare-date">작성 날짜</div>
 				</div>
@@ -46,7 +46,7 @@
 				<c:forEach var="care" items="${careList}">
 					<div class="admin-dogcare-list-row">
 
-						<div class="dogcare-number">${care.careNumber}</div>
+						<div class="dogcare-number">${care.careDate}</div>
 
 						<div class="dogcare-title">
 							<a
@@ -54,7 +54,7 @@
 								${care.careTitle} </a>
 						</div>
 
-						<div class="dogcare-id">${care.careDate}</div>
+						<div class="dogcare-id">${care.applyStatus}</div>
 						<div class="dogcare-nickname">${care.userNickname}</div>
 						<div class="dogcare-date">${care.careWriteDate}</div>
 

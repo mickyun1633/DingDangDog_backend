@@ -40,7 +40,7 @@ function renderTable(page) {
 
     row.innerHTML = `
       <div class="col-date">${item.date}</div>
-      <div class="col-title"><a href="#">${item.title}</a></div>
+      <div class="col-title"><a href="${pageContext.request.contextPath}/care/detail.ca?careNumber=${care.careNumber}">${item.title}</a></div>
       <div class="col-name">${item.shelter}</div>
       <div class="col-cancel">
         <button class="btn-cancel" data-id="${item.id}">취소</button>

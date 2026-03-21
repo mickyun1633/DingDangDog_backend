@@ -100,9 +100,9 @@
 				<!-- 신청자 리스트 -->
 				<c:forEach var="apply" items="${ApplyList}">
 					<div class="apply-row">
-						<div>${ApplyList.userNickname}</div>
-						<div>${ApplyList.userName}</div>
-						<div>${ApplyList.userPhone}</div>
+						<div>${apply.userNickname}</div>
+						<div>${apply.userName}</div>
+						<div>${apply.userPhone}</div>
 					</div>
 				</c:forEach>
 

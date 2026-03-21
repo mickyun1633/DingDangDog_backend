@@ -9,7 +9,14 @@ public class CareListDTO {
 	private LocalDateTime careDate;
 	private String userNickname;
 	private LocalDateTime careWriteDate;
+	private String applyStatus;
 	
+	public String getApplyStatus() {
+		return applyStatus;
+	}
+	public void setApplyStatus(String applyStatus) {
+		this.applyStatus = applyStatus;
+	}
 	public int getCareNumber() {
 		return careNumber;
 	}
@@ -44,16 +51,14 @@ public class CareListDTO {
 	public void setCareWriteDate(LocalDateTime careWriteDate) {
 		this.careWriteDate = careWriteDate;
 	}
-	
-
-	
-
-	
-	
 	@Override
 	public String toString() {
 		return "CareListDTO [careNumber=" + careNumber + ", careTitle=" + careTitle + ", careDate=" + careDate
-				+ ", userNickname=" + userNickname + ", careWriteDate=" + careWriteDate + "]";
+				+ ", userNickname=" + userNickname + ", careWriteDate=" + careWriteDate + ", applyStatus=" + applyStatus
+				+ "]";
 	}
+	
+
+	
 	
 }

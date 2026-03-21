@@ -1,25 +1,25 @@
-document.addEventListener("DOMContentLoaded", function(){
+document.addEventListener("DOMContentLoaded", function() {
+    const applyBtn = document.getElementById("applyStatusBtn");
+    const modal = document.getElementById("applyModal");
+    const closeBtn = document.getElementById("modalClose");
 
-  const applyBtn = document.getElementById("applyStatusBtn");
-  const modal = document.getElementById("applyModal");
-  const closeBtn = document.getElementById("modalClose");
+    // 신청현황 클릭 시 모달 열기
+    applyBtn.addEventListener("click", function() {
+        modal.style.display = "block"; // 모달 보이기
+    });
 
-  // 신청현황 클릭
-  applyBtn.addEventListener("click", function(){
-    modal.style.display = "block";
-  });
+    // 닫기 버튼 클릭 시 모달 닫기
+    closeBtn.addEventListener("click", function() {
+        modal.style.display = "none"; // 모달 숨기기
+    });
 
-  // 닫기
-  closeBtn.addEventListener("click", function(){
-    modal.style.display = "none";
-  });
+    // 배경 클릭 시 모달 닫기
+    window.addEventListener("click", function(e) {
+        if (e.target === modal) {
+            modal.style.display = "none"; // 배경 클릭 시 모달 닫기
+        }
+    });
 
-  // 배경 클릭 닫기
-  window.addEventListener("click", function(e){
-    if(e.target === modal){
-      modal.style.display = "none";
-    }
-  });
 
   // 기타 선택 시 입력창 활성화
   const reportReasons = document.querySelectorAll(".report-reason");

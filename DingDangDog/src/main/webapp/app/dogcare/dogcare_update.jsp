@@ -8,10 +8,22 @@
 <meta charset="UTF-8" />
 <title>멍! 케어 일정 수정</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/dogcare/dogcare_write.css" />
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/assets/css/header.css" />
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/assets/css/footer.css" />
 </head>
 
 <body>
-
+<!-- 유저 번호 확인 존재시 로그인 헤더 -->
+	<c:choose>
+		<c:when test="${not empty sessionScope.userNumber}">
+			<jsp:include page="/app/header_login.jsp" />
+		</c:when>
+		<c:otherwise>
+			<jsp:include page="/app/header_logout.jsp" />
+		</c:otherwise>
+	</c:choose>
     <main>
         <div class="dogcare-main-container">
             <div class="main-header">
@@ -75,6 +87,6 @@
             </div>
         </div>
     </main>
-
+<jsp:include page="/app/footer.jsp" />
 </body>
 </html>

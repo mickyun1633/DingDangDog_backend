@@ -50,10 +50,7 @@
 									<div class="col-name">보호소 명</div>
 									<div class="col-cancel">신청 취소</div>
 								</div>
-
-								<a href="#">
-									<div id="volunteerTableBody"></div>
-								</a>
+								<div id="volunteerTableBody"></div>
 							</div>
 
 							<div class="panel-footer">

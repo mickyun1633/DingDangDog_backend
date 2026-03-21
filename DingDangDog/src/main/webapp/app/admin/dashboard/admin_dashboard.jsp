@@ -177,7 +177,7 @@
 							<div class="box-header">
 								<span class="box-title">멍! 케어 목록</span> <a
 									href="
-									${pageContext.request.contextPath}/admin/"
+									${pageContext.request.contextPath}/admin/adminCareListOk.ad"
 									class="link-btn">+</a>
 							</div>
 							<div class="box-content">
