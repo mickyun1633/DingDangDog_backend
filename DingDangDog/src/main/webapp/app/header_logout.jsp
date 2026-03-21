@@ -24,7 +24,7 @@
     </nav>
 
     <div class="h-right-menu">
-      <a href="${pageContext.request.contextPath}/member/login.me" class="h-login-link">로그인</a>
+      <a href="${pageContext.request.contextPath}/user/login.us" class="h-login-link">로그인</a>
     </div>
   </div>
 </header>

@@ -11,11 +11,20 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/assets/css/dogarchive/dogarchive_list.css">
 <script defer src="${pageContext.request.contextPath}/assets/js/dogarchive/dogarchive_list.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/header.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/footer.css" />
 </head>
-
+<c:choose>
+        <c:when test="${not empty sessionScope.userNumber}">
+            <jsp:include page="/app/header_login.jsp" />
+        </c:when>
+        <c:otherwise>
+            <jsp:include page="/app/header_logout.jsp" />
+        </c:otherwise>
+    </c:choose>
 <body>
 	<!-- header -->
-	<div id="header-container"></div>
+	<!-- <div id="header-container"></div> -->
 
 	<main>
 		<div class="dogarchive-main-container">

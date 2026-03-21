@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="file">
+
+	<!-- 파일추가 -->
+	<insert id="fileInsert" parameterType="FileDTO">
+		insert into
+		DDD_FILE(file_system_name, file_original_name, USER_NUMBER)
+		values
+		(#{fileSystemName}, #{fileOriginalName}, #{userNumber})
+	</insert>
+
+	<!-- 파일 개수 조회 -->
+	<select id="fileCount" parameterType="int" resultType="int">
+		select
+		count(file_system_name)
+		from ddd_file where USER_NUMBER = #{userNumber}
+	</select>
+
+	<!-- 파일조회 -->
+	<select id="selectFile" parameterType="int" resultType="FileDTO">
+		select
+		file_system_name, file_original_name, USER_NUMBER
+		from DDD_FILE
+		where
+		USER_NUMBER = #{userNumber}
+	</select>
+
+	<!-- 파일삭제 -->
+	<delete id="deleteFile" parameterType="int">
+		delete from ddd_file
+		where
+		USER_NUMBER = #{userNumber}
+	</delete>
+
+
+
+</mapper>

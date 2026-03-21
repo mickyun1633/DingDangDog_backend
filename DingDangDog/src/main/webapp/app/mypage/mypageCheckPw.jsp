@@ -64,7 +64,6 @@
 						</div>
 						<div class="panel-body">
 							<div class="edit-form">
-								<p>현재 로그인 번호: <c:out value="${sessionScope.userNumber}" /></p>
 								<div class="password-check-modal-box">
 
 									<div class="password-check-modal-body">

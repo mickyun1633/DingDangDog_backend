@@ -56,4 +56,11 @@ public class AdminLogDAO {
 	public int deleteComment(int commentNumber) {
 		return sqlSession.delete("adminLog.deleteCommentByAdmin", commentNumber);
 	}
+
+	// 대시보드용 리스트
+	public List<AdminLogDTO> getDashboardLogList() {
+		System.out.println("대시보드용 로그리스트 호출");
+		return sqlSession.selectList("adminLog.getDashboardLogList");
+	}
+
 }

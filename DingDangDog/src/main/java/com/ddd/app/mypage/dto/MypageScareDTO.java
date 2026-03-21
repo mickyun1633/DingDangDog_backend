@@ -38,8 +38,10 @@ public class MypageScareDTO {
 	public void setCareTitle(String careTitle) {
 		this.careTitle = careTitle;
 	}
-	public LocalDateTime getCareDate() {
-		return careDate;
+	public String getCareDate() {
+		if (careDate == null)
+			return "";
+		return careDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 	}
 	public void setCareDate(LocalDateTime careDate) {
 		this.careDate = careDate;
@@ -50,14 +52,6 @@ public class MypageScareDTO {
 	public void setCareRecruit(int careRecruit) {
 		this.careRecruit = careRecruit;
 	}
-	
-	private static final DateTimeFormatter DATE_FORMAT =
-            DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    
-    public String getCareDateStr() {
-        if (careDate == null) return "";
-        return careDate.format(DATE_FORMAT);
-    }
 	
 	@Override
 	public String toString() {

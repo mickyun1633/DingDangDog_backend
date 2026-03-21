@@ -6,28 +6,35 @@
 <mapper namespace="adminLog">
 
 	<!-- 관리자 멍! 로그 목록 -->
-	<select id="selectAdminLogList" resultType="com.ddd.app.admin.dto.AdminLogDTO">
+	<select id="selectAdminLogList"
+		resultType="com.ddd.app.admin.dto.AdminLogDTO">
 		SELECT
-			l.log_number AS logNumber,
-			l.log_title AS logTitle,
-			l.log_date AS logDate,
-			u.user_id AS userId,
-			u.user_nickname AS userNickname
+		l.log_number AS logNumber,
+		l.log_title AS logTitle,
+		l.log_date AS logDate,
+		u.user_id AS userId,
+		u.user_nickname AS
+		userNickname
 		FROM ddd_log l
-		JOIN ddd_user u ON l.user_number = u.user_number
+		JOIN ddd_user u ON l.user_number =
+		u.user_number
 		ORDER BY l.log_date DESC
 	</select>
 
 	<!-- 관리자 멍! 로그 검색 -->
-	<select id="searchAdminLogList" parameterType="map" resultType="com.ddd.app.admin.dto.AdminLogDTO">
+	<select id="searchAdminLogList" parameterType="map"
+		resultType="com.ddd.app.admin.dto.AdminLogDTO">
 		SELECT
-			l.log_number AS logNumber,
-			l.log_title AS logTitle,
-			l.log_date AS logDate,
-			u.user_id AS userId,
-			u.user_nickname AS userNickname
-		FROM ddd_log l
-		JOIN ddd_user u ON l.user_number = u.user_number
+		l.log_number AS logNumber,
+		l.log_title AS logTitle,
+		l.log_date AS
+		logDate,
+		u.user_id AS userId,
+		u.user_nickname AS userNickname
+		FROM
+		ddd_log l
+		JOIN ddd_user u ON l.user_number =
+		u.user_number
 		<where>
 			<if test="keyword != null and keyword != ''">
 				<choose>
@@ -44,62 +51,90 @@
 	</select>
 
 	<!-- 관리자 상세 -->
-	<select id="selectLogDetail" parameterType="int" resultType="com.ddd.app.admin.dto.AdminLogDTO">
+	<select id="selectLogDetail" parameterType="int"
+		resultType="com.ddd.app.admin.dto.AdminLogDTO">
 		SELECT
-			l.log_number AS logNumber,
-			l.user_number AS userNumber,
-			u.user_id AS userId,
-			u.user_nickname AS userNickname,
-			l.log_title AS logTitle,
-			l.log_post AS logPost,
-			l.log_date AS logDate
+		l.log_number AS logNumber,
+		l.user_number AS
+		userNumber,
+		u.user_id AS userId,
+		u.user_nickname AS userNickname,
+		l.log_title AS logTitle,
+		l.log_post AS logPost,
+		l.log_date AS logDate
 		FROM ddd_log l
-		JOIN ddd_user u ON l.user_number = u.user_number
-		WHERE l.log_number = #{value}
+		JOIN ddd_user u ON l.user_number =
+		u.user_number
+		WHERE
+		l.log_number = #{value}
 	</select>
 
 	<!-- 관리자 대표 이미지 -->
-	<select id="selectMainImage" parameterType="int" resultType="com.ddd.app.admin.dto.AdminLogDTO">
+	<select id="selectMainImage" parameterType="int"
+		resultType="com.ddd.app.admin.dto.AdminLogDTO">
 		SELECT
-			log_img_number AS logImgNumber,
-			log_number AS logNumber,
-			log_img_name AS logImgName,
-			log_img_path AS logImgPath
+		log_img_number AS logImgNumber,
+		log_number AS
+		logNumber,
+		log_img_name AS logImgName,
+		log_img_path AS logImgPath
+		FROM
+		ddd_log_img
+		WHERE log_number = #{value}
+		AND log_img_number = (
+		SELECT
+		MIN(log_img_number)
 		FROM ddd_log_img
 		WHERE log_number = #{value}
-		  AND log_img_number = (
-				SELECT MIN(log_img_number)
-				FROM ddd_log_img
-				WHERE log_number = #{value}
-		  )
+		)
 	</select>
 
 	<!-- 관리자 댓글 목록 -->
-	<select id="selectCommentList" parameterType="int" resultType="com.ddd.app.admin.dto.AdminLogDTO">
+	<select id="selectCommentList" parameterType="int"
+		resultType="com.ddd.app.admin.dto.AdminLogDTO">
 		SELECT
-			c.comment_number AS commentNumber,
-			c.log_number AS logNumber,
-			c.user_number AS userNumber,
-			u.user_id AS userId,
-			u.user_nickname AS userNickname,
-			c.comment_post AS commentPost,
-			c.comment_date AS commentDate
+		c.comment_number AS commentNumber,
+		c.log_number AS
+		logNumber,
+		c.user_number AS userNumber,
+		u.user_id AS userId,
+		u.user_nickname AS userNickname,
+		c.comment_post AS commentPost,
+		c.comment_date AS commentDate
 		FROM ddd_log_comment c
-		JOIN ddd_user u ON c.user_number = u.user_number
+		JOIN ddd_user u ON
+		c.user_number
+		= u.user_number
 		WHERE c.log_number = #{value}
-		ORDER BY c.comment_date ASC
+		ORDER BY
+		c.comment_date
+		ASC
 	</select>
 
 	<!-- 관리자 댓글 삭제 -->
 	<delete id="deleteCommentByAdmin" parameterType="int">
-		DELETE FROM ddd_log_comment
+		DELETE FROM
+		ddd_log_comment
 		WHERE comment_number = #{value}
 	</delete>
 
 	<!-- 게시글 번호 기준 댓글 전체 삭제 -->
 	<delete id="deleteCommentByLogNumber" parameterType="int">
-		DELETE FROM ddd_log_comment
+		DELETE FROM
+		ddd_log_comment
 		WHERE log_number = #{value}
 	</delete>
 
+	<!-- 대시보드용 로그 조회 -->
+	<select id="getDashboardLogList"
+		resultType="com.ddd.app.admin.dto.AdminLogDTO">
+	<![CDATA[
+	SELECT * FROM
+	(SELECT l.log_number, l.log_title, u.user_nickname, l.log_date
+	FROM ddd_log l JOIN ddd_user u 
+	ON l.user_number = u.user_number
+	ORDER BY l.log_date DESC )
+WHERE rownum <= 5 
+	]]>
+	</select>
 </mapper>

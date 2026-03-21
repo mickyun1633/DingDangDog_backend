@@ -13,29 +13,31 @@
 	</settings>
 	<!-- DTO 별칭 설정 -->
 	<typeAliases>
-		<typeAlias type="com.ddd.app.user.dto.UserDTO" 
+		<typeAlias type="com.ddd.app.user.dto.UserDTO"
 			alias="UserDTO" />
 		<typeAlias type="com.ddd.app.user.dto.UserCommonDTO"
 			alias="UserCommonDTO" />
 		<typeAlias type="com.ddd.app.user.dto.UserShelterDTO"
 			alias="UserShelterDTO" />
-		<typeAlias type="com.ddd.app.doglog.dto.LogDTO" 
+		<typeAlias type="com.ddd.app.doglog.dto.LogDTO"
 			alias="LogDTO" />
 		<typeAlias type="com.ddd.app.doglog.dto.LogImgDTO"
 			alias="LogImgDTO" />
 		<typeAlias type="com.ddd.app.doglog.dto.LogCommentDTO"
-			alias="LogCommentDTO" /> 
+			alias="LogCommentDTO" />
 		<typeAlias type="com.ddd.app.admin.dto.AdminDTO"
 			alias="AdminDTO" />
 		<typeAlias type="com.ddd.app.admin.dto.AdminUserDTO"
 			alias="AdminUserDTO" />
-		<typeAlias type="com.ddd.app.dogarchive.dto.ArchiveDeleteDTO"
+		<typeAlias
+			type="com.ddd.app.dogarchive.dto.ArchiveDeleteDTO"
 			alias="ArchiveDeleteDTO" />
 		<typeAlias type="com.ddd.app.dogarchive.dto.ArchiveListDTO"
 			alias="ArchiveListDTO" />
 		<typeAlias type="com.ddd.app.dogarchive.dto.ArchiveReadDTO"
 			alias="ArchiveReadDTO" />
-		<typeAlias type="com.ddd.app.dogarchive.dto.ArchiveUpdateDTO"
+		<typeAlias
+			type="com.ddd.app.dogarchive.dto.ArchiveUpdateDTO"
 			alias="ArchiveUpdateDTO" />
 		<typeAlias type="com.ddd.app.dogarchive.dto.ArchiveWriteDTO"
 			alias="ArchiveWriteDTO" />
@@ -53,17 +55,15 @@
 			alias="AdminCareDTO" />
 		<typeAlias type="com.ddd.app.admin.dto.AdminLogDTO"
 			alias="AdminLogDTO" />
-		<!-- <typeAlias type="com.ddd.app.inquiry.dto.InquiryListDTO"
-			alias="InquiryListDTO" />
-		<typeAlias type="com.ddd.app.inquiry.dto.InquiryDetailDTO"
-			alias="InquiryDetailDTO" />
-		<typeAlias type="com.ddd.app.inquiry.dto.InquiryWritingDTO"
-			alias="InquiryWritingDTO" />
-		<typeAlias type="com.ddd.app.mypage.dto.MypageCcareDTO"
-			alias="MypageCcareDTO" />  -->
+		<!-- <typeAlias type="com.ddd.app.inquiry.dto.InquiryListDTO" alias="InquiryListDTO" 
+			/> <typeAlias type="com.ddd.app.inquiry.dto.InquiryDetailDTO" alias="InquiryDetailDTO" 
+			/> <typeAlias type="com.ddd.app.inquiry.dto.InquiryWritingDTO" alias="InquiryWritingDTO" 
+			/> <typeAlias type="com.ddd.app.mypage.dto.MypageCcareDTO" alias="MypageCcareDTO" 
+			/> -->
 		<typeAlias type="com.ddd.app.mypage.dto.MypageScareDTO"
 			alias="MypageScareDTO" />
-		<typeAlias type="com.ddd.app.mypage.dto.MyPageDogMatchingDTO"
+		<typeAlias
+			type="com.ddd.app.mypage.dto.MyPageDogMatchingDTO"
 			alias="MatchingResultDTO" />
 		<typeAlias type="com.ddd.app.mypage.dto.MypageSInfoDTO"
 			alias="MypageSDTO" />
@@ -75,6 +75,8 @@
 			alias="mainArchiveDTO" />
 		<typeAlias type="com.ddd.app.report.dto.ReportDTO"
 			alias="ReportDTO" />
+		<typeAlias type="com.ddd.app.file.dto.FileDTO"
+			alias="FileDTO" />
 	</typeAliases>
 
 	<environments default="oracle">
@@ -96,13 +98,14 @@
 		<mapper resource="com/ddd/mapper/LogMapper.xml" />
 		<mapper resource="com/ddd/mapper/MatchingMapper.xml" />
 		<mapper resource="com/ddd/mapper/ArchiveMapper.xml" />
-		
+
 		<mapper resource="com/ddd/mapper/AdminArchiveMapper.xml" />
 		<mapper resource="com/ddd/mapper/AdminLogMapper.xml" />
 		<mapper resource="com/ddd/mapper/AdminCareMapper.xml" />
 		<mapper resource="com/ddd/mapper/MypageSCareMapper.xml" />
-		<!-- <mapper resource="com/ddd/mapper/MypageCCareMapper.xml" /> -->
-		<mapper resource="com/ddd/mapper/MypageMatchingResultMapper.xml" />
+		<mapper resource="com/ddd/mapper/MypageCCareMapper.xml" />
+		<mapper
+			resource="com/ddd/mapper/MypageMatchingResultMapper.xml" />
 		<mapper resource="com/ddd/mapper/MypageCInfoMapper.xml" />
 		<mapper resource="com/ddd/mapper/MypageSInfoMapper.xml" />
 		<mapper resource="com/ddd/mapper/MypageLogMapper.xml" />
@@ -111,8 +114,9 @@
 		<mapper resource="com/ddd/mapper/ReportMapper.xml" />
 		<mapper resource="com/ddd/mapper/CareMapper.xml" />
 		<mapper resource="com/ddd/mapper/AdminUserMapper.xml" />
+		<mapper resource="com/ddd/mapper/FileMapper.xml" />
 	</mappers>
-	
+
 
 
 </configuration>

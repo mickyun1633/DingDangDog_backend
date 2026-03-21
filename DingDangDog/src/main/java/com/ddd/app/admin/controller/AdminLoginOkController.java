@@ -42,6 +42,7 @@ public class AdminLoginOkController implements Execute {
 
 			session.setAttribute("adminNumber", loginAdmin.getAdminNumber());
 			session.setAttribute("adminId", loginAdmin.getAdminId());
+			session.setAttribute("userType", loginAdmin.getUserType());
 			System.out.println("로그인 관리자 번호 : " + loginAdmin.getAdminNumber());
 		} else {
 			path = request.getContextPath() + "/admin/adminLogin.ad?adminLogin=fail";

@@ -16,6 +16,17 @@
 	href="${pageContext.request.contextPath}/assets/css/footer.css" />
 <script defer
 	src="${pageContext.request.contextPath}/assets/js/mypage/common/profile_edit_common.js"></script>
+<style type="text/css">
+.edit-row {
+	margin-top: 10px
+}
+
+.edit-bottom {
+	margin-top: 25px;
+	justify-content: flex-end;
+	width: 520px;
+}
+</style>
 </head>
 
 <body>
@@ -56,12 +67,14 @@
 						</div>
 						<div class="panel-body">
 
-							<form id="edit-profile-form" method="post"
-								action="${pageContext.request.contextPath}/mypage/profileEditSOk.mp"
-								data-context-path="${pageContext.request.contextPath}">
 
 
-								<div class="edit-form">
+							<div class="edit-form">
+
+								<form id="edit-profile-form" method="post"
+									action="${pageContext.request.contextPath}/mypage/profileEditSOk.mp"
+									data-context-path="${pageContext.request.contextPath}">
+
 									<div class="edit-row">
 										<div class="edit-label">아이디</div>
 										<div class="edit-value">${user.userId }</div>
@@ -93,16 +106,7 @@
 										<div class="edit-value">${user.shelterName }</div>
 									</div>
 
-									<div class="edit-row">
-										<div class="edit-label">보호소 인증</div>
-										<div class="file-upload-wrap">
-											<input type="file" id="shelter-file-input" class="file-input"
-												accept=".pdf,.jpg,.jpeg,.png">
-											<button type="button" id="shelter-file-btn"
-												class="action-btn">파일등록</button>
-											<div id="shelter-file-name" class="file-name-box">첨부파일</div>
-										</div>
-									</div>
+
 
 
 
@@ -159,9 +163,23 @@
 										<button type="button" id="complete-btn" class="complete-btn">변경
 											완료</button>
 									</div>
+								</form>
 
+								<div class="edit-row">
+									<form id="file-upload-form"
+										action="${pageContext.request.contextPath}/mypage/profileSFileOk.mp"
+										method="post" enctype="multipart/form-data">
+										<div class="edit-label">보호소 인증</div>
+										<div class="file-upload-wrap">
+											<input type="file" id="shelter-file-input" class="file-input"
+											name="shelterFile"	accept=".pdf,.jpg,.jpeg,.png">
+											<button type="submit" id="shelter-file-btn"
+												class="action-btn">파일등록</button>
+										</div>
+									</form>
 								</div>
-							</form>
+							</div>
+
 						</div>
 					</div>
 				</div>

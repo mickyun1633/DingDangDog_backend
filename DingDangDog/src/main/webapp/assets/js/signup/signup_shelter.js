@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
-	const form = document.querySelector("form");
+	/*const form = document.querySelector("form");*/
+	const form = document.getElementById("edit-profile-form");
 	const base = (form && form.dataset.contextPath) ? form.dataset.contextPath : "";
 
 	const idInput = document.getElementById("user-common-id");

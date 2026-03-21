@@ -46,7 +46,7 @@
           <div class="admin-title">멍! 로그 리스트</div>
         </div>
 
-        <div class="admin-main-content">
+        <div class="admin-main-content admin-box-shadow">
           <div class="admin-doglog-list-header">
             <div class="doglog-number">게시글 번호</div>
             <div class="doglog-title">제목</div>
