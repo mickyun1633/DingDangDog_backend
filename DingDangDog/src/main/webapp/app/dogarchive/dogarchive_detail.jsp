@@ -11,14 +11,7 @@
 <title>멍! 카이브 상세</title>
 </head>
 <body>
-	<c:choose>
-		<c:when test="${not empty sessionScope.userNumber}">
-			<jsp:include page="/app/header_login.jsp" />
-		</c:when>
-		<c:otherwise>
-			<jsp:include page="/app/header_logout.jsp" />
-		</c:otherwise>
-	</c:choose>
+	<jsp:include page="${not empty sessionScope.userNumber ? '/app/header_login.jsp' : '/app/header_logout.jsp'}" />
 
 	<main class="archive-detail">
 		<div class="container">
@@ -56,38 +49,55 @@
 						<div class="dog-trait-list">
 							<div class="trait-row">
 								<span class="trait-label">활동성 :</span>
-								<span class="trait-text">${archive.dogActivity >= 4 ? '에너지가 넘쳐요' : (archive.dogActivity >= 2 ? '보통이에요' : '조용해요')}</span>
-								<span class="trait-score-label">점수:</span>
 								<span class="trait-score-value">
-                                    <c:forEach begin="1" end="5" var="i">
-                                        ${i <= archive.dogActivity ? '★' : '☆'}
-                                    </c:forEach>
-                                </span>
-							</div>
-							<div class="trait-row">
-								<span class="trait-label">사회성 :</span>
-								<span class="trait-text">${archive.dogSociality >= 4 ? '친구를 좋아해요' : '낯을 가려요'}</span>
-								<span class="trait-score-label">점수:</span>
-								<span class="trait-score-value">
-                                    <c:forEach begin="1" end="5" var="i">
-                                        ${i <= archive.dogSociality ? '★' : '☆'}
-                                    </c:forEach>
-                                </span>
+									<c:forEach begin="1" end="5" var="i">
+										${i <= archive.dogActivity ? '★' : '☆'}
+									</c:forEach>
+									(${archive.dogActivity}점)
+								</span>
 							</div>
 
+							<div class="trait-row">
+								<span class="trait-label">사회성 :</span>
+								<span class="trait-score-value">
+									<c:forEach begin="1" end="5" var="i">
+										${i <= archive.dogSociality ? '★' : '☆'}
+									</c:forEach>
+									(${archive.dogSociality}점)
+								</span>
+							</div>
+
+							<div class="trait-row">
+								<span class="trait-label">독립성 :</span>
+								<span class="trait-score-value">
+									<c:forEach begin="1" end="5" var="i">
+										${i <= archive.dogIndependence ? '★' : '☆'}
+									</c:forEach>
+									(${archive.dogIndependence}점)
+								</span>
+							</div>
+
+							<div class="trait-row">
+								<span class="trait-label">짖음 :</span>
+								<span class="trait-score-value">
+									<c:forEach begin="1" end="5" var="i">
+										${i <= archive.dogBarking ? '★' : '☆'}
+									</c:forEach>
+									(${archive.dogBarking}점)
+								</span>
+							</div>
 						</div>
 					</div>
 				</div>
 
 				<div class="archive-action-section">
-					<a href="#" class="btn btn-shelter-link">${archive.shelterName} 보호소 바로가기</a> 
 					<a href="${pageContext.request.contextPath}/archive/update.ar?dogNumber=${archive.dogNumber}" class="btn btn-edit">수정하기</a> 
 					<a href="${pageContext.request.contextPath}/archive/deleteOk.ar?dogNumber=${archive.dogNumber}" class="btn btn-delete" onclick="return confirm('정말 삭제하시겠습니까?');">삭제</a>
 				</div>
 
 				<div class="archive-content-section">
-					<div class="archive-content-viewer" style="white-space: pre-wrap;">
-						${archive.dogDetail}
+					<div class="archive-content-viewer" style="white-space: pre-wrap; background: #fff; padding: 20px; border-radius: 10px;">
+						<c:out value="${archive.dogDetail}" />
 					</div>
 				</div>
 			</div>
