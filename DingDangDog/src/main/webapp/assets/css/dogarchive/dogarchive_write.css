@@ -1,3 +1,4 @@
+/* [기존 유지] 초기화 및 기본 폰트 */
 * {
 	margin: 0;
 	padding: 0;
@@ -6,9 +7,7 @@
 
 @font-face {
 	font-family: "HannaPro";
-	src:
-		url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_seven@1.0/BMHANNAPro.woff")
-		format("woff");
+	src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_seven@1.0/BMHANNAPro.woff") format("woff");
 	font-weight: normal;
 	font-display: swap;
 }
@@ -20,23 +19,43 @@ body {
 	font-family: "HannaPro", sans-serif;
 }
 
-header, .header {
-	width: 100% !important;
-	height: 110px;
-	background-color: #F47C2A;
-	display: flex;
-	justify-content: center;
+/* --------------------------------------------------
+   [수정] 헤더 & 푸터 : 배경은 100%, 내용은 1440px 중앙
+   -------------------------------------------------- */
+header {
+  width: 100%;        /* 배경은 화면 끝까지 */
+  height: 110px;
+  background-color: #f47c2a; /* 주황색 바가 끊기지 않게 배경색 지정 */
+  display: flex;
+  justify-content: center;
 }
 
-footer, .footer {
-	width: 100% !important;
-	height: 110px;
-	background-color: #000;
-	display: flex;
-	justify-content: center;
-	align-items: center;
+/* 헤더 안의 내용물(로고 등)을 감싸는 박스가 1440px여야 합니다 */
+.header-inner { 
+  width: 1440px;
+  height: 100%;
+  padding: 0 50px;
+  margin: 0 auto;
 }
 
+footer {
+  width: 100%;        /* 푸터 배경도 100% */
+  height: 210px;
+  background-color: #f8f8f8; /* 목록 페이지와 같은 푸터 배경색 */
+  display: flex;
+  justify-content: center;
+}
+
+.footer-inner {
+  width: 1440px;
+  height: 100%;
+  padding: 0 50px;
+  margin: 0 auto;
+}
+
+/* --------------------------------------------------
+   [기존 유지] 부팀장님이 주신 본문 디자인 (절대 수정 금지 구역)
+   -------------------------------------------------- */
 .archive-write {
 	width: 100%;
 	min-height: 804px;
@@ -287,19 +306,6 @@ footer, .footer {
 	overflow-y: auto;
 }
 
-.archive-content-editor:empty::before {
-	content: attr(data-placeholder);
-	color: #333;
-}
-
-.archive-content-editor img {
-	display: block;
-	max-width: 100%;
-	height: auto;
-	margin: 14px 0;
-	border-radius: 8px;
-}
-
 /* 하단 버튼 */
 .container-footer {
 	width: 100%;
@@ -311,48 +317,4 @@ footer, .footer {
 	display: flex;
 	justify-content: flex-end;
 	gap: 36px;
-}
-
-.editor-image-item {
-	position: relative;
-	display: block;
-	width: fit-content;
-	max-width: 100%;
-	margin: 14px 0;
-}
-
-.editor-image-item img {
-	display: block;
-	max-width: 100%;
-	height: auto;
-	border-radius: 8px;
-}
-
-.btn-editor-image-delete {
-	position: absolute;
-	top: 8px;
-	left: 8px;
-	width: 32px;
-	height: 32px;
-	border: none;
-	border-radius: 50%;
-	background: rgba(0, 0, 0, 0.7);
-	color: #fff;
-	font-size: 20px;
-	line-height: 32px;
-	text-align: center;
-	cursor: pointer;
-	z-index: 2;
-}
-
-.btn-editor-image-delete:hover {
-	background: rgba(0, 0, 0, 0.85);
-}
-
-.archive-content-editor:focus {
-	outline: none;
-}
-
-.archive-content-editor[contenteditable="true"] {
-	cursor: text;
 }
