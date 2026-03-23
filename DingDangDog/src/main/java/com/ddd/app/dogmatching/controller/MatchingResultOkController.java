@@ -88,7 +88,7 @@ public class MatchingResultOkController implements Execute {
 	            + independenceComment + ", "
 	            + barkingComment + ", "+"<br>"
 	            + groomingComment + ".";
-		}
+		}	
 	
 		private String getActivityComment(double avg) {
 		    if (avg >= 4.0) return "활동량이 있는 반려견과 잘 맞는 편이고";

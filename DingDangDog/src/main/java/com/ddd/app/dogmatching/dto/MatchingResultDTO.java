@@ -50,7 +50,7 @@ public class MatchingResultDTO {
 //	);
 //
 //	CREATE SEQUENCE seq_match_result nocache nocycle;
-
+//	CREATE SEQUENCE seq_match_result_dog NOCACHE NOCYCLE;
 //	----- 필드 -----
 //	DDD_MATCH_RESULT
 	private int resultNumber;

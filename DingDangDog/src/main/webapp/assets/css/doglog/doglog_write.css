@@ -18,7 +18,7 @@ body{
   font-family:"HannaPro", sans-serif;
 }
 
-.doglog-detail{
+.doglog-write{
   width:100%;
   min-height:804px;
   background:#fff;
@@ -32,6 +32,7 @@ body{
   flex-direction:column;
 }
 
+/* 내부 내용만 가운데 정렬 */
 .container-header,
 .container-body,
 .container-footer{
@@ -60,7 +61,7 @@ body{
   width:100%;
 }
 
-.doglog-detail-container{
+.doglog-write-container{
   width:100%;
   background-color:#fff;
   border-radius:5px;
@@ -68,44 +69,30 @@ body{
   overflow:hidden;
 }
 
-/* 제목 */
-.detail-title{
-  min-height:60px;
+.write-title{
+  height:60px;
   padding:0 45px;
   display:flex;
   align-items:center;
+  border-bottom:2px solid #b6b6b6;
+}
+
+.write-title input{
+  width:100%;
+  height:40px;
+  border:none;
+  outline:none;
+  background:transparent;
+  font-family:"HannaPro", sans-serif;
   font-size:24px;
   color:#333;
-  border-bottom:2px solid #b6b6b6;
-  word-break:break-word;
 }
 
-/* edit 제목 input */
-.edit-title{
-  width:100%;
-  min-height:60px;
-  padding:0 45px;
-  font-size:24px;
-  border:none;
-  border-bottom:2px solid #b6b6b6;
-  outline:none;
-  font-family:"HannaPro", sans-serif;
+.write-title input::placeholder{
+  color:#999;
 }
 
-/* 작성자 날짜 */
-.detail-info-container{
-  padding:0 45px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  height:60px;
-  border-bottom:2px solid #b6b6b6;
-  font-size:18px;
-  color:#555;
-}
-
-/* 메인 영역 */
-.detail-main-container{
+.write-main-container{
   padding:20px 45px;
   min-height:400px;
   display:flex;
@@ -114,78 +101,90 @@ body{
   gap:20px;
 }
 
-/* 이미지 영역 */
-.detail-main-img{
+.write-main-img{
   width:300px;
   height:360px;
   flex-shrink:0;
+}
+
+.img-preview-box{
+  width:100%;
+  height:100%;
+  border-radius:5px;
+  overflow:hidden;
+  position:relative;
+  background:#d7ddcb;
+  border:1px solid #b6b6b6;
   display:flex;
-  flex-direction:column;
+  justify-content:center;
+  align-items:center;
 }
 
-.detail-main-img img{
-  width:300px;
-  height:360px;
+#thumbnailPreview{
+  width:100%;
+  height:100%;
   object-fit:cover;
-  border-radius:5px;
-  display:block;
+  display:none;
 }
 
-/* edit 이미지 미리보기 */
-#editPreviewImg{
-  width:300px;
-  height:360px;
-  object-fit:cover;
-  border-radius:5px;
+.img-placeholder{
+  position:absolute;
+  font-size:20px;
+  color:#666;
 }
 
-/* 이미지 업로드 */
-#editImg{
-  margin-top:10px;
-}
-
-/* 내용 */
-.detail-main-post,
-.edit-content{
+.write-main-post{
   flex:1;
   min-width:0;
-  height:480px;
-  min-height:480px;
-  max-height:480px;
+  height:360px;
+}
+
+.write-content-editor{
+  width:100%;
+  height:100%;
   border:1px solid #b6b6b6;
   border-radius:5px;
   padding:20px;
+  outline:none;
+  font-family:"HannaPro", sans-serif;
   font-size:20px;
-  line-height:1.6;
+  color:#333;
+  overflow-y:auto;
+  background:#fff;
   white-space:pre-wrap;
   word-break:break-word;
-  overflow-y:auto;
-  font-family:"HannaPro", sans-serif;
 }
 
-/* 구분선 */
-hr{
-  margin:0 45px 20px;
-  border:none;
-  border-top:1px solid #d9d9d9;
+.write-content-editor:empty::before{
+  content:attr(data-placeholder);
+  color:#999;
 }
 
-/* 버튼 영역 */
+.write-content-editor img{
+  display:block;
+  max-width:100%;
+  height:auto;
+  margin:12px 0;
+  border-radius:5px;
+}
+
 .container-footer{
+  width:100%;
   margin-top:20px;
 }
 
-.btn-container{
+.footer-btn-wrap{
   width:100%;
   display:flex;
   justify-content:space-between;
   align-items:center;
 }
 
-.btn-left,
-.btn-right{
+.footer-left,
+.footer-right{
   display:flex;
-  gap:12px;
+  align-items:center;
+  gap:16px;
 }
 
 .btn{
@@ -205,6 +204,51 @@ hr{
   cursor:pointer;
 }
 
+.btn-upload{
+  width:120px;
+}
+
+.btn-save,
+.btn-cancel{
+  width:104px;
+}
+
 .btn:hover{
   opacity:0.9;
+}
+
+.editor-image-item{
+  position:relative;
+  display:block;
+  width:fit-content;
+  max-width:100%;
+  margin:12px 0;
+}
+
+.editor-image-item img{
+  display:block;
+  max-width:100%;
+  height:auto;
+  border-radius:5px;
+}
+
+.btn-editor-image-delete{
+  position:absolute;
+  top:8px;
+  left:8px;
+  width:32px;
+  height:32px;
+  border:none;
+  border-radius:50%;
+  background:rgba(0, 0, 0, 0.7);
+  color:#fff;
+  font-size:20px;
+  line-height:32px;
+  text-align:center;
+  cursor:pointer;
+  z-index:2;
+}
+
+.btn-editor-image-delete:hover{
+  background:rgba(0, 0, 0, 0.85);
 }

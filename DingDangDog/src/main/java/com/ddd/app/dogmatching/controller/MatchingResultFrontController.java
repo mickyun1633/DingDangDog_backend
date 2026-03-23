@@ -31,7 +31,7 @@ public class MatchingResultFrontController extends HttpServlet {
 		String target = request.getRequestURI().substring(request.getContextPath().length());
 		Result result = null;
 
-//		request.getSession().setAttribute("userNumber", 10001);
+		request.getSession().setAttribute("userNumber", 10001);
 		// ===== 요청별 분기 처리 =====
 		switch (target) {
 

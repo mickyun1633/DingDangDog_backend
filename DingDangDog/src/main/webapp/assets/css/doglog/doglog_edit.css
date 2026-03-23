@@ -6,7 +6,7 @@
 
 @font-face {
   font-family:"HannaPro";
-  src:url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_seven@1.0/BMHANNAPro.woff")
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_seven@1.0/BMHANNAPro.woff")
     format("woff");
   font-weight:normal;
   font-display:swap;
@@ -203,7 +203,7 @@ hr{
 }
 
 .btn{
-  min-width:104px;
+  min-width:120px;
   height:46px;
   padding:0 18px;
   background-color:#f47c2a;
