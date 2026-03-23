@@ -3,7 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,21 +15,8 @@
 	href="${pageContext.request.contextPath}/assets/css/dogarchive/dogarchive_list.css">
 <script defer
 	src="${pageContext.request.contextPath}/assets/js/dogarchive/dogarchive_list.js"></script>
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/assets/css/header.css" />
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/assets/css/footer.css" />
 </head>
-<c:choose>
-	<c:when test="${not empty sessionScope.userNumber}">
-		<jsp:include page="/app/header_login.jsp" />
-	</c:when>
-	<c:otherwise>
-		<jsp:include page="/app/header_logout.jsp" />
-	</c:otherwise>
-</c:choose>
 <body>
-	<!-- 유저 번호 확인 존재시 로그인 헤더 -->
 	<c:choose>
 		<c:when test="${not empty sessionScope.userNumber}">
 			<jsp:include page="/app/header_login.jsp" />
@@ -39,589 +25,82 @@
 			<jsp:include page="/app/header_logout.jsp" />
 		</c:otherwise>
 	</c:choose>
+
 	<main>
 		<div class="dogarchive-main-container">
 			<div class="main-container-header">
 				<div class="main-header-title">멍! 카이브</div>
 			</div>
-			<!-- 카드 리스트 -->
+
 			<div class="dogarchive-list">
-
-				<!-- 카드 -->
-				<div class="dogarchive-card">
-					<a href="dogarchive_detail.jsp" class="dogarchive-link">
-						<div class="dogarchive-image">이미지</div>
-
-						<div class="dogarchive-content">
-
-							<div class="dogarchive-post-title">이름</div>
-
-							<div class="dogarchive-meta">
-
-								<span class="dogarchive-type"> 푸들 </span> <span
-									class="dogarchive-writer"> 보호소명 </span> <span
-									class="dogarchive-date"> 등록 날짜 : 2024.03.06 </span>
-
+				<c:forEach var="dog" items="${archiveList}">
+					<div class="dogarchive-card">
+						<a
+							href="${pageContext.request.contextPath}/archive/read.ar?dogNumber=${dog.dogNumber}"
+							class="dogarchive-link">
+							<div class="dogarchive-image">
+								<c:choose>
+									<c:when test="${not empty dog.archiveImgPath}">
+										<img
+											src="${pageContext.request.contextPath}${dog.archiveImgPath}"
+											alt="${dog.dogName}"
+											style="width: 100%; height: 100%; object-fit: cover;">
+									</c:when>
+									<c:otherwise>이미지</c:otherwise>
+								</c:choose>
 							</div>
 
-						</div>
-					</a>
-				</div>
-				<!-- 카드 -->
-				<div class="dogarchive-card">
-					<a href="dogarchive_detail.jsp" class="dogarchive-link">
-						<div class="dogarchive-image">이미지</div>
-
-						<div class="dogarchive-content">
-
-							<div class="dogarchive-post-title">이름</div>
-
-							<div class="dogarchive-meta">
-
-								<span class="dogarchive-type"> 푸들 </span> <span
-									class="dogarchive-writer"> 보호소명 </span> <span
-									class="dogarchive-date"> 등록 날짜 : 2024.03.06 </span>
-
+							<div class="dogarchive-content">
+								<div class="dogarchive-post-title">${dog.dogName}</div>
+								<div class="dogarchive-meta">
+									<span class="dogarchive-type">${dog.dogBreed}</span> <span
+										class="dogarchive-writer">${dog.shelterName}</span> <span
+										class="dogarchive-date"> 등록 날짜 : ${dog.dogSafeDate} </span>
+								</div>
 							</div>
-
-						</div>
-					</a>
-				</div>
-				<!-- 카드 -->
-				<div class="dogarchive-card">
-					<a href="dogarchive_detail.jsp" class="dogarchive-link">
-						<div class="dogarchive-image">이미지</div>
-
-						<div class="dogarchive-content">
-
-							<div class="dogarchive-post-title">이름</div>
-
-							<div class="dogarchive-meta">
-
-								<span class="dogarchive-type"> 푸들 </span> <span
-									class="dogarchive-writer"> 보호소명 </span> <span
-									class="dogarchive-date"> 등록 날짜 : 2024.03.06 </span>
-
-							</div>
-
-						</div>
-					</a>
-				</div>
-				<!-- 카드 -->
-				<div class="dogarchive-card">
-					<a href="dogarchive_detail.jsp" class="dogarchive-link">
-						<div class="dogarchive-image">이미지</div>
-
-						<div class="dogarchive-content">
-
-							<div class="dogarchive-post-title">이름</div>
-
-							<div class="dogarchive-meta">
-
-								<span class="dogarchive-type"> 푸들 </span> <span
-									class="dogarchive-writer"> 보호소명 </span> <span
-									class="dogarchive-date"> 등록 날짜 : 2024.03.06 </span>
-
-							</div>
-
-						</div>
-					</a>
-				</div>
-				<!-- 카드 -->
-				<div class="dogarchive-card">
-					<a href="dogarchive_detail.jsp" class="dogarchive-link">
-						<div class="dogarchive-image">이미지</div>
-
-						<div class="dogarchive-content">
-
-							<div class="dogarchive-name">이름</div>
-
-							<div class="dogarchive-meta">
-
-								<span class="dogarchive-type"> 푸들 </span> <span
-									class="dogarchive-writer"> 보호소명 </span> <span
-									class="dogarchive-date"> 등록 날짜 : 2024.03.06 </span>
-
-							</div>
-
-						</div>
-					</a>
-				</div>
-				<!-- 카드 -->
-				<div class="dogarchive-card">
-					<a href="dogarchive_detail.jsp" class="dogarchive-link">
-						<div class="dogarchive-image">이미지</div>
-
-						<div class="dogarchive-content">
-
-							<div class="dogarchive-post-title">이름</div>
-
-							<div class="dogarchive-meta">
-
-								<span class="dogarchive-type"> 푸들 </span> <span
-									class="dogarchive-writer"> 보호소명 </span> <span
-									class="dogarchive-date"> 등록 날짜 : 2024.03.06 </span>
-
-							</div>
-
-						</div>
-					</a>
-				</div>
-				<!-- 카드 -->
-				<div class="dogarchive-card">
-					<a href="dogarchive_detail.jsp" class="dogarchive-link">
-						<div class="dogarchive-image">이미지</div>
-
-						<div class="dogarchive-content">
-
-							<div class="dogarchive-post-title">이름</div>
-
-							<div class="dogarchive-meta">
-
-								<span class="dogarchive-type"> 리트리버 </span> <span
-									class="dogarchive-writer"> 보호소명 </span> <span
-									class="dogarchive-date"> 등록 날짜 : 2024.03.06 </span>
-
-							</div>
-
-						</div>
-					</a>
-				</div>
-				<!-- 카드 -->
-				<div class="dogarchive-card">
-					<a href="dogarchive_detail.jsp" class="dogarchive-link">
-						<div class="dogarchive-image">이미지</div>
-
-						<div class="dogarchive-content">
-
-							<div class="dogarchive-post-title">이름</div>
-
-							<div class="dogarchive-meta">
-
-								<span class="dogarchive-type"> 리트리버 </span> <span
-									class="dogarchive-writer"> 보호소명 </span> <span
-									class="dogarchive-date"> 등록 날짜 : 2024.03.06 </span>
-
-							</div>
-
-						</div>
-					</a>
-				</div>
-				<!-- 카드 -->
-				<div class="dogarchive-card">
-					<a href="dogarchive_detail.jsp" class="dogarchive-link">
-						<div class="dogarchive-image">이미지</div>
-
-						<div class="dogarchive-content">
-
-							<div class="dogarchive-post-title">이름</div>
-
-							<div class="dogarchive-meta">
-
-								<span class="dogarchive-type"> 리트리버 </span> <span
-									class="dogarchive-writer"> 보호소명 </span> <span
-									class="dogarchive-date"> 등록 날짜 : 2024.03.06 </span>
-
-							</div>
-
-						</div>
-					</a>
-				</div>
-				<!-- 카드 -->
-				<div class="dogarchive-card">
-					<a href="dogarchive_detail.jsp" class="dogarchive-link">
-						<div class="dogarchive-image">이미지</div>
-
-						<div class="dogarchive-content">
-
-							<div class="dogarchive-post-title">이름</div>
-
-							<div class="dogarchive-meta">
-
-								<span class="dogarchive-type"> 리트리버 </span> <span
-									class="dogarchive-writer"> 보호소명 </span> <span
-									class="dogarchive-date"> 등록 날짜 : 2024.03.06 </span>
-
-							</div>
-
-						</div>
-					</a>
-				</div>
-				<!-- 카드 -->
-				<div class="dogarchive-card">
-					<a href="dogarchive_detail.jsp" class="dogarchive-link">
-						<div class="dogarchive-image">이미지</div>
-
-						<div class="dogarchive-content">
-
-							<div class="dogarchive-post-title">이름</div>
-
-							<div class="dogarchive-meta">
-
-								<span class="dogarchive-type"> 리트리버 </span> <span
-									class="dogarchive-writer"> 보호소명 </span> <span
-									class="dogarchive-date"> 등록 날짜 : 2024.03.06 </span>
-
-							</div>
-
-						</div>
-					</a>
-				</div>
-				<!-- 카드 -->
-				<div class="dogarchive-card">
-					<a href="dogarchive_detail.jsp" class="dogarchive-link">
-						<div class="dogarchive-image">이미지</div>
-
-						<div class="dogarchive-content">
-
-							<div class="dogarchive-post-title">이름</div>
-
-							<div class="dogarchive-meta">
-
-								<span class="dogarchive-type"> 리트리버 </span> <span
-									class="dogarchive-writer"> 보호소명 </span> <span
-									class="dogarchive-date"> 등록 날짜 : 2024.03.06 </span>
-
-							</div>
-
-						</div>
-					</a>
-				</div>
-				-
-				<!-- 카드 -->
-				<div class="dogarchive-card">
-					<a href="dogarchive_detail.jsp" class="dogarchive-link">
-						<div class="dogarchive-image">이미지</div>
-
-						<div class="dogarchive-content">
-
-							<div class="dogarchive-post-title">이름</div>
-
-							<div class="dogarchive-meta">
-
-								<span class="dogarchive-type"> 치와와 </span> <span
-									class="dogarchive-writer"> 보호소명 </span> <span
-									class="dogarchive-date"> 등록 날짜 : 2024.03.06 </span>
-
-							</div>
-
-						</div>
-					</a>
-				</div>
-				<!-- 카드 -->
-				<div class="dogarchive-card">
-					<a href="dogarchive_detail.jsp" class="dogarchive-link">
-						<div class="dogarchive-image">이미지</div>
-
-						<div class="dogarchive-content">
-
-							<div class="dogarchive-post-title">이름</div>
-
-							<div class="dogarchive-meta">
-
-								<span class="dogarchive-type"> 치와와 </span> <span
-									class="dogarchive-writer"> 보호소명 </span> <span
-									class="dogarchive-date"> 등록 날짜 : 2024.03.06 </span>
-
-							</div>
-
-						</div>
-					</a>
-				</div>
-				<!-- 카드 -->
-				<div class="dogarchive-card">
-					<a href="dogarchive_detail.jsp" class="dogarchive-link">
-						<div class="dogarchive-image">이미지</div>
-
-						<div class="dogarchive-content">
-
-							<div class="dogarchive-post-title">이름</div>
-
-							<div class="dogarchive-meta">
-
-								<span class="dogarchive-type"> 치와와 </span> <span
-									class="dogarchive-writer"> 보호소명 </span> <span
-									class="dogarchive-date"> 등록 날짜 : 2024.03.06 </span>
-
-							</div>
-
-						</div>
-					</a>
-				</div>
-				<!-- 카드 -->
-				<div class="dogarchive-card">
-					<a href="dogarchive_detail.jsp" class="dogarchive-link">
-						<div class="dogarchive-image">이미지</div>
-
-						<div class="dogarchive-content">
-
-							<div class="dogarchive-post-title">이름</div>
-
-							<div class="dogarchive-meta">
-
-								<span class="dogarchive-type"> 견종 </span> <span
-									class="dogarchive-writer"> 보호소명 </span> <span
-									class="dogarchive-date"> 등록 날짜 : 2024.03.06 </span>
-
-							</div>
-
-						</div>
-					</a>
-				</div>
-				<!-- 카드 -->
-				<div class="dogarchive-card">
-					<a href="dogarchive_detail.jsp" class="dogarchive-link">
-						<div class="dogarchive-image">이미지</div>
-
-						<div class="dogarchive-content">
-
-							<div class="dogarchive-post-title">이름</div>
-
-							<div class="dogarchive-meta">
-
-								<span class="dogarchive-type"> 견종 </span> <span
-									class="dogarchive-writer"> 보호소명 </span> <span
-									class="dogarchive-date"> 등록 날짜 : 2024.03.06 </span>
-
-							</div>
-
-						</div>
-					</a>
-				</div>
-				<!-- 카드 -->
-				<div class="dogarchive-card">
-					<a href="dogarchive_detail.jsp" class="dogarchive-link">
-						<div class="dogarchive-image">이미지</div>
-
-						<div class="dogarchive-content">
-
-							<div class="dogarchive-post-title">이름</div>
-
-							<div class="dogarchive-meta">
-
-								<span class="dogarchive-type"> 견종 </span> <span
-									class="dogarchive-writer"> 보호소명 </span> <span
-									class="dogarchive-date"> 등록 날짜 : 2024.03.06 </span>
-
-							</div>
-
-						</div>
-					</a>
-				</div>
-				<!-- 카드 -->
-				<div class="dogarchive-card">
-					<a href="dogarchive_detail.jsp" class="dogarchive-link">
-						<div class="dogarchive-image">이미지</div>
-
-						<div class="dogarchive-content">
-
-							<div class="dogarchive-post-title">이름</div>
-
-							<div class="dogarchive-meta">
-
-								<span class="dogarchive-type"> 견종 </span> <span
-									class="dogarchive-writer"> 보호소명 </span> <span
-									class="dogarchive-date"> 등록 날짜 : 2024.03.06 </span>
-
-							</div>
-
-						</div>
-					</a>
-				</div>
-				<!-- 카드 -->
-				<div class="dogarchive-card">
-					<a href="dogarchive_detail.jspl" class="dogarchive-link">
-						<div class="dogarchive-image">이미지</div>
-
-						<div class="dogarchive-content">
-
-							<div class="dogarchive-post-title">이름</div>
-
-							<div class="dogarchive-meta">
-
-								<span class="dogarchive-type"> 견종 </span> <span
-									class="dogarchive-writer"> 보호소명 </span> <span
-									class="dogarchive-date"> 등록 날짜 : 2024.03.06 </span>
-
-							</div>
-
-						</div>
-					</a>
-				</div>
-				<!-- 카드 -->
-				<div class="dogarchive-card">
-					<a href="dogarchive_detail.jsp" class="dogarchive-link">
-						<div class="dogarchive-image">이미지</div>
-
-						<div class="dogarchive-content">
-
-							<div class="dogarchive-post-title">이름</div>
-
-							<div class="dogarchive-meta">
-
-								<span class="dogarchive-type"> 견종 </span> <span
-									class="dogarchive-writer"> 보호소명 </span> <span
-									class="dogarchive-date"> 등록 날짜 : 2024.03.06 </span>
-
-							</div>
-
-						</div>
-					</a>
-				</div>
-				<!-- 카드 -->
-				<div class="dogarchive-card">
-					<a href="dogarchive_detail.jsp" class="dogarchive-link">
-						<div class="dogarchive-image">이미지</div>
-
-						<div class="dogarchive-content">
-
-							<div class="dogarchive-post-title">이름</div>
-
-							<div class="dogarchive-meta">
-
-								<span class="dogarchive-type"> 견종 </span> <span
-									class="dogarchive-writer"> 보호소명 </span> <span
-									class="dogarchive-date"> 등록 날짜 : 2024.03.06 </span>
-
-							</div>
-
-						</div>
-					</a>
-				</div>
-				<!-- 카드 -->
-				<div class="dogarchive-card">
-					<a href="dogarchive_detail.jsp" class="dogarchive-link">
-						<div class="dogarchive-image">이미지</div>
-
-						<div class="dogarchive-content">
-
-							<div class="dogarchive-post-title">이름</div>
-
-							<div class="dogarchive-meta">
-
-								<span class="dogarchive-type"> 견종 </span> <span
-									class="dogarchive-writer"> 보호소명 </span> <span
-									class="dogarchive-date"> 등록 날짜 : 2024.03.06 </span>
-
-							</div>
-
-						</div>
-					</a>
-				</div>
-				<!-- 카드 -->
-				<div class="dogarchive-card">
-					<a href="dogarchive_detail.jsp" class="dogarchive-link">
-						<div class="dogarchive-image">이미지</div>
-
-						<div class="dogarchive-content">
-
-							<div class="dogarchive-post-title">이름</div>
-
-							<div class="dogarchive-meta">
-
-								<span class="dogarchive-type"> 견종 </span> <span
-									class="dogarchive-writer"> 보호소명 </span> <span
-									class="dogarchive-date"> 등록 날짜 : 2024.03.06 </span>
-
-							</div>
-
-						</div>
-					</a>
-				</div>
-				<!-- 카드 -->
-				<div class="dogarchive-card">
-					<a href="dogarchive_detail.jsp" class="dogarchive-link">
-						<div class="dogarchive-image">이미지</div>
-
-						<div class="dogarchive-content">
-
-							<div class="dogarchive-post-title">이름</div>
-
-							<div class="dogarchive-meta">
-
-								<span class="dogarchive-type"> 견종 </span> <span
-									class="dogarchive-writer"> 보호소명 </span> <span
-									class="dogarchive-date"> 등록 날짜 : 2024.03.06 </span>
-
-							</div>
-
-						</div>
-					</a>
-				</div>
-				<!-- 카드 -->
-				<div class="dogarchive-card">
-					<a href="dogarchive_detail.jspl" class="dogarchive-link">
-						<div class="dogarchive-image">이미지</div>
-
-						<div class="dogarchive-content">
-
-							<div class="dogarchive-post-title">이름</div>
-
-							<div class="dogarchive-meta">
-
-								<span class="dogarchive-type"> 견종 </span> <span
-									class="dogarchive-writer"> 보호소명 </span> <span
-									class="dogarchive-date"> 등록 날짜 : 2024.03.06 </span>
-
-							</div>
-
-						</div>
-					</a>
-				</div>
+						</a>
+					</div>
+				</c:forEach>
+
+			</div>
+
+			<div class="search-box">
+				<select class="search-select">
+					<option>보호소명</option>
+					<option>견종</option>
+				</select> <input type="text" class="search-input">
+				<button class="btn-search" id="searchBtn">검색</button>
 			</div>
 		</div>
 
-		<!-- 검색 -->
-		<div class="search-box">
-			<select class="search-select">
-				<option>보호소명</option>
-				<option>견종</option>
-			</select> <input type="text" class="search-input">
-			<button class="btn-search" id="searchBtn">검색</button>
-		</div>
-
-		</div>
-		<!-- 하단 검색 + 글 작성 -->
 		<div class="main-container-footer">
-
-
-			<!-- 페이지네이션 -->
 			<div class="pagination">
 				<ul class="page-list">
-					<li>
-						<button class="prev-btn">
+					<li><button class="prev-btn">
 							<span>&lt;</span>
-						</button>
-					</li>
-					<li>
-						<button class="page-item current-page">1</button>
-					</li>
-					<li>
-						<button class="page-item">2</button>
-					</li>
-					<li>
-						<button class="page-item">3</button>
-					</li>
-					<li>
-						<button class="page-item">4</button>
-					</li>
-					<li>
-						<button class="page-item">5</button>
-					</li>
-					<li>
-						<button class="next-btn">
+						</button></li>
+					<li><button class="page-item current-page">1</button></li>
+					<li><button class="page-item">2</button></li>
+					<li><button class="page-item">3</button></li>
+					<li><button class="page-item">4</button></li>
+					<li><button class="page-item">5</button></li>
+					<li><button class="next-btn">
 							<span>&gt;</span>
-						</button>
-					</li>
+						</button></li>
 				</ul>
 			</div>
-			<button class="btn-write" onclick="location"
-				href="dogarchive_write.jsp">유기견 등록하기</button>
-		</div>
-		<!-- footer -->
-		<jsp:include page="/app/footer.jsp" />
-		<!-- js -->
-		<script src="/assets/js/header-footer.js"></script>
-</body>
 
+			<c:if test="${sessionScope.userType == 'S'}">
+				<button type="button" class="btn-write"
+					onclick="location.href='${pageContext.request.contextPath}/archive/write.ar'">
+					유기견 등록하기</button>
+			</c:if>
+		</div>
+	</main>
+
+	<jsp:include page="/app/footer.jsp" />
+
+	<script
+		src="${pageContext.request.contextPath}/assets/js/header-footer.js"></script>
+</body>
 </html>

@@ -31,6 +31,7 @@ public class ArchiveWriteDTO {
 
 	// ===== 필드 =====
 	private int userNumber;
+	private int dogNumber;
 	private String dogName;
 	private String dogBreed;
 	private String dogGender;
@@ -57,6 +58,14 @@ public class ArchiveWriteDTO {
 
 	public void setUserNumber(int userNumber) {
 		this.userNumber = userNumber;
+	}
+
+	public int getDogNumber() {
+		return dogNumber;
+	}
+
+	public void setDogNumber(int dogNumber) {
+		this.dogNumber = dogNumber;
 	}
 
 	public String getDogName() {

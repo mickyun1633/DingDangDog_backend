@@ -1,8 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
 
   const cards = Array.from(document.querySelectorAll(".dogarchive-card"));
-  const cardsPerPage = 20;   // 한 페이지 카드 수
-  const pageCount = 5;       // 페이지 버튼 개수
+  const cardsPerPage = 20;  
+  const pageCount = 5;
 
   let currentPage = 1;
   let filteredCards = [...cards];

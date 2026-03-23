@@ -21,21 +21,21 @@ public class ArchiveDAO {
 	// ===== 정보 등록 =====
 	public void insert(ArchiveWriteDTO writeDTO) {
 		// 1. 기본 정보 등록
-		sqlSession.insert("archiveWrite.insertArchive", writeDTO);
+		sqlSession.insert("archive.insertArchive", writeDTO);
 		// 2. 성향 점수 등록
-		sqlSession.insert("archiveWrite.insertScore", writeDTO);
+		sqlSession.insert("archive.insertScore", writeDTO);
 		// 3. 이미지 정보 등록
-		sqlSession.insert("archiveWrite.insertImg", writeDTO);
+		sqlSession.insert("archive.insertImg", writeDTO);
 	}
 
 	// ===== 정보 수정 =====
 	public void update(ArchiveUpdateDTO updateDTO) {
 		// 1. 기본 정보 수정
-		sqlSession.update("archiveUpdate.updateArchive", updateDTO);
+		sqlSession.update("archive.updateArchive", updateDTO);
 		// 2. 성향 점수 수정
-		sqlSession.update("archiveUpdate.updateScore", updateDTO);
+		sqlSession.update("archive.updateScore", updateDTO);
 		// 3. 이미지 수정
-		sqlSession.update("archiveUpdate.updateImg", updateDTO);
+		sqlSession.update("archive.updateImg", updateDTO);
 	}
 
 	// ===== 정보 삭제 =====

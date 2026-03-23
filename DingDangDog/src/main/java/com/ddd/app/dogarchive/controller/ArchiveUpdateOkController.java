@@ -1,6 +1,6 @@
 package com.ddd.app.dogarchive.controller;
 
-// ===== 멍 카이브 수정 ===== 
+import java.io.File;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -11,46 +11,72 @@ import com.ddd.app.Execute;
 import com.ddd.app.Result;
 import com.ddd.app.dogarchive.dao.ArchiveDAO;
 import com.ddd.app.dogarchive.dto.ArchiveUpdateDTO;
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
+/**
+ * 멍! 카이브 수정 처리 컨트롤러
+ * 작성자: 윤철민 (맥/윈도우 공용 대응 버전)
+ */
 public class ArchiveUpdateOkController implements Execute {
 
 	@Override
 	public Result execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		// 객체
-		Result result = new Result();
+		// 1. 객체 준비
 		ArchiveDAO dao = new ArchiveDAO();
 		ArchiveUpdateDTO updateDTO = new ArchiveUpdateDTO();
 
+		// 2. 운영체제 맞춤형 경로 설정 (맥/윈도우 호환)
+		// 서버의 실제 루트 경로를 가져옵니다.
+		String rootPath = request.getServletContext().getRealPath("/");
+		
+		// File.separator를 사용하여 맥(/)과 윈도우(\) 경로 구분자 문제를 해결합니다.
+		String uploadPath = rootPath + File.separator + "upload";
+		
+		// 3. 물리적 창고(폴더)가 없는 경우 자동 생성 (Not a directory 에러 방지)
+		File uploadDir = new File(uploadPath);
+		if (!uploadDir.exists()) {
+			uploadDir.mkdirs(); // 폴더가 없으면 즉시 생성
+			System.out.println("--- [DingDongDog] 업로드 폴더 생성 완료: " + uploadPath);
+		}
+
+		int fileSize = 1024 * 1024 * 10; // 10MB 제한
+
 		try {
-			// ===== 수정할 dogNumber =====
-			int dogNumber = Integer.parseInt(request.getParameter("dogNumber"));
+			// 4. MultipartRequest 생성 (이제 폴더가 확실히 있으므로 안전하게 저장됩니다)
+			MultipartRequest multi = new MultipartRequest(
+					request, 
+					uploadPath, 
+					fileSize, 
+					"UTF-8", 
+					new DefaultFileRenamePolicy()
+			);
 
-			// ===== 기본 정보 =====
-			String dogName = request.getParameter("dogName");
-			String dogBreed = request.getParameter("dogBreed");
-			String dogGender = request.getParameter("dogGender");
-			String dogAge = request.getParameter("dogAge");
-			int dogWeight = Integer.parseInt(request.getParameter("dogWeight"));
-			String dogSafeDate = request.getParameter("dogSafeDate");
-			String dogDetail = request.getParameter("dogDetail");
+			// 5. 데이터 추출 (request가 아닌 multi에서 꺼내야 함!)
+			int dogNumber = Integer.parseInt(multi.getParameter("dogNumber"));
+			String dogName = multi.getParameter("dogName");
+			String dogBreed = multi.getParameter("dogBreed");
+			String dogGender = multi.getParameter("dogGender");
+			String dogAge = multi.getParameter("dogAge");
+			double dogWeight = Double.parseDouble(multi.getParameter("dogWeight"));
+			String dogDetail = multi.getParameter("dogDetail");
 
-			// ===== 성향 점수 받기 =====
-			int dogActivity = Integer.parseInt(request.getParameter("dogActivity"));
-			int dogSociality = Integer.parseInt(request.getParameter("dogSociality"));
-			int dogIndependence = Integer.parseInt(request.getParameter("dogIndependence"));
-			int dogBarking = Integer.parseInt(request.getParameter("dogBarking"));
-			int dogGrooming = Integer.parseInt(request.getParameter("dogGrooming"));
+			// 성향 점수 추출
+			int dogActivity = Integer.parseInt(multi.getParameter("dogActivity"));
+			int dogSociality = Integer.parseInt(multi.getParameter("dogSociality"));
+			int dogIndependence = Integer.parseInt(multi.getParameter("dogIndependence"));
+			int dogBarking = Integer.parseInt(multi.getParameter("dogBarking"));
+			int dogGrooming = Integer.parseInt(multi.getParameter("dogGrooming"));
 
-			// ===== 데이터 =====
+			// 6. DTO 데이터 세팅
 			updateDTO.setDogNumber(dogNumber);
 			updateDTO.setDogName(dogName);
 			updateDTO.setDogBreed(dogBreed);
 			updateDTO.setDogGender(dogGender);
 			updateDTO.setDogAge(dogAge);
 			updateDTO.setDogWeight(dogWeight);
-//			updateDTO.setDogSafeDate(dogSafeDate);
 			updateDTO.setDogDetail(dogDetail);
 			updateDTO.setDogActivity(dogActivity);
 			updateDTO.setDogSociality(dogSociality);
@@ -58,26 +84,30 @@ public class ArchiveUpdateOkController implements Execute {
 			updateDTO.setDogBarking(dogBarking);
 			updateDTO.setDogGrooming(dogGrooming);
 
-			String DogSafeDateStr = request.getParameter("DogSafeDate");
+			// 7. 이미지 파일 정보 처리
+			// JSP의 input name인 "dogImage"로 가져옵니다.
+			String fileName = multi.getFilesystemName("dogImage"); 
+			
+			if (fileName != null) {
+				updateDTO.setArchiveImgName(fileName);
+				updateDTO.setArchiveImgPath("/upload/" + fileName);
+			}
 
-			// ===== 이미지 수정 =====
-			updateDTO.setArchiveImgName(request.getParameter("archiveImgName"));
-			updateDTO.setArchiveImgPath(request.getParameter("archiveImgPath"));
-
-			// ===== DB 업데이트 =====
+			// 8. DB 업데이트 실행 (DAO의 update 메서드 호출)
 			dao.update(updateDTO);
 
-			// ===== 수정 완료 시 List 페이지 이동 =====
-			result.setPath(request.getContextPath() + "/archive/list.ar");
-			result.setRedirect(true);
+			// 9. 비동기 응답 (JS Fetch API 대응)
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().print("{\"status\": \"success\", \"dogNumber\": " + dogNumber + "}");
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			// ===== 수정 실패 시 Main 페이지 이동 =====
-			result.setPath(request.getContextPath() + "/main.jsp");
-			result.setRedirect(true);
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().print("{\"status\": \"fail\"}");
 		}
 
-		return result;
+		return null;
 	}
 }

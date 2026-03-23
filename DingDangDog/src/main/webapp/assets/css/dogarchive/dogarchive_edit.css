@@ -1,3 +1,4 @@
+/* 기본 초기화 */
 *{
   margin:0;
   padding:0;
@@ -19,27 +20,21 @@ body{
   font-family:"HannaPro", sans-serif;
 }
 
-header{
+header, footer {
   width:1440px;
   height:110px;
-  background-color:#F47C2A;
 }
 
-footer{
-  width:1440px;
-  height:110px;
-  background-color:#000;
-}
+header { background-color:#F47C2A; }
+footer { background-color:#000; }
 
 .archive-detail{
   width:1440px;
   min-height:804px;
-  background:#fff;
 }
 
 .container{
   width:1440px;
-  min-height:804px;
   padding:0 50px 40px;
   display:flex;
   flex-direction:column;
@@ -75,11 +70,13 @@ footer{
   gap:40px;
 }
 
-/* 이미지 영역 */
-
+/* --- 이미지 영역 (강제 고정 버전) --- */
 .archive-image-section{
   width:320px;
   flex-shrink:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center; /* 가로 중앙 정렬 */
 }
 
 .archive-image-box{
@@ -91,6 +88,7 @@ footer{
   display:flex;
   justify-content:center;
   align-items:center;
+  margin-bottom:15px;
 }
 
 .archive-image-box img{
@@ -100,44 +98,50 @@ footer{
   display:block;
 }
 
-.archive-image-box:empty::before{
-  content:"대표 이미지";
-  font-size:24px;
-  color:#666;
+/* ⭐ 이미지 수정 버튼 (작성 페이지와 100% 동일 규격 강제 적용) ⭐ */
+.btn-upload {
+  display: block !important;
+  width: 140px !important;
+  height: 45px !important;
+  background-color: #f47c2a !important;
+  border-radius: 10px !important;
+  color: #fff !important;
+  font-size: 18px !important;
+  text-align: center !important;
+  line-height: 45px !important;
+  cursor: pointer !important;
+  box-shadow: 2px 2px 5px #b6b6b6 !important;
+  font-family: "HannaPro", sans-serif !important;
+  border: none !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+  text-decoration: none !important;
 }
 
-/* 이미지 업로드 */
-
-#editImage{
-  margin-top:12px;
-  width:100%;
+.btn-upload:hover {
+  opacity: 0.9 !important;
 }
 
-/* 오른쪽 정보 */
+/* 파일 입력창 숨기기 */
+#editImage {
+  display: none !important;
+}
 
+/* --- 오른쪽 정보 입력 --- */
 .archive-info-section{
   flex:1;
   min-width:0;
   height:500px;
   border:3px solid #111;
   padding:28px 28px 24px;
-  overflow:hidden;
 }
 
-/* 이름 */
-
 .dog-name-row{
-  width:100%;
   display:flex;
   justify-content:center;
   align-items:center;
   gap:12px;
   margin-bottom:24px;
-}
-
-.dog-name-label{
-  font-size:30px;
-  flex-shrink:0;
 }
 
 .dog-name-input{
@@ -150,10 +154,7 @@ footer{
   font-family:"HannaPro", sans-serif;
 }
 
-/* 기본 정보 */
-
 .dog-info-grid{
-  width:100%;
   display:flex;
   flex-direction:column;
   gap:10px;
@@ -161,19 +162,13 @@ footer{
 }
 
 .info-item{
-  width:100%;
   display:grid;
-  grid-template-columns:170px minmax(0, 1fr);
+  grid-template-columns:170px 1fr;
   align-items:center;
   column-gap:12px;
 }
 
-.info-label{
-  font-size:20px;
-}
-
 .info-input{
-  min-height:28px;
   font-size:20px;
   border:none;
   border-bottom:1px solid #ccc;
@@ -181,10 +176,7 @@ footer{
   font-family:"HannaPro", sans-serif;
 }
 
-/* 성향 */
-
 .dog-trait-list{
-  width:100%;
   margin-top:8px;
   display:flex;
   flex-direction:column;
@@ -192,39 +184,21 @@ footer{
 }
 
 .trait-row{
-  width:100%;
   display:grid;
-  grid-template-columns:90px minmax(0, 1fr) 50px 130px;
+  grid-template-columns:90px 1fr 50px 130px;
   align-items:center;
   column-gap:10px;
 }
 
-.trait-label,
-.trait-score-label{
-  font-size:18px;
-}
-
-.trait-input{
-  font-size:18px;
+.trait-input, .trait-score-input{
   border:none;
   border-bottom:1px solid #ccc;
   outline:none;
   font-family:"HannaPro", sans-serif;
 }
 
-.trait-score-input{
-  font-size:20px;
-  width:80px;
-  border:none;
-  border-bottom:1px solid #ccc;
-  outline:none;
-  text-align:center;
-}
-
-/* 버튼 */
-
+/* 하단 버튼 */
 .archive-action-section{
-  width:100%;
   margin-top:24px;
   display:flex;
   justify-content:center;
@@ -234,40 +208,26 @@ footer{
 .btn{
   min-width:104px;
   height:46px;
-  padding:0 18px;
   background-color:#f47c2a;
   border-radius:10px;
   color:#fff;
   border:none;
-  box-shadow:2px 2px 5px #b6b6b6;
-  text-align:center;
-  line-height:46px;
-  text-decoration:none;
   font-size:18px;
   font-family:"HannaPro", sans-serif;
   cursor:pointer;
 }
 
-.btn:hover{
-  opacity:0.9;
-}
-
 /* 본문 */
-
 .archive-content-section{
-  width:100%;
   margin-top:34px;
 }
 
 .archive-content-editor{
   width:100%;
   min-height:260px;
-  padding:20px 28px;
+  padding:20px;
   font-size:22px;
-  color:#111;
-  line-height:1.5;
   border:3px solid black;
-  resize:none;
   outline:none;
   font-family:"HannaPro", sans-serif;
 }

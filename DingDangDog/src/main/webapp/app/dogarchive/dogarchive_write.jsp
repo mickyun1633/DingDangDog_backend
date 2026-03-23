@@ -19,7 +19,7 @@
 </head>
 
 <body>
-<!-- 유저 번호 확인 존재시 로그인 헤더 -->
+	<!-- 유저 번호 확인 존재시 로그인 헤더 -->
 	<c:choose>
 		<c:when test="${not empty sessionScope.userNumber}">
 			<jsp:include page="/app/header_login.jsp" />
@@ -62,7 +62,7 @@
 
 							<div class="info-item">
 								<label for="dogGender">성별 :</label> <input type="text"
-									id="dogGender" />
+									id="dogGender" placeholder="M 또는 F를 입력해주세요" class="info-input" />
 							</div>
 
 							<div class="info-item">
