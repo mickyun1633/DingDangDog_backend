@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="inquiry">
 	<!-- 문의글 삭제 -->
-	<delete id="delete" parameterType="InquiryDetailDTO">
+	<delete id="delete" parameterType="InquiryListDTO">
 		DELETE FROM DDD_INQUIRY
 		WHERE INQUIRY_NUMBER = #{inquiryNumber}
 		AND USER_NUMBER = #{userNumber}
@@ -16,28 +16,36 @@
 		= b.member_number ORDER BY b.board_date DESC ) subquery ) WHERE rnum BETWEEN 
 		#{startRow} AND #{endRow} ]]> </select> -->
 	<!-- 전체 문의글 조회 -->
-	<select id="selectAll" parameterType="Map"
-		resultType="InquiryListDTO">
-		SELECT
-		ANSWER_STATUS,
-		INQUIRY_NUMBER,
-		INQUIRY_TITLE,
-		TO_CHAR(INQUIRY_DATE, 'YYYY-MM-DD') AS INQUIRY_DATE,
-		USER_NUMBER
-		FROM DDD_INQUIRY
-		WHERE USER_NUMBER = #{userNumber}
-		ORDER BY
-		INQUIRY_NUMBER DESC
+	<select id="selectAll" parameterType="map" resultType="InquiryListDTO">
+	    <![CDATA[
+	    SELECT * FROM (
+	        SELECT ROWNUM rnum, sub.*
+	        FROM (
+	            SELECT
+	                ANSWER_STATUS,
+	                INQUIRY_NUMBER,
+	                INQUIRY_TITLE,
+	                INQUIRY_DATE,
+	                USER_NUMBER
+	            FROM DDD_INQUIRY
+	            WHERE USER_NUMBER = #{userNumber}
+	            ORDER BY INQUIRY_NUMBER DESC
+	        ) sub
+	        WHERE ROWNUM <= #{endRow}
+	    )
+	    WHERE rnum >= #{startRow}
+	    ]]>
 	</select>
 
 
 	<!-- 상세 문의글 조회 -->
-	<select id="select" parameterType="InquiryDetailDTO "
+	<select id="select" parameterType="InquiryDetailDTO"
 		resultType="InquiryDetailDTO">
 		SELECT
 		INQUIRY_NUMBER,
 		INQUIRY_TITLE,
-		TO_CHAR(INQUIRY_DATE, 'YYYY.MM.DD') AS INQUIRY_DATE,
+		INQUIRY_DATE AS INQUIRY_DATE,
+		ANSWER_STATUS,
 		INQUIRY_POST,
 		TO_CHAR(ANSWER_DATE, 'YYYY.MM.DD') AS ANSWER_DATE,
 		ANSWER_POST
@@ -47,7 +55,7 @@
 	</select>
 
 	<!-- 문의글 작성 -->
-	<insert id="insert" parameterType="InquiryWritingDTO">
+	<insert id="insert" parameterType="InquiryWriteDTO">
 		INSERT INTO DDD_INQUIRY (
 		INQUIRY_NUMBER,
 		USER_NUMBER,
@@ -67,12 +75,10 @@
 
 	<!-- 총 개수 조회 -->
 
-	<select id="getTotal" parameterType="userNumber"
-		resultType="int">
-		SELECT COUNT(*)
-		FROM DDD_INQUIRY
-		WHERE USER_NUMBER = #{userNumber}
-
+	<select id="getTotal"  parameterType="int" resultType="int">
+	    SELECT COUNT(*)
+	    FROM DDD_INQUIRY
+	    WHERE USER_NUMBER = #{userNumber}
 	</select>
 
 </mapper>

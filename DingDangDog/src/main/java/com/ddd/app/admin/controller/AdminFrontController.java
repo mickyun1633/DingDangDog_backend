@@ -183,6 +183,21 @@ public class AdminFrontController extends HttpServlet {
 			System.out.println("블랙리스트 해제 완료");
 			break;
 
+		case "/admin/InquiryListOk.ad":
+			System.out.println("관리자 문의목록 페이지 요청");
+			result = new AdminInquiryListOkController().execute(request, response);
+			System.out.println("관리자 문의목록 페이지 이동");
+			break;
+		case "/admin/InquiryDetailOk.ad":
+			System.out.println("관리자 문의목록 페이지 요청");
+			result = new AdminInquiryDetailOkController().execute(request, response);
+			System.out.println("관리자 문의목록 페이지 이동");
+			break;
+		case "/admin/InquiryAnswerOk.ad":
+			System.out.println("관리자 문의목록 페이지 요청");
+			result = new AdminInquiryAnswerOkController().execute(request, response);
+			System.out.println("관리자 문의목록 페이지 이동");
+			break;
 		}
 
 		if (result != null && result.getPath() != null) {

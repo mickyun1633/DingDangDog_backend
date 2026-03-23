@@ -292,24 +292,22 @@ document.addEventListener("DOMContentLoaded", function() {
 		}
 
 		fetch(`${base}/user/sendSMS.us?realPhoneNumber=${realPhoneNumber}`, {
-			//fetch(`${base}/user/sendSMS.us`, {
-			method: "POST",
-			headers: { "Content-Type": "application/json; charset=utf-8", "Accept": "application/json"/*, "X-Requested-With": "XMLHttpRequest" */ },
-			body: JSON.stringify({ realPhoneNumber })
+			method: "GET",
+			headers: {
+				"X-Requested-With": "XMLHttpRequest"
+			}
 		})
 			.then(r => {
 				if (!r.ok) throw new Error(r.status);
-				const ct = r.headers.get("Content-Type") || "";
-				return ct.includes("application/json") ? r.json() : { ok: true };
+				return r.json();
 			})
 			.then(data => {
-				const ok = typeof data.ok === "boolean" ? data.ok : true;
-				if (ok) {
+				if (data.ok) {
 					verificationCodeInput.disabled = false;
 					phoneStatus.textContent = "인증번호가 발송되었습니다.";
 					phoneStatus.style.color = "green";
 				} else {
-					phoneStatus.textContent = "발송 실패. 잠시 후 다시 시도하세요.";
+					phoneStatus.textContent = "발송 실패: " + (data.message || "");
 					phoneStatus.style.color = "red";
 				}
 			})

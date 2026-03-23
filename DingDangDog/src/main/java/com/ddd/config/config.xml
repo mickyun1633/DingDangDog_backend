@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-<properties resource="context.properties" />
+	<properties resource="context.properties" />
 	<settings>
 		<!-- 카멜케이스 매핑 설정 -->
 		<setting name="mapUnderscoreToCamelCase" value="true"></setting>
@@ -56,11 +56,14 @@
 			alias="AdminCareDTO" />
 		<typeAlias type="com.ddd.app.admin.dto.AdminLogDTO"
 			alias="AdminLogDTO" />
-		<!-- <typeAlias type="com.ddd.app.inquiry.dto.InquiryListDTO" alias="InquiryListDTO" 
-			/> <typeAlias type="com.ddd.app.inquiry.dto.InquiryDetailDTO" alias="InquiryDetailDTO" 
-			/> <typeAlias type="com.ddd.app.inquiry.dto.InquiryWritingDTO" alias="InquiryWritingDTO" 
-			/> <typeAlias type="com.ddd.app.mypage.dto.MypageCcareDTO" alias="MypageCcareDTO" 
-			/> -->
+		<typeAlias type="com.ddd.app.inquiry.dto.InquiryListDTO"
+			alias="InquiryListDTO" />
+		<typeAlias type="com.ddd.app.inquiry.dto.InquiryDetailDTO"
+			alias="InquiryDetailDTO" />
+		<typeAlias type="com.ddd.app.inquiry.dto.InquiryWriteDTO"
+			alias="InquiryWriteDTO" />
+		<typeAlias type="com.ddd.app.mypage.dto.MypageCcareDTO"
+			alias="MypageCcareDTO" />
 		<typeAlias type="com.ddd.app.mypage.dto.MypageScareDTO"
 			alias="MypageScareDTO" />
 		<typeAlias
@@ -80,16 +83,17 @@
 			alias="FileDTO" />
 		<typeAlias type="com.ddd.app.admin.dto.AdminBlackDTO"
 			alias="AdminBlackDTO" />
+		<typeAlias type="com.ddd.app.admin.dto.AdminInquiryDTO"
+			alias="AdminInquiryDTO" />
 	</typeAliases>
 
-	
+
 	<environments default="oracle">
 		<environment id="oracle">
 			<transactionManager type="JDBC"></transactionManager>
 			<dataSource type="POOLED">
 				<property name="driver" value="${db.driver}"></property>
-				<property name="url"
-					value="${db.url}"></property>
+				<property name="url" value="${db.url}"></property>
 				<property name="username" value="${db.username}"></property>
 				<property name="password" value="${db.password}"></property>
 			</dataSource>
@@ -113,14 +117,15 @@
 		<mapper resource="com/ddd/mapper/MypageCInfoMapper.xml" />
 		<mapper resource="com/ddd/mapper/MypageSInfoMapper.xml" />
 		<mapper resource="com/ddd/mapper/MypageLogMapper.xml" />
+		<mapper resource="com/ddd/mapper/InquiryMapper.xml" />
 		<mapper resource="com/ddd/mapper/MypageArchiveMapper.xml"/>
-		<!-- <mapper resource="com/ddd/mapper/InquiryMapper.xml" /> -->
 		<mapper resource="com/ddd/mapper/mainMapper.xml" />
 		<mapper resource="com/ddd/mapper/ReportMapper.xml" />
 		<mapper resource="com/ddd/mapper/CareMapper.xml" />
 		<mapper resource="com/ddd/mapper/AdminUserMapper.xml" />
 		<mapper resource="com/ddd/mapper/FileMapper.xml" />
 		<mapper resource="com/ddd/mapper/AdminBlackMapper.xml" />
+		<mapper resource="com/ddd/mapper/AdminInquiryMapper.xml" />
 	</mappers>
 
 

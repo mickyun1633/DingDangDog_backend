@@ -1,8 +1,5 @@
 package com.ddd.app.inquiry.dto;
 
-import java.sql.Date;
-import java.time.LocalDateTime;
-
 public class InquiryDetailDTO {
 //	SELECT
 //    INQUIRY_NUMBER,
@@ -16,78 +13,67 @@ public class InquiryDetailDTO {
 //WHERE INQUIRY_NUMBER = 1
 //  AND USER_NUMBER = 10001;
 
-private	int inquiryNumber;
-private	String inquiryTitle;
-private LocalDateTime inquiryDate;
-private	String inquiryPost;
-private	char answerStatus;
-private String answerStatusText;
-private	String answerPost;
-private	Date regDate;
+	private int inquiryNumber;
+	private String inquiryTitle;
+    private String inquiryDate;
+	private String inquiryPost;
+	private String answerStatus;
+    private String answerDate;
+	private String answerPost;
+	private int userNumber;
+	public int getInquiryNumber() {
+		return inquiryNumber;
+	}
+	public void setInquiryNumber(int inquiryNumber) {
+		this.inquiryNumber = inquiryNumber;
+	}
+	public String getInquiryTitle() {
+		return inquiryTitle;
+	}
+	public void setInquiryTitle(String inquiryTitle) {
+		this.inquiryTitle = inquiryTitle;
+	}
+	public String getInquiryDate() {
+		return inquiryDate;
+	}
+	public void setInquiryDate(String inquiryDate) {
+		this.inquiryDate = inquiryDate;
+	}
+	public String getInquiryPost() {
+		return inquiryPost;
+	}
+	public void setInquiryPost(String inquiryPost) {
+		this.inquiryPost = inquiryPost;
+	}
+	public String getAnswerStatus() {
+		return answerStatus;
+	}
+	public void setAnswerStatus(String answerStatus) {
+		this.answerStatus = answerStatus;
+	}
+	public String getAnswerDate() {
+		return answerDate;
+	}
+	public void setAnswerDate(String answerDate) {
+		this.answerDate = answerDate;
+	}
+	public String getAnswerPost() {
+		return answerPost;
+	}
+	public void setAnswerPost(String answerPost) {
+		this.answerPost = answerPost;
+	}
+	public int getUserNumber() {
+		return userNumber;
+	}
+	public void setUserNumber(int userNumber) {
+		this.userNumber = userNumber;
+	}
+	@Override
+	public String toString() {
+		return "InquiryDetailDTO [inquiryNumber=" + inquiryNumber + ", inquiryTitle=" + inquiryTitle + ", inquiryDate="
+				+ inquiryDate + ", inquiryPost=" + inquiryPost + ", answerStatus=" + answerStatus + ", answerDate="
+				+ answerDate + ", answerPost=" + answerPost + ", userNumber=" + userNumber + "]";
+	}
 
-public int getInquiryNumber() {
-	return inquiryNumber;
 }
-public void setInquiryNumber(int inquiryNumber) {
-	this.inquiryNumber = inquiryNumber;
-}
-public String getInquiryTitle() {
-	return inquiryTitle;
-}
-public void setInquiryTitle(String inquiryTitle) {
-	this.inquiryTitle = inquiryTitle;
-}
-public LocalDateTime getInquiryDate() {
-	return inquiryDate;
-}
-public void setInquiryDate(LocalDateTime inquiryDate) {
-	this.inquiryDate = inquiryDate;
-}
-public String getInquiryPost() {
-	return inquiryPost;
-}
-public void setInquiryPost(String inquiryPost) {
-	this.inquiryPost = inquiryPost;
-}
-public char getAnswerStatus() {
-	return answerStatus;
-}
-public void setAnswerStatus(char answerStatus) {
-	this.answerStatus = answerStatus;
-}
-public String getAnswerStatusText() {
-	return answerStatusText;
-}
-public void setAnswerStatusText(String answerStatusText) {
-	this.answerStatusText = answerStatusText;
-}
-public String getAnswerPost() {
-	return answerPost;
-}
-public void setAnswerPost(String answerPost) {
-	this.answerPost = answerPost;
-}
-public Date getRegDate() {
-	return regDate;
-}
-public void setRegDate(Date regDate) {
-	this.regDate = regDate;
-}
-
-@Override
-public String toString() {
-	return "InquiryDetailDTO [inquiryNumber=" + inquiryNumber + ", inquiryTitle=" + inquiryTitle + ", inquiryDate="
-			+ inquiryDate + ", inquiryPost=" + inquiryPost + ", answerStatus=" + answerStatus + ", answerStatusText="
-			+ answerStatusText + ", answerPost=" + answerPost + ", regDate=" + regDate + "]";
-}
-
-
-
-
-
-
-
-	
-	
-}
-

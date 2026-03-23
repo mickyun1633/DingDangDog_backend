@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import com.ddd.app.admin.dto.AdminBlackDTO;
 import com.ddd.app.admin.dto.AdminCareDTO;
 import com.ddd.app.admin.dto.AdminDTO;
+import com.ddd.app.admin.dto.AdminInquiryDTO;
 import com.ddd.app.admin.dto.AdminUserDTO;
 import com.ddd.config.MyBatisConfig;
 
@@ -121,14 +122,14 @@ public class AdminDAO {
 
 	// 멍! 케어 게시글 총 개수 조회 (검색 조건 추가)
 	public int getCareTotal(Map<String, Object> pageMap) {
-	    System.out.println("멍! 케어 게시글 총 개수 조회 - getCareTotal 실행");
-	    return sqlSession.selectOne("adminCare.getCareTotal", pageMap);
+		System.out.println("멍! 케어 게시글 총 개수 조회 - getCareTotal 실행");
+		return sqlSession.selectOne("adminCare.getCareTotal", pageMap);
 	}
 
 	// 멍! 케어 리스트 조회
 	public List<AdminCareDTO> selectCareList(Map<String, Object> pageMap) {
-	    System.out.println("멍케어 전체 리스트 조회");
-	    return sqlSession.selectList("adminCare.selectCareList", pageMap);
+		System.out.println("멍케어 전체 리스트 조회");
+		return sqlSession.selectList("adminCare.selectCareList", pageMap);
 	}
 
 	// 멍! 케어 검색
@@ -210,6 +211,46 @@ public class AdminDAO {
 		System.out.println("신고횟수 초기화");
 		sqlSession.update("adminBlack.resetUserStatus", userNumber);
 		System.out.println("블랙리스트 해제");
+	}
+
+	// 문의
+
+	// 대시보드용 문의리스트
+
+	// 문의 전체 개수
+	public int getTotalInq() {
+		System.out.println("문의 전체 개수 조회");
+		return sqlSession.selectOne("adminInq.getTotalInq");
+	}
+
+	// 필터링후 문의 전체 개수
+	public int getTotalInqByFilter() {
+		System.out.println("필터링후 문의 전체 개수 조회");
+		return sqlSession.selectOne("adminInq.getTotalInqByFilter");
+	}
+
+	// 문의 전체 조회
+	public List<AdminInquiryDTO> selectInquiryList(Map<String, Object> pageMap) {
+		System.out.println("문의 전체 목록 조회");
+		return sqlSession.selectList("adminInq.selectInquiryList", pageMap);
+	}
+
+	// 필터링후 문의 전체 조회
+	public List<AdminInquiryDTO> selectInquiryListByFilter(Map<String, Object> pageMap) {
+		System.out.println("필터링후 문의 전체 목록 조회");
+		return sqlSession.selectList("adminInq.selectInquiryListByFilter", pageMap);
+	}
+
+	// 문의 상세
+	public AdminInquiryDTO selectInquiryDetail(int inquiryNumber) {
+		System.out.println("문의 상세 조회 실행 : " + inquiryNumber);
+		return sqlSession.selectOne("adminInq.selectInquiryDetail", inquiryNumber);
+	}
+
+	// 문의 답변
+	public void inquiryAnswer(AdminInquiryDTO adminInquiryDTO) {
+		System.out.println("문의 답변 실행 : " + adminInquiryDTO.getInquiryNumber());
+		sqlSession.update("adminInq.inquiryAnswer", adminInquiryDTO);
 	}
 
 }

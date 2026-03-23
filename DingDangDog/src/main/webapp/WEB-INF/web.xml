@@ -98,7 +98,7 @@
 	<!-- 문의 매핑 -->
 	<servlet>
 		<servlet-name>inquiry</servlet-name>
-		<servlet-class>com.ddd.app.inquiry.controller.inquiryFrontController</servlet-class>
+		<servlet-class>com.ddd.app.inquiry.controller.InquiryFrontController</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>inquiry</servlet-name>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="adminInq">
+
+	<!-- 대시보드용 문의 조회 -->
+
+
+	<!-- 관리자 문의관리 -->
+	<!-- 문의 전체 개수 -->
+	<select id="getTotalInq" resultType="int">
+		SELECT count(*) FROM
+		DDD_INQUIRY
+	</select>
+	<!-- 문의 필터링 전체 개수 -->
+	<select id="getTotalInqByFilter" resultType="int">
+		SELECT count(*) FROM
+		DDD_INQUIRY
+		WHERE ANSWER_STATUS = 'N'
+	</select>
+	<!-- 문의 전체조회 -->
+	<select id="selectInquiryList" parameterType="map"
+		resultType="AdminInquiryDTO">
+<![CDATA[
+    SELECT * FROM (
+        SELECT ROWNUM AS rnum, subquery.* FROM (
+          	SELECT i.inquiry_number, i.answer_status, i.inquiry_title,
+			u.user_nickname, i.inquiry_date
+			FROM ddd_inquiry i JOIN ddd_user u 
+			ON i.user_number = u.user_number
+			ORDER BY i.answer_status ASC, i.inquiry_date ASC
+        ) subquery
+    ) 
+    WHERE rnum BETWEEN #{startRow} AND #{endRow}
+]]>
+	</select>
+
+	<!-- 문의 전체조회 + 필터링 -->
+	<select id="selectInquiryListByFilter" parameterType="map"
+		resultType="AdminInquiryDTO">
+<![CDATA[
+    SELECT * FROM (
+        SELECT ROWNUM AS rnum, subquery.* FROM (
+          	SELECT i.inquiry_number, i.answer_status, i.inquiry_title,
+			u.user_nickname, i.inquiry_date
+			FROM ddd_inquiry i JOIN ddd_user u 
+			ON i.user_number = u.user_number
+			WHERE i.answer_status = 'N'
+			ORDER BY i.inquiry_date ASC
+        ) subquery
+    ) 
+    WHERE rnum BETWEEN #{startRow} AND #{endRow}
+]]>
+	</select>
+
+	<!-- 문의 상세 -->
+	<select id="selectInquiryDetail" parameterType="int"
+		resultType="AdminInquiryDTO">
+		SELECT i.inquiry_title, i.answer_status, u.user_nickname,
+		i.inquiry_date,
+		i.inquiry_post, i.answer_date, i.answer_post
+		FROM
+		ddd_inquiry i JOIN ddd_user u
+		ON i.user_number = u.user_number
+		WHERE
+		i.inquiry_number = #{inquiryNumber}
+	</select>
+	<!-- 문의 답변 -->
+	<update id="inquiryAnswer" parameterType="AdminInquiryDTO">
+		UPDATE DDD_INQUIRY
+		SET
+		ANSWER_POST = #{answerPost}
+		,ANSWER_DATE = sysdate , ANSWER_STATUS = 'Y'
+		WHERE INQUIRY_NUMBER = #{inquiryNumber}
+	</update>
+
+
+</mapper>

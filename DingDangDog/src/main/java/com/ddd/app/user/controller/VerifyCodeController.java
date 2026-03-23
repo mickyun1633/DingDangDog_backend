@@ -1,8 +1,6 @@
 package com.ddd.app.user.controller;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -20,31 +18,49 @@ public class VerifyCodeController implements Execute {
 	public Result execute(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 
-		BufferedReader reader = request.getReader();
-		String body = reader.lines().collect(Collectors.joining());
-		JsonObject json = JsonParser.parseString(body).getAsJsonObject();
-
-		// 클라이언트로부터 받은 인증번호
-		String userCode = json.get("code").getAsString();
-		HttpSession session = request.getSession();
-
-		// 세션에 저장된 인증번호
-		String sessionCode = (String) session.getAttribute("verificationCode");
-
-		JsonObject responseJson = new JsonObject();
-
-		// 인증번호 일치 여부 검사
-		if (sessionCode != null && sessionCode.equals(userCode)) {
-			responseJson.addProperty("success", true);
-		} else {
-			responseJson.addProperty("success", false);
-		}
-
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
-		response.getWriter().write(responseJson.toString());
 
-		return null;
+		try {
+			// JSON 파싱
+			JsonObject json = JsonParser.parseReader(request.getReader()).getAsJsonObject();
+
+			String userCode = json.get("code").getAsString();
+			System.out.println("입력 코드: " + userCode);
+
+			HttpSession session = request.getSession();
+			String sessionCode = (String) session.getAttribute("verificationCode");
+
+			System.out.println("세션 코드: " + sessionCode);
+
+			JsonObject responseJson = new JsonObject();
+
+			// 2. 검증
+			if (sessionCode != null && sessionCode.equals(userCode)) {
+				responseJson.addProperty("success", true);
+
+				// 인증 성공 시 세션 제거
+				session.removeAttribute("verificationCode");
+
+			} else {
+				responseJson.addProperty("success", false);
+			}
+
+			response.getWriter().write(responseJson.toString());
+			return null;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+
+			JsonObject errorJson = new JsonObject();
+			errorJson.addProperty("success", false);
+			errorJson.addProperty("message", "서버 오류");
+
+			response.getWriter().write(errorJson.toString());
+			return null;
+		}
 	}
 
 }

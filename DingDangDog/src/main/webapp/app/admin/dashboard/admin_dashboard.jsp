@@ -243,7 +243,7 @@
 						<article class="dashboard-box admin-box-shadow">
 							<div class="box-header">
 								<span class="box-title">문의 목록</span> <a
-									href="${pageContext.request.contextPath}/admin/"
+									href="${pageContext.request.contextPath}/admin/InquiryListOk"
 									class="link-btn">+</a>
 							</div>
 							<div class="box-content">

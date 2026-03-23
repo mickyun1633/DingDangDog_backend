@@ -8,14 +8,46 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.ddd.app.Execute;
 import com.ddd.app.Result;
+import com.ddd.app.inquiry.dao.InquiryDAO;
+import com.ddd.app.inquiry.dto.InquiryListDTO;
 
 public class InquiryDeleteOkController implements Execute{
 
 	@Override
 	public Result execute(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		return null;
+	        throws ServletException, IOException {
+
+	    InquiryDAO inquiryDAO = new InquiryDAO();
+	    InquiryListDTO dto = new InquiryListDTO();
+	    Result result = new Result();
+
+	    Integer userNumber = (Integer) request.getSession().getAttribute("userNumber");
+
+	    if (userNumber == null) {
+	        result.setPath(request.getContextPath() + "/app/login/login.jsp");
+	        result.setRedirect(true);
+	        return result;
+	    }
+
+	    String inquiryNumberStr = request.getParameter("inquiryNumber");
+
+	    if (inquiryNumberStr == null || inquiryNumberStr.trim().isEmpty()) {
+	        result.setPath(request.getContextPath() + "/inquiry/inquirylistOk.in");
+	        result.setRedirect(true);
+	        return result;
+	    }
+
+	    int inquiryNumber = Integer.parseInt(inquiryNumberStr);
+
+	    dto.setInquiryNumber(inquiryNumber);
+	    dto.setUserNumber(userNumber);
+
+	    inquiryDAO.deleteInquiry(dto);
+
+	    result.setPath(request.getContextPath() + "/inquiry/inquirylistOk.in");
+	    result.setRedirect(true);
+
+	    return result;
 	}
-	
+
 }

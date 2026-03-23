@@ -1,66 +1,165 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>1:1 문의 리스트(일반회원)</title>
-  <link rel="stylesheet" href="./../../../assets/css/mypage/common/support_list_common.css" />
-  <script defer src="./../../../assets/js/mypage/common/support_list_common.js"></script>
+<meta charset="UTF-8" />
+<title>1:1 문의 리스트</title>
+<link rel="stylesheet"
+    href="${pageContext.request.contextPath}/assets/css/mypage/common/support_list_common.css" />
 </head>
 
 <body>
-  <!-- header -->
-  <div id="header-container"></div>
-  <main class="support-list-common">
+
+<div id="header-container"></div>
+
+<main class="support-list-common">
     <div class="container">
-      <aside class="sidebar">
-        <nav class="side-menu">
-          <a class="btn-side-link" href="./profile_edit_common.html">내 정보 변경</a>
-          <hr>
-          <a class="btn-side-link" href="./volunteer_status_list_common.html">멍! 케어 신청 확인</a>
-          <hr>
-          <a class="btn-side-link" href="./review_list.html">내가 작성한 멍! 로그 목록</a>
-          <hr>
-          <a class="btn-side-link" href="./support_list_common.html">1 : 1 문의</a>
-        </nav>
-      </aside>
 
-      <section class="content">
-        <div class="content-box">
-          <div class="panel">
-            <div class="panel-head">
-              <h2 class="panel-title">1:1 문의</h2>
-            </div>
+        <!-- 사이드바 -->
+        <aside class="sidebar">
+            <nav class="side-menu">
+                <a class="btn-side-link"
+                   href="${pageContext.request.contextPath}/user/profileEdit.in">
+                    내 정보 변경
+                </a>
+                <hr>
+                <a class="btn-side-link"
+                   href="${pageContext.request.contextPath}/care/myCareList.in">
+                    멍! 케어 신청 확인
+                </a>
+                <hr>
+                <a class="btn-side-link"
+                   href="${pageContext.request.contextPath}/log/myLogList.in">
+                    내가 작성한 멍! 로그 목록
+                </a>
+                <hr>
+                <a class="btn-side-link"
+                   href="${pageContext.request.contextPath}/inquiry/inquirylistOk.in">
+                    1 : 1 문의
+                </a>
+            </nav>
+        </aside>
 
-            <div class="panel-body">
-              <div class="support-table">
-                <div class="support-table-head">
-                  <div class="col-status">답변상태</div>
-                  <div class="col-number">문의글 번호</div>
-                  <div class="col-title">제목</div>
-                  <div class="col-date">작성일자</div>
+        <!-- 본문 -->
+        <section class="content">
+            <div class="content-box">
+                <div class="panel">
+
+                    <div class="panel-head">
+                        <h2 class="panel-title">1:1 문의</h2>
+                    </div>
+
+                    <div class="panel-body">
+
+                        <div class="support-table">
+                            <div class="support-table-head">
+                                <div class="col-status">답변상태</div>
+                                <div class="col-number">문의글 번호</div>
+                                <div class="col-title">제목</div>
+                                <div class="col-date">작성일자</div>
+                            </div>
+
+
+                            <div id="supportTableBody">
+
+                                <c:choose>
+                                    <c:when test="${not empty inquiryList}">
+
+                                        <c:forEach var="item" items="${inquiryList}">
+
+                                            <div class="support-table-row">
+
+                                                <!-- 답변 상태 -->
+                                                <div class="col-status">
+                                                    <span class="status ${item.answerStatus}">
+                                                        <c:choose>
+                                                            <c:when test="${item.answerStatus eq 'Y'}">
+                                                                답변 완료
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                답변 대기
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </span>
+                                                </div>
+
+                                                <!-- 번호 -->
+                                                <div class="col-number">
+                                                    ${item.inquiryNumber}
+                                                </div>
+
+                                                <!-- 제목 -->
+                                                <div class="col-title">
+                                                    <a href="${pageContext.request.contextPath}/inquiry/inquiryReadOk.in?inquiryNumber=${item.inquiryNumber}">
+                                                        ${item.inquiryTitle}
+                                                    </a>
+                                                </div>
+
+                                                <!-- 날짜 -->
+                                                <div class="col-date">
+                                                    ${item.inquiryDate}
+                                                </div>
+
+                                            </div>
+
+                                        </c:forEach>
+
+                                    </c:when>
+                                    <c:otherwise>
+                                        <div class="support-table-row">
+                                            <div class="col-title">
+                                                등록된 문의가 없습니다.
+                                            </div>
+                                        </div>
+                                    </c:otherwise>
+
+                                </c:choose>
+
+                            </div>
+                        </div>
+
+                        <!-- 페이지네이션 -->
+                        <div class="panel-footer">
+
+                            <div class="pagination">
+                                <c:if test="${prev}">
+                                    <a href="${pageContext.request.contextPath}/inquiry/inquiryListOk.in?page=${startPage-1}">
+                                        이전
+                                    </a>
+                                </c:if>
+
+                                <c:forEach var="i" begin="${startPage}" end="${endPage}">
+                                    <a href="${pageContext.request.contextPath}/inquiry/inquiryListOk.in?page=${i}">
+                                        ${i}
+                                    </a>
+                                </c:forEach>
+
+                                <c:if test="${next}">
+                                    <a href="${pageContext.request.contextPath}/inquiry/inquirylistOk.in?page=${endPage+1}">
+                                        다음
+                                    </a>
+                                </c:if>
+                            </div>
+
+                            <a class="btn-outline"
+                               href="${pageContext.request.contextPath}/inquiry/inquiryWrite.in">
+                                문의글 작성
+                            </a>
+
+                        </div>
+
+                    </div>
                 </div>
-
-                <div id="supportTableBody"></div>
-              </div>
-
-              <div class="panel-footer">
-                <div class="pagination">
-                  <ul class="page-list" id="pagination"></ul>
-                </div>
-                <a class="btn-outline" href="./support_write_common.html">문의글 작성</a>
-              </div>
             </div>
-          </div>
-        </div>
-      </section>
+        </section>
+
     </div>
-  </main>
-  <!-- footer -->
-  <div id="footer-container"></div>
-  <!-- js -->
-  <script src="/assets/js/header-footer.js"></script>
-</body>
+</main>
 
+<div id="footer-container"></div>
+
+</body>
 </html>

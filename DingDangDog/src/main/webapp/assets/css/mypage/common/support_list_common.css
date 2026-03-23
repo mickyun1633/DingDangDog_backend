@@ -192,13 +192,13 @@ hr{
   font-weight:800;
 }
 
-.status.done{
-  background:#fff;
-  color:#F47C2A;
-  border:2px solid #F47C2A;
+.status.Y {
+  background: #fff;
+  color: #F47C2A;
+  border: 2px solid #F47C2A;
 }
 
-.status.progress{
+.status.N {
   background:#F47C2A;
   color:#fff;
   border:2px solid #F47C2A;

@@ -36,7 +36,7 @@
 			</li>
 			<li class="admin-nav-list">
 				<!-- 문의사항 페이지로 이동 --> <a
-				href="${pageContext.request.contextPath}/admin/"> 문의목록</a>
+				href="${pageContext.request.contextPath}/admin/InquiryListOk.ad"> 문의목록</a>
 			</li>
 		</ul>
 	</nav>
