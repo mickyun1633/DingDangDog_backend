@@ -147,7 +147,7 @@ public class MypageFrontController extends HttpServlet {
 			} else {
 				// 로그인 정보가 없거나 타입이 이상할 경우 로그인 페이지로
 				result = new Result();
-				result.setPath(request.getContextPath() + "/member/login.me");
+				result.setPath(request.getContextPath() + "/user/login.us");
 				result.setRedirect(true);
 			}
 			System.out.println("마이페이지 이동 처리 완료");
