@@ -51,9 +51,18 @@ public class CareApplyController implements Execute {
         }
 
         // 6. 봉사 신청 처리
-        careDAO.applyCare(dto);
-        careDAO.incrementApplyCount(careNumber);
-        
+        int applyResult = careDAO.applyCare(dto);
+
+        if (applyResult == 0) {
+            request.setAttribute("alertMessage", "모집이 마감되었거나 신청할 수 없는 상태입니다.");
+            result.setPath("/care/detail.ca?careNumber=" + careNumber);
+            result.setRedirect(false);
+            return result;
+        }
+
+        // 신청 후 현재 인원 기준으로 상태 재계산
+        careDAO.syncCareStatus(careNumber);
+
         // 신청 완료 메시지 설정
         request.setAttribute("alertMessage", "신청 완료되었습니다.");
         result.setPath("/care/detail.ca?careNumber=" + careNumber);

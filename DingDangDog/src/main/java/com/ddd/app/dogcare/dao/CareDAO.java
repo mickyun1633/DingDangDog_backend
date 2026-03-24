@@ -131,10 +131,11 @@ public class CareDAO {
 		return sqlSession.selectOne("care.getApplyStatus", careNumber);
 	}
 
-	// 멍! 케어 신청 후 인원 증가
-	public void incrementApplyCount(int careNumber) {
-	    System.out.println("봉사 신청 인원 수 증가");
-	    sqlSession.update("care.incrementApplyCount", careNumber);  // apply_count 증가
+	// 현재 신청 인원/모집 인원/날짜를 기준으로 상태 동기화
+	public void syncCareStatus(int careNumber) {
+		System.out.println("멍! 케어 상태 동기화 실행 : " + careNumber);
+		sqlSession.update("care.syncCareStatus", careNumber);
+		System.out.println("멍! 케어 상태 동기화 완료");
 	}
 	
 	// 회원 정보 확인

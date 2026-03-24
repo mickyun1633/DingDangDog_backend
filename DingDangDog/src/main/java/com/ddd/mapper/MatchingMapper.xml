@@ -13,7 +13,7 @@
 			DOG_GROOMING,
 			RESULT_CREATED_DATE
 		) VALUES (
-			#{resultNumber},
+			SEQ_MATCH_RESULT.NEXTVAL,
 			#{userNumber},
 			#{dogActivity},
 			#{dogSociality},

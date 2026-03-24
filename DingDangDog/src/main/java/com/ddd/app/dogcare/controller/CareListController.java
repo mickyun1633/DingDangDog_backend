@@ -24,6 +24,9 @@ public class CareListController implements Execute {
 		CareDAO careDAO = new CareDAO();
 		Result result = new Result();
 
+		// 지난 날짜 게시글 상태를 목록 진입 시 반영
+		careDAO.updateExpiredStatus();
+
 		// 검색 파라미터 받기
 		String type = request.getParameter("type");
 		String keyword = request.getParameter("keyword");

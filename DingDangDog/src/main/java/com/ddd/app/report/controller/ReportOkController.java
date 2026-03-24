@@ -1,6 +1,8 @@
 package com.ddd.app.report.controller;
 
 import java.io.IOException;
+import java.time.LocalDate;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -8,66 +10,103 @@ import javax.servlet.http.HttpSession;
 
 import com.ddd.app.Execute;
 import com.ddd.app.Result;
+import com.ddd.app.dogcare.dao.CareDAO;
+import com.ddd.app.dogcare.dto.CareDetailDTO;
 import com.ddd.app.report.dao.ReportDAO;
 import com.ddd.app.report.dto.ReportDTO;
 
 public class ReportOkController implements Execute {
-    @Override
-    public Result execute(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
 
-        System.out.println("=== ReportOkController 실행 ===");
+	@Override
+	public Result execute(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
-        Result result = new Result();
-        ReportDAO reportDAO = new ReportDAO();
-        ReportDTO reportDTO = new ReportDTO();
-        HttpSession session = request.getSession();
+		System.out.println("=== ReportOkController 실행 ===");
 
-        try {
-            // 1. 세션에서 현재 로그인한 유저(신고자) 번호 가져오기
-            // 세션에 저장된 키값이 "userNumber"인지 확인하세요!
-            Integer reporterUserNumber = (Integer) session.getAttribute("userNumber");
+		Result result = new Result();
+		ReportDAO reportDAO = new ReportDAO();
+		CareDAO careDAO = new CareDAO();
+		HttpSession session = request.getSession();
 
-            if (reporterUserNumber == null) {
-                // 로그인 안 되어 있으면 로그인 페이지로
-                result.setPath(request.getContextPath() + "/user/login.us");
-                result.setRedirect(true);
-                return result;
-            }
+		try {
+			Integer reporterUserNumber = (Integer) session.getAttribute("userNumber");
 
-            // 2. 파라미터 수집
-            int careNumber = Integer.parseInt(request.getParameter("careNumber"));
-            int reportedUserNumber = Integer.parseInt(request.getParameter("userNumber"));
-            String reason = request.getParameter("reason");
-            String etcReason = request.getParameter("etcReason");
-            
-            // applyNumber 파라미터가 있는지 확인 후 세팅 (없으면 일단 0이나 제외)
-            String applyNumStr = request.getParameter("applyNumber");
-            if (applyNumStr != null && !applyNumStr.isEmpty()) {
-                reportDTO.setApplyNumber(Integer.parseInt(applyNumStr));
-            }
+			if (reporterUserNumber == null) {
+				result.setPath(request.getContextPath() + "/user/login.us");
+				result.setRedirect(true);
+				return result;
+			}
 
-            // 3. 신고 사유 가공
-            String finalReason = "기타".equals(reason) ? "기타: " + etcReason : reason;
+			int careNumber = Integer.parseInt(request.getParameter("careNumber"));
+			int reportedUserNumber = Integer.parseInt(request.getParameter("userNumber"));
+			int applyNumber = Integer.parseInt(request.getParameter("applyNumber"));
 
-            // 4. DTO 데이터 세팅 (이 부분이 중요!)
-            reportDTO.setReporterUserNumber(reporterUserNumber); // 신고자 (세션 값)
-            reportDTO.setReportedUserNumber(reportedUserNumber); // 피신고자 (파라미터 값)
-            reportDTO.setReportReason(finalReason);
-            
-            // 5. DB 저장
-            reportDAO.insertReport(reportDTO);
-            
-            // 6. 결과 설정: 다시 상세페이지로 리다이렉트
-            result.setPath(request.getContextPath() + "/care/detail.ca?careNumber=" + careNumber);
-            result.setRedirect(true);
+			String reason = request.getParameter("reason");
+			String etcReason = request.getParameter("etcReason");
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            result.setPath(request.getContextPath() + "/care/list.ca");
-            result.setRedirect(true);
-        }
+			// 봉사 날짜 지난 후에만 신고 가능
+			CareDetailDTO care = careDAO.selectCare(careNumber);
+			if (care == null || care.getCareDate() == null || care.getCareDate().isEmpty()) {
+				session.setAttribute("reportMessage", "잘못된 접근입니다.");
+				result.setPath(request.getContextPath() + "/care/detail.ca?careNumber=" + careNumber);
+				result.setRedirect(true);
+				return result;
+			}
 
-        return result;
-    }
+			LocalDate volunteerDate = LocalDate.parse(care.getCareDate());
+			if (!volunteerDate.isBefore(LocalDate.now())) {
+				session.setAttribute("reportMessage", "신고는 봉사날짜가 지난 후에만 가능합니다.");
+				result.setPath(request.getContextPath() + "/care/detail.ca?careNumber=" + careNumber);
+				result.setRedirect(true);
+				return result;
+			}
+
+			// 중복 신고 체크
+			int duplicateCount = reportDAO.checkDuplicateReport(reporterUserNumber, applyNumber);
+			if (duplicateCount > 0) {
+				session.setAttribute("reportMessage", "이 게시글에서 이미 신고된 회원입니다.");
+				result.setPath(request.getContextPath() + "/care/detail.ca?careNumber=" + careNumber);
+				result.setRedirect(true);
+				return result;
+			}
+
+			String finalReason = reason;
+			if ("기타".equals(reason)) {
+				if (etcReason == null || etcReason.trim().isEmpty()) {
+					session.setAttribute("reportMessage", "기타 사유를 입력해주세요.");
+					result.setPath(request.getContextPath() + "/care/detail.ca?careNumber=" + careNumber);
+					result.setRedirect(true);
+					return result;
+				}
+				finalReason = "기타: " + etcReason.trim();
+			}
+
+			ReportDTO reportDTO = new ReportDTO();
+			reportDTO.setReporterUserNumber(reporterUserNumber);
+			reportDTO.setReportedUserNumber(reportedUserNumber);
+			reportDTO.setApplyNumber(applyNumber);
+			reportDTO.setReportReason(finalReason);
+
+			int insertResult = reportDAO.insertReport(reportDTO);
+
+			if (insertResult > 0) {
+				reportDAO.reportCount(reportedUserNumber);
+				reportDAO.updateBlacklist(reportedUserNumber);
+				session.setAttribute("reportMessage", "신고 완료되었습니다.");
+			} else {
+				session.setAttribute("reportMessage", "신고 처리에 실패했습니다.");
+			}
+
+			result.setPath(request.getContextPath() + "/care/detail.ca?careNumber=" + careNumber);
+			result.setRedirect(true);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.setAttribute("reportMessage", "신고 처리 중 오류가 발생했습니다.");
+			result.setPath(request.getContextPath() + "/care/list.ca");
+			result.setRedirect(true);
+		}
+
+		return result;
+	}
 }

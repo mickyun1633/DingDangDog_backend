@@ -60,6 +60,9 @@
 							<a
 								href="${pageContext.request.contextPath}/care/detail.ca?careNumber=${care.careNumber}">
 								${care.careTitle} </a>
+									<c:if test="${care.careStatus eq 'closed'}">
+										<span style="color: #999; font-size: 14px; margin-left: 8px;">[모집마감]</span>
+									</c:if>
 						</div>
 						<div class="dogcare-date">${care.careDate}</div>
 						<div class="dogcare-nickname">${care.userNickname}</div>
