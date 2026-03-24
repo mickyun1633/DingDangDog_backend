@@ -53,8 +53,8 @@ footer {
   margin-bottom: 80px;
   border-radius: 10px;
   /*나중에 해제 */
-  /* overflow: hidden; */
-  /* box-shadow: 2px 2px 5px #b6b6b6; */
+   overflow: hidden; 
+   box-shadow: 2px 2px 5px #b6b6b6; 
 }
 
 .survey-items-header {

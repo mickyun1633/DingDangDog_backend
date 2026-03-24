@@ -31,8 +31,9 @@
     <main>
         <!-- 최상단 배너 -->
         <section class="top-banner-section">
-            <a href="${pageContext.request.contextPath}/dogmatching/main.dm">
-                <img src="${pageContext.request.contextPath}/assets/img/1.png" alt="멍! 매칭 설문조사 바로가기" class="banner-img">
+            <a href="${pageContext.request.contextPath}/matching/test.ma">
+                <img src="${pageContext.request.contextPath}/assets/img/main_matching.png" alt="멍! 매칭 설문조사 바로가기" class="banner-img">
+
             </a>
         </section>
 
@@ -73,7 +74,7 @@
 
         <!-- 플로팅 버튼 -->
         <div class="floating-btn">
-            <a href="${pageContext.request.contextPath}/dogmatching/main.dm">
+            <a href="${pageContext.request.contextPath}/matching/test.ma">
                 <img src="${pageContext.request.contextPath}/assets/img/FloatingButton02.svg" alt="멍! 매칭 설문조사">
             </a>
         </div>

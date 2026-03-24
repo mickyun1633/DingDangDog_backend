@@ -28,13 +28,12 @@
     };
 
     const serverMatchData = [
-        <c:forEach var="match" items="${matchingList}" varStatus="status">
-            { 
-                // MatchingResultDTO의 실제 필드명 확인 필요 (예: matchingTitle, matchingDate)
-                title: "${match.matchingTitle}", 
-                date: "${match.matchingDate}" 
-            }${!status.last ? ',' : ''}
-        </c:forEach>
+    	<c:forEach var="match" items="${matchingList}" varStatus="status">
+        { "title": "${match.resultNumber}번째 매칭 결과", 
+            
+            "date": "${match.resultCreatedDate}" 
+        }${!status.last ? ',' : ''}
+    </c:forEach>
     ];
 </script>
 <body>
@@ -60,7 +59,7 @@
 
 					<article class="panel panel-left">
 						<div class="panel-head">
-							<h2 class="panel-title">${user.userNickname} 님의 멍!매칭 결과</h2>
+							<h2 class="panel-title">${user.userNickname}님의멍!매칭 결과</h2>
 						</div>
 
 						<div class="panel-body">
@@ -69,8 +68,11 @@
 									<c:when test="${not empty matchingList}">
 										<c:forEach var="match" items="${matchingList}">
 											<li class="match-row">
-												<div class="match-title">${match.title}</div>
-												<div class="match-date">${match.date}</div>
+											<a href="${pageContext.request.contextPath}/matching/save.ma?no=${match.resultNumber}"
+												style="display: block; text-decoration: none; color: inherit;">
+													<div class="match-title">매칭 번호: ${match.resultNumber}</div>
+											</a>
+											<div class="match-date">${match.resultCreatedDate}</div>
 											</li>
 										</c:forEach>
 									</c:when>

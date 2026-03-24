@@ -44,8 +44,8 @@ public class InquiryDeleteOkController implements Execute{
 
 	    inquiryDAO.deleteInquiry(dto);
 
-	    result.setPath(request.getContextPath() + "/inquiry/inquirylistOk.in");
-	    result.setRedirect(true);
+	    result.setPath("/app/mypage/common/support_list_common.jsp");
+	    result.setRedirect(false);
 
 	    return result;
 	}
