@@ -33,6 +33,7 @@
         <section class="top-banner-section">
             <a href="${pageContext.request.contextPath}/matching/test.ma">
                 <img src="${pageContext.request.contextPath}/assets/img/main_matching.png" alt="멍! 매칭 설문조사 바로가기" class="banner-img">
+
             </a>
         </section>
 
