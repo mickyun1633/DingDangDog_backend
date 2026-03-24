@@ -19,14 +19,8 @@ const logNumberInput = document.getElementById("logNumber");
 const commentCancelWrap = document.getElementById("commentCancelWrap");
 const btnCommentCancel = document.getElementById("btnCommentCancel");
 
-/* =========================
-   초기 실행
-========================= */
 bindEvents();
 
-/* =========================
-   이벤트 등록
-========================= */
 function bindEvents() {
   bindCommentWriteForm();
   bindCommentEdit();
@@ -34,10 +28,6 @@ function bindEvents() {
   bindCommentCancelButton();
 }
 
-/* =========================
-   댓글 작성 / 수정
-   - form submit 기준으로 검사
-========================= */
 function bindCommentWriteForm() {
   if (!commentForm || !commentWriteInput) return;
 
@@ -53,11 +43,6 @@ function bindCommentWriteForm() {
   });
 }
 
-/* =========================
-   댓글 수정
-   - 수정 버튼 클릭 시 기존 댓글 내용을 입력창에 세팅
-   - form action을 editOk로 변경
-========================= */
 function bindCommentEdit() {
   if (!commentList || !commentForm || !commentWriteInput || !btnCommentWrite || !commentNumberInput) return;
 
@@ -87,9 +72,6 @@ function bindCommentEdit() {
   });
 }
 
-/* =========================
-   댓글 수정 취소
-========================= */
 function bindCommentCancelButton() {
   if (!btnCommentCancel || !commentForm || !commentWriteInput || !btnCommentWrite || !commentNumberInput) return;
 
@@ -109,9 +91,6 @@ function resetCommentForm() {
   }
 }
 
-/* =========================
-   게시글 삭제
-========================= */
 function bindPostDelete() {
   if (!btnDetailDelete) return;
 
@@ -129,9 +108,6 @@ function bindPostDelete() {
   });
 }
 
-/* =========================
-   공통 유틸
-========================= */
 function escapeHtml(value) {
   return String(value)
     .replace(/&/g, "&amp;")

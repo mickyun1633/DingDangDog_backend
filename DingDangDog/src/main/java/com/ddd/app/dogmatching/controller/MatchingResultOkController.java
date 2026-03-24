@@ -89,10 +89,15 @@ public class MatchingResultOkController implements Execute {
 	    return "입력한 응답을 보면 "
 	            + activityComment + ", "
 	            + socialityComment +"<br>"
-	            +". 또한 "
+	            +" 또한 "
 	            + independenceComment + ", "
 	            + barkingComment + ", "+"<br>"
-	            + groomingComment + ".";
+	            + groomingComment + "."+"<br>"
+	            + "성향 분석 점수 : 활동성 [" + activityAvg + "], "
+	    		+ "사회성 [" + socialityAvg + "], "
+	    		+ "독립성 [" + independenceAvg + "], "
+	    		+ "짖음 민감도 [" + barkingAvg + "], "
+	    		+ "털 관리 선호도 [" + groomingAvg + "]";
 		}	
 	
 		private String getActivityComment(double avg) {

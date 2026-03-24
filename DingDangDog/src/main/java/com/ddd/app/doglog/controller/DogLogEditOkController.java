@@ -2,7 +2,10 @@ package com.ddd.app.doglog.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -50,16 +53,8 @@ public class DogLogEditOkController implements Execute {
 			return null;
 		}
 
-		// 1. 게시글 수정
-		LogDTO updateLog = new LogDTO();
-		updateLog.setLogNumber(logNumber);
-		updateLog.setLogTitle(logTitle);
-		updateLog.setLogPost(logPost);
-		updateDAO.update(updateLog);
-
 		LogImgDAO logImgDAO = new LogImgDAO();
 
-		// 2. 삭제할 기존 이미지 삭제
 		if (deleteImageIds != null && !deleteImageIds.trim().isEmpty()) {
 			String[] deleteIds = deleteImageIds.split(",");
 
@@ -71,7 +66,6 @@ public class DogLogEditOkController implements Execute {
 			}
 		}
 
-		// 3. 새 이미지 업로드 및 DB 저장
 		Collection<Part> parts = request.getParts();
 		String uploadPath = request.getServletContext().getRealPath("/upload/doglog");
 		File uploadDir = new File(uploadPath);
@@ -80,6 +74,9 @@ public class DogLogEditOkController implements Execute {
 			uploadDir.mkdirs();
 		}
 
+		List<LogImgDTO> newImageList = new ArrayList<>();
+		int imageIndex = 0;
+
 		for (Part part : parts) {
 			if (!"logImages".equals(part.getName())) continue;
 			if (part.getSize() == 0) continue;
@@ -87,14 +84,43 @@ public class DogLogEditOkController implements Execute {
 			String submittedFileName = part.getSubmittedFileName();
 			if (submittedFileName == null || submittedFileName.isBlank()) continue;
 
-			String savedFileName = System.currentTimeMillis() + "_" + submittedFileName;
+			String contentType = part.getContentType();
+			if (contentType == null || !contentType.startsWith("image/")) continue;
+
+			String ext = "";
+			int dotIndex = submittedFileName.lastIndexOf(".");
+			if (dotIndex != -1) {
+				ext = submittedFileName.substring(dotIndex);
+			}
+
+			String savedFileName = UUID.randomUUID().toString() + ext;
 			File saveFile = new File(uploadDir, savedFileName);
 			part.write(saveFile.getAbsolutePath());
 
+			String dbImagePath = "/upload/doglog/" + savedFileName;
+			String viewImagePath = request.getContextPath() + dbImagePath;
+
 			LogImgDTO logImgDTO = new LogImgDTO();
 			logImgDTO.setLogNumber(logNumber);
-			logImgDTO.setLogImgPath("/upload/doglog/" + savedFileName);
-			logImgDAO.insertImage(logImgDTO);
+			logImgDTO.setLogImgName(savedFileName);
+			logImgDTO.setLogImgPath(dbImagePath);
+			newImageList.add(logImgDTO);
+
+			String marker = "[[IMG_" + imageIndex + "]]";
+			String imgTag = "<img src=\"" + viewImagePath + "\" alt=\"본문 이미지\">";
+			logPost = logPost.replace(marker, imgTag);
+
+			imageIndex++;
+		}
+
+		LogDTO updateLog = new LogDTO();
+		updateLog.setLogNumber(logNumber);
+		updateLog.setLogTitle(logTitle);
+		updateLog.setLogPost(logPost);
+		updateDAO.update(updateLog);
+
+		for (LogImgDTO image : newImageList) {
+			logImgDAO.insertImage(image);
 		}
 
 		Result result = new Result();

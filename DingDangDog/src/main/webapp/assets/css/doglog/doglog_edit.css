@@ -18,8 +18,6 @@ body{
   font-family:"HannaPro", sans-serif;
 }
 
-
-
 .doglog-detail{
   width:100%;
   min-height:804px;
@@ -72,7 +70,6 @@ body{
 }
 
 /* 제목 */
-
 .detail-title{
   min-height:60px;
   padding:0 45px;
@@ -85,7 +82,6 @@ body{
 }
 
 /* edit 제목 input */
-
 .edit-title{
   width:100%;
   min-height:60px;
@@ -98,7 +94,6 @@ body{
 }
 
 /* 작성자 날짜 */
-
 .detail-info-container{
   padding:0 45px;
   display:flex;
@@ -111,58 +106,114 @@ body{
 }
 
 /* 메인 영역 */
-
 .detail-main-container{
   padding:20px 45px;
   min-height:400px;
   display:flex;
   justify-content:space-between;
   align-items:flex-start;
+  gap:20px;
 }
 
 /* 이미지 영역 */
-
 .detail-main-img{
   width:300px;
-  height:360px;
+  min-height:360px;
   flex-shrink:0;
   display:flex;
   flex-direction:column;
 }
 
-.detail-main-img img{
+.img-preview-box{
   width:300px;
   height:360px;
+  border-radius:5px;
+  overflow:hidden;
+  position:relative;
+  background:#d7ddcb;
+  border:1px solid #b6b6b6;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.detail-main-img img{
+  width:100%;
+  height:100%;
   object-fit:cover;
   border-radius:5px;
   display:block;
 }
 
 /* edit 이미지 미리보기 */
-
 #editPreviewImg{
-  width:300px;
-  height:360px;
+  width:100%;
+  height:100%;
   object-fit:cover;
   border-radius:5px;
 }
 
-/* 이미지 업로드 */
+.img-placeholder{
+  position:absolute;
+  font-size:20px;
+  color:#666;
+}
 
+/* 이미지 업로드 */
 #editImg{
+  display:none;
+}
+
+.edit-image-btn-wrap{
   margin-top:10px;
+  display:flex;
+}
+
+/* 기존 이미지 목록 */
+.existing-image-list{
+  margin-top:12px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+}
+
+.existing-image-item{
+  position:relative;
+  width:90px;
+  height:90px;
+  border-radius:5px;
+  overflow:hidden;
+  border:1px solid #b6b6b6;
+  background:#fff;
+}
+
+.existing-image-item img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.existing-image-remove{
+  position:absolute;
+  top:6px;
+  right:6px;
+  width:24px;
+  height:24px;
+  border:none;
+  border-radius:50%;
+  background:rgba(0, 0, 0, 0.7);
+  color:#fff;
+  font-size:18px;
+  line-height:24px;
+  cursor:pointer;
 }
 
 /* 내용 */
-
 .detail-main-post,
 .edit-content{
-  width:920px;
-  height:480px;
-  min-width:920px;
+  flex:1;
+  min-width:0;
   min-height:480px;
-  max-width:920px;
-  max-height:480px;
   border:1px solid #b6b6b6;
   border-radius:5px;
   padding:20px;
@@ -170,12 +221,53 @@ body{
   line-height:1.6;
   white-space:pre-wrap;
   word-break:break-word;
-  overflow-y:auto;
   font-family:"HannaPro", sans-serif;
+  overflow:visible;
+}
+
+.edit-content{
+  outline:none;
+}
+
+.edit-content:empty::before{
+  content:attr(data-placeholder);
+  color:#999;
+}
+
+.detail-main-post img,
+.edit-content img,
+.editor-body-image{
+  display:block;
+  max-width:100%;
+  height:auto;
+  border-radius:8px;
+  margin:12px 0;
+}
+
+/* 본문 이미지 wrapper */
+.editor-image-item{
+  position:relative;
+  display:inline-block;
+  margin:12px 0;
+  max-width:100%;
+}
+
+.editor-image-remove{
+  position:absolute;
+  top:8px;
+  right:8px;
+  width:28px;
+  height:28px;
+  border:none;
+  border-radius:50%;
+  background:rgba(0, 0, 0, 0.7);
+  color:#fff;
+  font-size:20px;
+  line-height:28px;
+  cursor:pointer;
 }
 
 /* 구분선 */
-
 hr{
   margin:0 45px 20px;
   border:none;
@@ -183,7 +275,6 @@ hr{
 }
 
 /* 버튼 영역 */
-
 .container-footer{
   width:100%;
   margin-top:20px;

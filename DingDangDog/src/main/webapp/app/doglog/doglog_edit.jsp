@@ -14,11 +14,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/doglog/doglog_edit.css" />
-  <script defer src="${pageContext.request.contextPath}/assets/js/doglog/doglog_edit.js"></script>
   <title>멍! 로그 수정</title>
+  
+  	<script>
+	  const contextPath = "${pageContext.request.contextPath}";
+	</script>
+
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/doglog/doglog_edit.css" />
   <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/header.css" />
   <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/footer.css" />
+  <script defer src="${pageContext.request.contextPath}/assets/js/doglog/doglog_edit.js"></script>
 </head>
 
 <body>
@@ -93,10 +98,32 @@
                 <input type="file"
                        id="editImg"
                        name="logImages"
-                       accept="image/*" />
+                       accept="image/*"
+                       multiple
+                       hidden />
 
-                <div class="existing-image-list" id="existingImageList"></div>
+                <div class="edit-image-btn-wrap">
+                  <label for="editImg" class="btn btn-upload">이미지 첨부</label>
+                </div>
+
+                <div class="existing-image-list" id="existingImageList">
+                  <c:if test="${not empty imageList}">
+                    <c:forEach var="image" items="${imageList}">
+                      <div class="existing-image-item"
+                           data-image-id="${image.logImgNumber}"
+                           data-image-path="${image.logImgPath}">
+                        <img src="${pageContext.request.contextPath}${image.logImgPath}" alt="기존 이미지" />
+                        <button type="button"
+                                class="existing-image-remove"
+                                data-action="delete-existing-image"
+                                data-image-id="${image.logImgNumber}"
+                                data-image-path="${image.logImgPath}">×</button>
+                      </div>
+                    </c:forEach>
+                  </c:if>
+                </div>
               </div>
+
               <div class="detail-main-post edit-content"
                    id="editContent"
                    contenteditable="true"

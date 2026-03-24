@@ -1,8 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
+<c:set var="firstImagePath" value="" />
+<c:if test="${not empty imageList and fn:length(imageList) > 0}">
+  <c:set var="firstImagePath" value="${imageList[0].logImgPath}" />
+</c:if>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -16,22 +21,20 @@
   </script>
   <script defer src="${contextPath}/assets/js/doglog/doglog_detail.js"></script>
   <title>멍! 로그 상세</title>
-  	<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/header.css" />
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/footer.css" />
+  <link rel="stylesheet" href="${contextPath}/assets/css/header.css" />
+  <link rel="stylesheet" href="${contextPath}/assets/css/footer.css" />
 </head>
 
-	<!-- 유저 번호 확인 존재시 로그인 헤더 -->
-	<c:choose>
-	  <c:when test="${not empty sessionScope.userNumber}">
-	    <jsp:include page="/app/header_login.jsp" />
-	  </c:when>
-	  <c:otherwise>
-	    <jsp:include page="/app/header_logout.jsp" />
-	  </c:otherwise>
-	</c:choose>
 <body>
 
-
+  <c:choose>
+    <c:when test="${not empty sessionScope.userNumber}">
+      <jsp:include page="/app/header_login.jsp" />
+    </c:when>
+    <c:otherwise>
+      <jsp:include page="/app/header_logout.jsp" />
+    </c:otherwise>
+  </c:choose>
 
   <main class="doglog-detail">
     <div class="container">
@@ -42,7 +45,6 @@
       <div class="container-body">
         <div class="doglog-detail-container">
 
-          <!-- 제목 -->
           <div class="detail-title" id="detailTitle">
             <c:choose>
               <c:when test="${not empty log and not empty log.logTitle}">
@@ -54,7 +56,6 @@
             </c:choose>
           </div>
 
-          <!-- 작성자 / 날짜 -->
           <div class="detail-info-container">
             <div class="detail-info-name" id="detailWriter">
               <c:choose>
@@ -74,21 +75,18 @@
             </div>
           </div>
 
-          <!-- 이미지 / 본문 -->
           <div class="detail-main-container">
             <div class="detail-main-img" id="detailMainImg">
-              <c:choose>
-                <c:when test="${not empty imageList}">
-                  <c:forEach var="image" items="${imageList}">
-                    <div class="detail-image-item">
-                      <img src="${contextPath}${image.logImgPath}" alt="멍로그 이미지" />
-                    </div>
-                  </c:forEach>
-                </c:when>
-                <c:otherwise>
-                  <div class="detail-image-empty">이미지가 없습니다.</div>
-                </c:otherwise>
-              </c:choose>
+              <div class="img-preview-box">
+                <c:choose>
+                  <c:when test="${not empty firstImagePath}">
+                    <img src="${contextPath}${firstImagePath}" alt="대표 이미지" />
+                  </c:when>
+                  <c:otherwise>
+                    <div class="detail-image-empty">이미지가 없습니다.</div>
+                  </c:otherwise>
+                </c:choose>
+              </div>
             </div>
 
             <div class="detail-main-post" id="detailMainPost">
@@ -105,7 +103,6 @@
 
           <hr />
 
-          <!-- 댓글 목록 -->
           <div class="comment-list" id="commentList">
             <c:choose>
               <c:when test="${not empty commentList}">
@@ -143,8 +140,7 @@
                                   class="btn btn-comment-edit"
                                   data-action="edit-comment"
                                   data-comment-number="${comment.commentNumber}"
-                                  data-log-number="${log.logNumber}"
-                                  <%-- data-comment-post="${comment.commentPost}" --%>>
+                                  data-log-number="${log.logNumber}">
                             수정
                           </button>
 
@@ -168,7 +164,6 @@
             </c:choose>
           </div>
 
-          <!-- 댓글 작성 / 수정 -->
           <div class="comment-write-container" id="commentWriteContainer">
             <c:choose>
               <c:when test="${not empty sessionScope.userNumber}">
@@ -235,7 +230,13 @@
       </div>
     </div>
   </main>
-
+  
+  	<p>본문1</p>
+	<p><img src="/DingDangDog/upload/doglog/이미지.jpg" alt="본문 이미지"></p>
+	<p>본문2</p>
+	
+	
+	
   <jsp:include page="/app/footer.jsp" />
 </body>
 
