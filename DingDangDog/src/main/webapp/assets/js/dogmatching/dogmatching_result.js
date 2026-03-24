@@ -42,7 +42,12 @@ function renderDogCards() {
 
 if (saveBtn) {
   saveBtn.addEventListener("click", () => {
-	alert("저장되었습니다.");
+    if (!isLoggedIn) {
+      alert("로그인 후 결과를 저장할 수 있습니다.");
+      location.href = `${contextPath}/user/login.us`;
+      return;
+    }
+
     location.href = `${contextPath}/matching/save.ma`;
   });
 }

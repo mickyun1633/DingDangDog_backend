@@ -13,6 +13,7 @@
 
   <script>
     const contextPath = "${pageContext.request.contextPath}";
+    const isLoggedIn = ${not empty sessionScope.userNumber};
     const recommendedDogs = [
       <c:forEach var="dog" items="${recommendedDogs}" varStatus="status">
         {

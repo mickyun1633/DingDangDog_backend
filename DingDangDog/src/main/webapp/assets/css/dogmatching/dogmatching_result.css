@@ -96,8 +96,8 @@ footer {
 }
 
 /* 카드 이미지 */
-
 .dogarchive-image {
+  width: 100%;
   height: 300px;
   background: #ddd;
   display: flex;
@@ -105,6 +105,14 @@ footer {
   justify-content: center;
   font-weight: 600;
   color: #444;
+  overflow: hidden;
+}
+
+.dogarchive-image img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
 }
 
 /* 카드 내용 */

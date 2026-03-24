@@ -8,6 +8,7 @@ import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.ddd.app.Execute;
 import com.ddd.app.Result;
@@ -28,12 +29,16 @@ public class MatchingResultOkController implements Execute {
 
 		MatchingResultDTO dto = new MatchingResultDTO();
 		Result result = new Result();
-
+		HttpSession session = request.getSession();
 		// ===== 로그인한 userNumber 세션에서 확인 =====
-		int userNumber = (int) request.getSession().getAttribute("userNumber");
+		Integer userNumber = (Integer) session.getAttribute("userNumber");
+		
 
 		// ===== 데이터 수집 =====
-		dto.setUserNumber(userNumber);
+		
+		if(userNumber != null) {
+			dto.setUserNumber(userNumber); //유저 번호가 있을시에만 저장
+		}
 		dto.setDogActivity(Integer.parseInt(request.getParameter("dogActivity")));
 		dto.setDogSociality(Integer.parseInt(request.getParameter("dogSociality")));
 		dto.setDogIndependence(Integer.parseInt(request.getParameter("dogIndependence")));

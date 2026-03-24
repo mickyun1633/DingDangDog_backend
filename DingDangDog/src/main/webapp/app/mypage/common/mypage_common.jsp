@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="ko">
@@ -65,20 +65,22 @@
 						<div class="panel-body">
 							<ul class="match-list">
 								<c:choose>
-									<c:when test="${not empty matchingList}">
-										<c:forEach var="match" items="${matchingList}">
-											<li class="match-row">
-											<a href="${pageContext.request.contextPath}/matching/save.ma?no=${match.resultNumber}"
-												style="display: block; text-decoration: none; color: inherit;">
-													<div class="match-title">매칭 번호: ${match.resultNumber}</div>
-											</a>
-											<div class="match-date">${match.resultCreatedDate}</div>
-											</li>
-										</c:forEach>
-									</c:when>
-									<c:otherwise>
-										<li class="match-row">매칭 결과가 없습니다.</li>
-									</c:otherwise>
+								  <c:when test="${not empty matchingList}">
+								    <c:forEach var="match" items="${matchingList}" varStatus="status">
+								      <li class="match-row">
+								        <a href="${pageContext.request.contextPath}/matching/result.ma?resultNumber=${match.resultNumber}"
+								           style="display:flex; justify-content:space-between; align-items:center; width:100%; text-decoration:none; color:inherit;">
+								          <div class="match-title">
+								            ${fn:length(matchingList) - status.index}번째 매칭 결과
+								          </div>
+								          <div class="match-date">${match.resultCreatedDate}</div>
+								        </a>
+								      </li>
+								    </c:forEach>
+								  </c:when>
+								  <c:otherwise>
+								    <li class="match-row">매칭 결과가 없습니다.</li>
+								  </c:otherwise>
 								</c:choose>
 							</ul>
 							<div class="panel-footer">
