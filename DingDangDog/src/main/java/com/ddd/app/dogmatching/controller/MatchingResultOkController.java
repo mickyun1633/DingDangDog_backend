@@ -32,12 +32,11 @@ public class MatchingResultOkController implements Execute {
 		HttpSession session = request.getSession();
 		// ===== 로그인한 userNumber 세션에서 확인 =====
 		Integer userNumber = (Integer) session.getAttribute("userNumber");
-		
 
 		// ===== 데이터 수집 =====
-		
-		if(userNumber != null) {
-			dto.setUserNumber(userNumber); //유저 번호가 있을시에만 저장
+
+		if (userNumber != null) {
+			dto.setUserNumber(userNumber); // 유저 번호가 있을시에만 저장
 		}
 		dto.setDogActivity(Integer.parseInt(request.getParameter("dogActivity")));
 		dto.setDogSociality(Integer.parseInt(request.getParameter("dogSociality")));
@@ -52,7 +51,6 @@ public class MatchingResultOkController implements Execute {
 		for (ArchiveListDTO dog : recommendedDogs) {
 			topDogNumbers.add(dog.getDogNumber());
 		}
-		
 
 		// ===== 결과 문구 생성 =====
 		String resultComment = makeResultComment(dto);
@@ -60,7 +58,7 @@ public class MatchingResultOkController implements Execute {
 		// ===== 추천된 유기견 8마리 전달 및 코멘트 전달 =====
 		request.setAttribute("recommendedDogs", recommendedDogs);
 		request.setAttribute("resultComment", resultComment);
-		
+
 		// ===== 추천된 유기견 8마리 저장용 세션에 저장 =====
 		request.getSession().setAttribute("matchingResultDTO", dto);
 		request.getSession().setAttribute("topDogNumbers", topDogNumbers);
@@ -72,56 +70,64 @@ public class MatchingResultOkController implements Execute {
 		return result;
 
 	}
-	
+
 	private String makeResultComment(MatchingResultDTO dto) {
-	    double activityAvg = (double) dto.getDogActivity() / 4;
-	    double socialityAvg = (double) dto.getDogSociality() / 4;
-	    double independenceAvg = (double) dto.getDogIndependence() / 4;
-	    double barkingAvg = (double) dto.getDogBarking() / 4;
-	    double groomingAvg = (double) dto.getDogGrooming() / 4;
+		double activityAvg = (double) dto.getDogActivity() / 4;
+		double socialityAvg = (double) dto.getDogSociality() / 4;
+		double independenceAvg = (double) dto.getDogIndependence() / 4;
+		double barkingAvg = (double) dto.getDogBarking() / 4;
+		double groomingAvg = (double) dto.getDogGrooming() / 4;
 
-	    String activityComment = getActivityComment(activityAvg);
-	    String socialityComment = getSocialityComment(socialityAvg);
-	    String independenceComment = getIndependenceComment(independenceAvg);
-	    String barkingComment = getBarkingComment(barkingAvg);
-	    String groomingComment = getGroomingComment(groomingAvg);
+		String activityComment = getActivityComment(activityAvg);
+		String socialityComment = getSocialityComment(socialityAvg);
+		String independenceComment = getIndependenceComment(independenceAvg);
+		String barkingComment = getBarkingComment(barkingAvg);
+		String groomingComment = getGroomingComment(groomingAvg);
 
-	    return "입력한 응답을 보면 "
-	            + activityComment + ", "
-	            + socialityComment +"<br>"
-	            +". 또한 "
-	            + independenceComment + ", "
-	            + barkingComment + ", "+"<br>"
-	            + groomingComment + ".";
-		}	
-	
-		private String getActivityComment(double avg) {
-		    if (avg >= 4.0) return "활동량이 있는 반려견과 잘 맞는 편이고";
-		    if (avg >= 2.5) return "적당한 활동성을 가진 반려견을 선호하는 편이고";
-		    return "차분하고 무리한 활동이 적은 반려견이 더 잘 맞는 편이고";
-		}
-	
-		private String getSocialityComment(double avg) {
-		    if (avg >= 4.0) return "사회성이 좋은 성향을 중요하게 보는 편이에요";
-		    if (avg >= 2.5) return "무난한 사회성을 가진 반려견과 잘 맞는 편이에요";
-		    return "조용하고 낯선 환경에 크게 예민하지 않은 성향이 더 잘 맞는 편이에요";
-		}
-	
-		private String getIndependenceComment(double avg) {
-		    if (avg >= 4.0) return "혼자 있는 시간에도 안정적인 성향과 잘 맞아요";
-		    if (avg >= 2.5) return "독립성과 교감의 균형이 있는 성향을 선호하는 편이에요";
-		    return "보호자와의 교감이 많은 성향을 더 선호하는 편이에요";
-		}
-	
-		private String getBarkingComment(double avg) {
-		    if (avg >= 4.0) return "생활 소음 부담이 적은 조용한 친구들을 중요하게 보셨어요";
-		    if (avg >= 2.5) return "짖음 정도가 과하지 않은 무난한 성향을 선호하는 편이에요";
-		    return "짖음에 대해서는 비교적 유연한 편이에요";
-		}
-	
-		private String getGroomingComment(double avg) {
-		    if (avg >= 4.0) return "털 관리 부담이 적은 친구들이 더 잘 맞아요";
-		    if (avg >= 2.5) return "그루밍 부담이 과하지 않은 친구들을 선호하는 편이에요";
-		    return "털관리나 미용에 어느 정도 시간을 들일 수 있는 편이에요";
-		}
+		return "입력한 응답을 보면 " + activityComment + ", " + socialityComment + "<br>" + " 또한 " + independenceComment + ", "
+				+ barkingComment + ", " + "<br>" + groomingComment + "." + "<br>" + "<br>"
+
+				+ "성향 분석 점수 : 활동성 [" + activityAvg + "], " + "사회성 [" + socialityAvg + "], " + "독립성 [" + independenceAvg
+				+ "], " + "짖음 민감도 [" + barkingAvg + "], " + "털 관리 선호도 [" + groomingAvg + "]";
+	}
+
+	private String getActivityComment(double avg) {
+		if (avg >= 4.0)
+			return "활동량이 있는 반려견과 잘 맞는 편이고";
+		if (avg >= 2.5)
+			return "적당한 활동성을 가진 반려견을 선호하는 편이고";
+		return "차분하고 무리한 활동이 적은 반려견이 더 잘 맞는 편이고";
+	}
+
+	private String getSocialityComment(double avg) {
+		if (avg >= 4.0)
+			return "사회성이 좋은 성향을 중요하게 보는 편이에요";
+		if (avg >= 2.5)
+			return "무난한 사회성을 가진 반려견과 잘 맞는 편이에요";
+		return "조용하고 낯선 환경에 크게 예민하지 않은 성향이 더 잘 맞는 편이에요";
+	}
+
+	private String getIndependenceComment(double avg) {
+		if (avg >= 4.0)
+			return "혼자 있는 시간에도 안정적인 성향과 잘 맞아요";
+		if (avg >= 2.5)
+			return "독립성과 교감의 균형이 있는 성향을 선호하는 편이에요";
+		return "보호자와의 교감이 많은 성향을 더 선호하는 편이에요";
+	}
+
+	private String getBarkingComment(double avg) {
+		if (avg >= 4.0)
+			return "생활 소음 부담이 적은 조용한 친구들을 중요하게 보셨어요";
+		if (avg >= 2.5)
+			return "짖음 정도가 과하지 않은 무난한 성향을 선호하는 편이에요";
+		return "짖음에 대해서는 비교적 유연한 편이에요";
+	}
+
+	private String getGroomingComment(double avg) {
+		if (avg >= 4.0)
+			return "털 관리 부담이 적은 친구들이 더 잘 맞아요";
+		if (avg >= 2.5)
+			return "그루밍 부담이 과하지 않은 친구들을 선호하는 편이에요";
+		return "털관리나 미용에 어느 정도 시간을 들일 수 있는 편이에요";
+	}
 }

@@ -10,7 +10,14 @@ public class CareListDTO {
 	private String shelterName;
 	private LocalDateTime careWriteDate;
 	private String applyStatus;
+	private String careStatus;
 	
+	public String getCareStatus() {
+		return careStatus;
+	}
+	public void setCareStatus(String careStatus) {
+		this.careStatus = careStatus;
+	}
 	public String getApplyStatus() {
 		return applyStatus;
 	}
@@ -55,7 +62,7 @@ public class CareListDTO {
 	public String toString() {
 		return "CareListDTO [careNumber=" + careNumber + ", careTitle=" + careTitle + ", careDate=" + careDate
 				+ ", shelterName=" + shelterName + ", careWriteDate=" + careWriteDate + ", applyStatus=" + applyStatus
-				+ "]";
+				+ ", careStatus=" + careStatus + "]";
 	}
 	
 

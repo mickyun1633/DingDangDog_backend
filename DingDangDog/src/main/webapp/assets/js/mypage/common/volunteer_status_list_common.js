@@ -72,16 +72,8 @@ function bindCancelButtons() {
 
 			if (!isConfirmed) return;
 
-			volunteerData.splice(targetIndex, 1);
-
-			const totalPages = Math.ceil(volunteerData.length / rowsPerPage);
-
-			if (currentPage > totalPages) {
-				currentPage = totalPages || 1;
-			}
-
-			alert("신청이 취소되었습니다.");
-			updatePage();
+			location.href =
+				`${contextPath}/care/cancel.ca?careNumber=${targetItem.careNumber}&userNumber=${sessionUserNumber}`;
 		});
 	});
 }

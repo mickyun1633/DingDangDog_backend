@@ -1,39 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
 <mapper namespace="report">
+
+	<!-- 중복 신고 확인 -->
+	<select id="checkDuplicateReport" parameterType="map"
+		resultType="int">
+		SELECT COUNT(*)
+		FROM DDD_REPORT
+		WHERE reporter_user_number =
+		#{reporterUserNumber}
+		AND apply_number = #{applyNumber}
+	</select>
 
 	<!-- 신고 등록 -->
 	<insert id="insertReport"
 		parameterType="com.ddd.app.report.dto.ReportDTO">
 		INSERT INTO DDD_REPORT
-		(report_number, reporter_user_number, reported_user_number, apply_number,
-		report_reason, report_date)
+		(
+		report_number,
+		reporter_user_number,
+		reported_user_number,
+		apply_number,
+		report_reason,
+		report_date
+		)
 		VALUES
-		(SEQ_REPORT.NEXTVAL,
+		(
+		SEQ_REPORT.NEXTVAL,
 		#{reporterUserNumber},
 		#{reportedUserNumber},
 		#{applyNumber},
 		#{reportReason},
-		SYSDATE)
+		SYSDATE
+		)
 	</insert>
 
-	<!-- 신고 횟수 증가 -->
+	<!-- 일반회원 신고 횟수 증가 -->
 	<update id="reportCount" parameterType="int">
-		UPDATE DDD_USER
-		SET REPORT_COUNT = REPORT_COUNT + 1
-		WHERE USER_NUMBER = #{userNumber}
+		UPDATE ddd_user_common
+		SET common_report_count = NVL(common_report_count, 0) + 1
+		WHERE
+		user_number = #{value}
 	</update>
 
-	<!-- 블랙리스트 처리 (3회 이상) -->
+	<!-- 신고 3회 이상이면 블랙 처리 -->
 	<update id="updateBlacklist" parameterType="int">
-		UPDATE DDD_USER
-		SET USER_STATUS = 'BLACK'
-		WHERE USER_NUMBER = #{userNumber}
-		AND (
-		SELECT COUNT(*)
-		FROM DDD_REPORT
-		WHERE REPORTED_USER_NUMBER = #{userNumber}
-		) >= 3
+		UPDATE ddd_user
+		SET
+		user_status = 'black'
+		WHERE user_number = #{value}
+		AND EXISTS (
+		SELECT 1
+		FROM ddd_user_common
+		WHERE user_number = #{value}
+		AND common_report_count >= 3
+		)
 	</update>
 
 </mapper>

@@ -62,6 +62,7 @@ public class CareUpdateOkController implements Execute {
         System.out.println("수정 DTO : " + careDTO);
 
         careDAO.updateCare(careDTO);
+        careDAO.syncCareStatus(careDTO.getCareNumber());
         System.out.println("수정 완료");
 
         result.setPath(request.getContextPath() + "/care/detail.ca?careNumber=" + careDTO.getCareNumber());

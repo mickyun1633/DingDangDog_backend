@@ -1,13 +1,12 @@
 package com.ddd.app.dogcare.controller;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-//import javax.servlet.http.HttpSession;
 
 import com.ddd.app.Execute;
 import com.ddd.app.Result;
@@ -15,52 +14,41 @@ import com.ddd.app.dogcare.dao.CareDAO;
 import com.ddd.app.dogcare.dto.CareApplyDTO;
 import com.ddd.app.dogcare.dto.CareDetailDTO;
 
-public class CareDetailController implements Execute{
+public class CareDetailController implements Execute {
 
 	@Override
 	public Result execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		System.out.println("=== CareDetailController 실행 ===");
-		
+
 		CareDAO careDAO = new CareDAO();
 		Result result = new Result();
-		CareDetailDTO careDetailDTO = new CareDetailDTO();
-		
-		// 상세 정보를 보기 전, 날짜 지난 모든 글의 상태를 'close'로 먼저 업데이트
-	    careDAO.updateExpiredStatus();
-	    
-//		// 세션에서 userNumber 가져오기
-//        HttpSession session = request.getSession();
-//        int userNumber = (Integer) session.getAttribute("userNumber");  // 세션에서 userNumber 가져오기
-//        System.out.println("접속한 userNumber : " + userNumber);
+
+		// 날짜 지난 글 상태 갱신
+		careDAO.updateExpiredStatus();
+
 		int careNumber = Integer.parseInt(request.getParameter("careNumber"));
-		
-		CareDetailDTO detail = careDAO.selectCare(careNumber);
-		request.setAttribute("care", detail);
-		System.out.println("상세정보 출력");
-		
+
 		CareDetailDTO care = careDAO.selectCare(careNumber);
-
-		String careDateStr = request.getParameter("careDate");
-
-		if (careDateStr != null && !careDateStr.isEmpty()) {
-		    LocalDateTime careDate = LocalDateTime.parse(careDateStr + "T00:00:00");
-		    careDetailDTO.setCareDate(careDate);
-		}
-		List<CareApplyDTO> applyList = careDAO.selectApplyUsers(careNumber); 
-		request.setAttribute("applyList", applyList);
-		// 신청현황 따로 조회
+		List<CareApplyDTO> applyList = careDAO.selectApplyUsers(careNumber);
 		String applyStatus = careDAO.getApplyStatus(careNumber);
-		// care 객체에 넣기
+
 		care.setApplyStatus(applyStatus);
-		// request에 담기
+
+		// 봉사날짜 지난 경우만 신고 가능
+		boolean reportAvailable = false;
+		if (care != null && care.getCareDate() != null && !care.getCareDate().isEmpty()) {
+			LocalDate volunteerDate = LocalDate.parse(care.getCareDate());
+			reportAvailable = volunteerDate.isBefore(LocalDate.now());
+		}
+
 		request.setAttribute("care", care);
-		System.out.println("care."+detail.getApplyStatus());
+		request.setAttribute("applyList", applyList);
+		request.setAttribute("reportAvailable", reportAvailable);
 
 		result.setPath("/app/dogcare/dogcare_detail_shelter.jsp");
 		result.setRedirect(false);
 
 		return result;
 	}
-	
 }
