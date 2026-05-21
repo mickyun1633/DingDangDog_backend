@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="archive">
-<select id="selectList" parameterType="com.ddd.app.dogarchive.dto.ArchiveListDTO" resultType="com.ddd.app.dogarchive.dto.ArchiveListDTO">
+
+	<select id="selectList" parameterType="com.ddd.app.dogarchive.dto.ArchiveListDTO" resultType="com.ddd.app.dogarchive.dto.ArchiveListDTO">
 		SELECT
-		A.DOG_NUMBER,
-		A.DOG_NAME,
-		A.DOG_BREED,
-		NVL(US.SHELTER_NAME, U.USER_NAME) AS SHELTER_NAME,
-		A.DOG_SAFE_DATE,
-		AI.ARCHIVE_IMG_PATH
-		FROM DDD_ARCHIVE A LEFT JOIN DDD_USER U ON A.USER_NUMBER = U.USER_NUMBER
+			A.DOG_NUMBER,
+			A.DOG_NAME,
+			A.DOG_BREED,
+			IFNULL(US.SHELTER_NAME, U.USER_NAME) AS SHELTER_NAME,
+			A.DOG_SAFE_DATE,
+			AI.ARCHIVE_IMG_PATH
+		FROM DDD_ARCHIVE A 
+		LEFT JOIN DDD_USER U ON A.USER_NUMBER = U.USER_NUMBER
 		LEFT JOIN DDD_USER_SHELTER US ON A.USER_NUMBER = US.USER_NUMBER
 		LEFT JOIN (
-		SELECT DOG_NUMBER, MIN(ARCHIVE_IMG_NUMBER) AS MIN_IMG_NUMBER
-		FROM DDD_ARCHIVE_IMG GROUP BY DOG_NUMBER
+			SELECT DOG_NUMBER, MIN(ARCHIVE_IMG_NUMBER) AS MIN_IMG_NUMBER
+			FROM DDD_ARCHIVE_IMG GROUP BY DOG_NUMBER
 		) FIRST_IMG ON A.DOG_NUMBER = FIRST_IMG.DOG_NUMBER
-		LEFT JOIN DDD_ARCHIVE_IMG AI ON FIRST_IMG.MIN_IMG_NUMBER =
-		AI.ARCHIVE_IMG_NUMBER
+		LEFT JOIN DDD_ARCHIVE_IMG AI ON FIRST_IMG.MIN_IMG_NUMBER = AI.ARCHIVE_IMG_NUMBER
 		ORDER BY A.DOG_NUMBER DESC
-</select>
+	</select>
 
 	<select id="getTotalCount" parameterType="com.ddd.app.dogarchive.dto.ArchiveListDTO" resultType="int">
 		SELECT COUNT(*) FROM DDD_ARCHIVE
@@ -62,18 +63,15 @@
 		WHERE A.DOG_NUMBER = #{dogNumber}
 	</select>
 
-	<insert id="insertArchive" parameterType="com.ddd.app.dogarchive.dto.ArchiveWriteDTO">
-		<selectKey keyProperty="dogNumber" resultType="int" order="BEFORE">
-			SELECT SEQ_DDD_ARCHIVE.NEXTVAL FROM DUAL
-		</selectKey>
+	<insert id="insertArchive" parameterType="com.ddd.app.dogarchive.dto.ArchiveWriteDTO" useGeneratedKeys="true" keyProperty="dogNumber">
 		INSERT INTO DDD_ARCHIVE (
-			DOG_NUMBER, USER_NUMBER, DOG_NAME, DOG_BREED, DOG_GENDER,
+			USER_NUMBER, DOG_NAME, DOG_BREED, DOG_GENDER,
 			DOG_AGE, DOG_WEIGHT, DOG_SAFE_DATE, DOG_ARCHIVE_DATE, DOG_DETAIL
 		) VALUES (
-			#{dogNumber}, #{userNumber}, #{dogName}, #{dogBreed}, #{dogGender},
+			#{userNumber}, #{dogName}, #{dogBreed}, #{dogGender},
 			#{dogAge}, #{dogWeight}, 
-			TO_DATE(REPLACE(SUBSTR(#{dogSafeDate}, 1, 10), 'T', ''), 'YYYY-MM-DD'),
-			SYSDATE, #{dogDetail}
+			STR_TO_DATE(REPLACE(SUBSTR(#{dogSafeDate}, 1, 10), 'T', ''), '%Y-%m-%d'),
+			NOW(), #{dogDetail}
 		)
 	</insert>
 
@@ -91,12 +89,11 @@
 		<choose>
 			<when test="archiveImgName != null">
 				INSERT INTO DDD_ARCHIVE_IMG (
-					ARCHIVE_IMG_NUMBER, 
 					DOG_NUMBER, 
 					ARCHIVE_IMG_NAME, 
 					ARCHIVE_IMG_PATH
 				) VALUES (
-					SEQ_ARCHIVE_IMG.NEXTVAL, #{dogNumber}, 
+					#{dogNumber}, 
 					#{archiveImgName},
 					#{archiveImgPath} 
 				)
@@ -115,9 +112,9 @@
 			DOG_GENDER = #{dogGender},
 			DOG_AGE = #{dogAge}, 
 			DOG_WEIGHT = #{dogWeight},
-			DOG_SAFE_DATE = TO_DATE(REPLACE(SUBSTR(#{dogSafeDate}, 1, 10), 'T', ''), 'YYYY-MM-DD'), 
+			DOG_SAFE_DATE = STR_TO_DATE(REPLACE(SUBSTR(#{dogSafeDate}, 1, 10), 'T', ''), '%Y-%m-%d'), 
 			DOG_DETAIL = #{dogDetail}, 
-			ARCHIVE_MODIFY_DATE = SYSDATE
+			ARCHIVE_MODIFY_DATE = NOW()
 		WHERE DOG_NUMBER = #{dogNumber}
 	</update>
 	
@@ -138,16 +135,18 @@
 	</update>
 
 	<update id="updateImg" parameterType="com.ddd.app.dogarchive.dto.ArchiveUpdateDTO">
-		MERGE INTO DDD_ARCHIVE_IMG AI
-		USING DUAL
-		ON (AI.DOG_NUMBER = #{dogNumber})
-		WHEN MATCHED THEN
-		UPDATE SET 
-		ARCHIVE_IMG_NAME = #{archiveImgName}, 
-		ARCHIVE_IMG_PATH = #{archiveImgPath}
-		WHEN NOT MATCHED THEN
-	 	INSERT (ARCHIVE_IMG_NUMBER, DOG_NUMBER, ARCHIVE_IMG_NAME, ARCHIVE_IMG_PATH)
-		VALUES (SEQ_ARCHIVE_IMG.NEXTVAL, #{dogNumber}, #{archiveImgName}, #{archiveImgPath})
+		INSERT INTO DDD_ARCHIVE_IMG (
+			DOG_NUMBER, 
+			ARCHIVE_IMG_NAME, 
+			ARCHIVE_IMG_PATH
+		) VALUES (
+			#{dogNumber}, 
+			#{archiveImgName}, 
+			#{archiveImgPath}
+		)
+		ON DUPLICATE KEY UPDATE 
+			ARCHIVE_IMG_NAME = #{archiveImgName}, 
+			ARCHIVE_IMG_PATH = #{archiveImgPath}
 	</update>
 
 	<delete id="delete" parameterType="com.ddd.app.dogarchive.dto.ArchiveDeleteDTO">
